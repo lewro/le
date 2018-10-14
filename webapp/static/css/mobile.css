@@ -85,6 +85,10 @@
       padding: 100px !important;
     }
 
+    .index .top-cover form input.select-dropdown {
+      width: calc(100% - 30px);
+    }
+
     .index #expert-contacts {
       float: left;
     }
