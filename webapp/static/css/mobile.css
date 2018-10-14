@@ -398,6 +398,10 @@
       width: 100%;
     }
 
+    .expert-main {
+      margin-top: 150px;
+    }
+
     .expert .expert-title h1 {
       margin-left: 0;
       font-size: 50px;
@@ -407,7 +411,7 @@
       margin: 0 0 50px 0;
     }
 
-    .expert-value-section .messages-button {
+    .expert-value-section .message-button {
       margin-left: 0;
       margin-top: 20px;
       clear: both;
