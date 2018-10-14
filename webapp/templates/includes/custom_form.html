@@ -1,0 +1,440 @@
+{% load i18n %}
+
+{% if form.errors %}
+  <div class="errors row">
+    <div class="col s12">
+      <strong>Errors</strong>
+      {% for field in form %}
+        {% if field.name == "password1" %}
+          <p>{% trans 'Password:' %} {{ field.errors|striptags }}</p>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+
+<div class="row" id="steps">
+  <div class="col s1"></div>
+  <div class="step col s2 active" id="step_1">
+    <span class="number">1</span>
+    <span class="name">{% trans 'Identification' %}</span>
+  </div>
+  <div class="step col s2" id="step_2">
+    <span class="number">2</span>
+    <span class="name">{% trans 'Experience' %}</span>
+  </div>
+  <div class="step col s2" id="step_3">
+    <span class="number">3</span>
+    <span class="name">{% trans 'Expertise' %}</span>
+  </div>
+  <div class="step col s2" id="step_4">
+    <span class="number">4</span>
+    <span class="name">{% trans 'Contacts '%}</span>
+  </div>
+  <div class="step col s2" id="step_5">
+    <span class="number">5</span>
+    <span class="name">{% trans 'Account' %}</span>
+  </div>
+  <div class="col s1"></div>
+</div>
+
+<!-- STEP 1 -->
+<div class="box-step active" data-id="step_1">
+  <div class="row">
+    <div class="col s4" id="lawyer">
+      <div class="big-button profession" data-id="1">
+        <i class="fas fa-balance-scale"></i>
+        <span class="title">{% trans 'Lawyer' %}</span>
+      </div>
+    </div>
+    <div class="col s4" id="accountant">
+      <div class="big-button profession" data-id="2">
+        <i class="fas fa-calculator"></i>
+        <span class="title">{% trans 'Accountant' %}</span>
+      </div>
+    </div>
+    <div class="col s4" id="translator">
+      <div class="big-button profession" data-id="3">
+        <i class="fas fa-bullhorn"></i>
+        <span class="title">{% trans 'Translator ' %}</span>
+      </div>
+    </div>
+  </div>
+  <input
+    type="text"
+    id="id_category_id"
+    name="category_id"
+    {% if form.category_id.value != None %}
+      value="{{ form.category_id.value|stringformat:'s' }}"
+    {% endif %}
+    />
+  <button  class="box-stepper hidden"></button>
+</div>
+
+<!-- STEP 2 -->
+<div class="box-step" data-id="step_2">
+  <div class="box flat-bottom">
+    <div class="row">
+
+      <!-- SLIDER FOR EXPERIENCE -->
+      <div class="input-spacing">
+        <label class="active">
+          {% trans 'Experience (years): '%}
+          <span class="label-helper">
+            <span id="experience"></span>
+          </span>
+        </label>
+        <div class="input-field">
+          <div id="experience-slider"></div>
+          <input
+            type="text"
+            id="id_experience"
+            name="experience"
+            {% if form.experience.value != None %}
+              value="{{ form.experience.value }}"
+            {% endif %}
+            />
+        </div>
+      </div>
+        <!-- SLIDER FOR RATE -->
+      <div class="input-spacing">
+          <label class="active">
+              <span id="hour_rate_label">{% trans 'Hour Rate (from - to):' %}</span>
+              <span id="normopage_rate_label">{% trans 'Normo-page Rate (from - to):' %}</span>
+            <span class="label-helper">
+              <span id="rate_from"></span> -
+              <span id="rate_to"></span>
+            </span>
+          </label>
+        <div class="input-field">
+          <div id="rate-slider"></div>
+          <input
+            type="text"
+            id="id_hour_rate_from"
+            name="hour_rate_from"
+            {% if form.hour_rate_from.value != None %}
+              value="{{ form.hour_rate_from.value }}"
+            {% endif %}
+            />
+          <input
+            type="text"
+            id="id_hour_rate_to"
+            name="hour_rate_to"
+            {% if form.hour_rate_to.value != None %}
+              value="{{ form.hour_rate_to.value }}"
+            {% endif %}
+            />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="btn-cover clearix">
+    <button class="btn box-stepper">{% trans 'Next  →   ' %}</button>
+    <button class="btn box-stepper-back">{% trans ' ←  Back' %}</button>
+  </div>
+</div>
+
+<!-- STEP 3 -->
+<div class="box-step" data-id="step_3">
+  <div class="box flat-bottom">
+    <div class="row">
+      <div class="input-spacing">
+        <div class="input-field">
+          {% for expertise_value in expertieses %}
+            <div class="tag" data-expertise-id="{{ expertise_value.id }}" data-category-id="{{ expertise_value.category_id }}">
+              {{ expertise_value.title }}
+              <i class="fas fa-check"></i>
+            </div>
+          {% endfor %}
+          <input
+            type="hidden"
+            id="id_expertise"
+            name="expertise"
+            {% if form.expertise.value != None %}
+              value="{{ form.expertise.value }}"
+            {% endif %}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="btn-cover clearix">
+    <button class="btn box-stepper">{% trans 'Next  →   '%}</button>
+    <button class="btn box-stepper-back">{% trans ' ←  Back' %}</button>
+  </div>
+</div>
+
+<!-- STEP 4 -->
+<div class="box-step" data-id="step_4">
+  <div class="box flat-bottom">
+    <div class="row">
+        <div class="input-spacing">
+          <div class="input-field col s12 l6">
+            <input
+              type="text"
+              id="id_first_name"
+              name="first_name"
+              {% if form.first_name.value != None %}
+                value="{{ form.first_name.value|stringformat:'s' }}"
+              {% endif %}
+            />
+            <label for="id_first_name">{% trans 'First name' %}</label>
+          </div>
+        </div>
+
+        <div class="input-spacing">
+          <div class="input-field col s12 l6">
+            <input
+              type="text"
+              id="id_last_name"
+              name="last_name"
+              {% if form.last_name.value != None %}
+                value="{{ form.last_name.value|stringformat:'s' }}"
+              {% endif %}
+              />
+            <label id="id_last_name">{% trans 'Last name'   %}</label>
+          </div>
+        </div>
+        <div class="input-spacing">
+          <div class="input-field col s12 ">
+            <textarea type="text" id="id_bio" name="bio">{% if form.bio.value != None %}{{ form.bio.value|stringformat:'s' }}{% endif %}</textarea>
+            <label for="id_bio">{% trans 'Bio' %}</label>
+          </div>
+        </div>
+        <div class="input-spacing">
+          <div class="input-field col s12">
+            <input
+              type="text"
+              id="id_company"
+              name="company"
+              {% if form.company.value != None %}
+                value="{{ form.company.value|stringformat:'s' }}"
+              {% endif %}
+              />
+            <label id="id_company">{% trans 'Company' %}</label>
+          </div>
+        </div>
+        <div class="input-spacing">
+          <div class="input-field col s12 l6">
+            <select
+              id="id_district_id"
+              name="district_id"
+              type="number"
+              {% if form.district_id.value != None %}
+                value="{{ form.district_id.value }}"
+              {% endif %}
+              >
+              {% include 'includes/district.html' %}
+            </select>
+            <label for="id_district_id" id="data-distric-value" data-distric-value="{{ form.district_id.value }}">{% trans 'District' %}</label>
+            <input
+              type="hidden"
+              id="id_district"
+              name="district"
+              {% if form.district.value != None %}
+                value="{{ form.district.value }}"
+              {% endif %}
+            />
+          </div>
+        </div>
+        <div class="input-spacing">
+          <div class="input-field col s12 l6">
+            {{ form.country }}
+            <label for="id_country">{% trans 'Country' %}</label>
+         </div>
+        </div>
+        <div class="input-spacing">
+          <div class="input-field col s12 l6">
+            <input
+              type="text"
+              id="id_phone"
+              name="phone"
+              {% if form.phone.value != None %}
+                value="{{ form.phone.value|stringformat:'s' }}"
+              {% endif %}
+              />
+            <label for="id_phone">{% trans 'Phone' %}</label>
+          </div>
+        </div>
+        <div class="input-spacing">
+          <div class="input-field col s12 l6">
+            <input
+              type="text"
+              id="id_mobile"
+              name="mobile"
+              {% if form.mobile.value != None %}
+                value="{{ form.mobile.value|stringformat:'s' }}"
+              {% endif %}
+              />
+            <label for="id_phone">{% trans 'Mobile' %}</label>
+          </div>
+        </div>
+        <div class="input-spacing">
+          <div class="input-field col s12">
+            <input
+              type="text"
+              id="id_web"
+              name="web"
+              {% if form.web.value != None %}
+                value="{{ form.web.value|stringformat:'s' }}"
+              {% endif %}
+              />
+            <label for="id_web">{% trans 'Web' %}</label>
+          </div>
+        </div>
+        <div class="input-spacing">
+          <div class="input-field col s12 l6">
+            <input
+              type="text"
+              id="id_street"
+              name="street"
+              {% if form.street.value != None %}
+                value="{{ form.street.value|stringformat:'s' }}"
+              {% endif %}
+              />
+            <label for="id_street_number">{% trans 'Street' %}</label>
+          </div>
+        </div>
+        <div class="input-spacing">
+          <div class="input-field col s12 l6">
+            <input
+              type="text"
+              id="id_street_number"
+              name="street_number"
+              {% if form.street_number.value != None %}
+                value="{{ form.street_number.value|stringformat:'s' }}"
+              {% endif %}
+              />
+            <label for="id_street_number">{% trans 'Street number' %}</label>
+          </div>
+        </div>
+        <div class="input-spacing">
+          <div class="input-field col s12 l6">
+            <input
+              type="text"
+              id="id_city"
+              name="city"
+              {% if form.city.value != None %}
+                value="{{ form.city.value|stringformat:'s' }}"
+              {% endif %}
+              />
+            <label for="id_city">{% trans 'City' %}</label>
+          </div>
+        </div>
+        <div class="input-spacing">
+          <div class="input-field col s12 l6">
+            <input
+              type="text"
+              id="id_zipcode"
+              name="zipcode"
+              {% if form.zipcode.value != None %}
+                value="{{ form.zipcode.value|stringformat:'s' }}"
+              {% endif %}
+              />
+            <label for="id_zipcode">{% trans 'Zip' %}</label>
+          </div>
+        </div>
+
+       <!-- GOOGLE MAP FOR LOCATION -->
+        <div id="google-map" class="clearfix">
+          <input
+            id="id_longtitude"
+            name="longtitude"
+            type="text"
+              {% if form.longtitude.value != None %}
+                value="{{ form.longtitude.value }}"
+              {% endif %}
+            />
+          <input
+            id="id_latitude"
+            name="latitude"
+            type="text"
+              {% if form.latitude.value != None %}
+                value="{{ form.latitude.value }}"
+              {% endif %}
+            />
+          <div class="row">
+            <div class="input-spacing">
+              <label class="clearfix">
+                <a class="btn" href ="#" id="find_location">{% trans 'Click here to find your address on map' %}</a>
+              </label>
+            </div>
+          </div>
+          <input
+            id="pac-input"
+            class="controls"
+            type="text"
+            placeholder="Enter location">
+          <div id="map-canvas" style="height:500px; width:100%"></div>
+        </div>
+      </div>
+   </div>
+  <div class="btn-cover clearix">
+    <button class="btn box-stepper">{% trans 'Next  →   '%}</button>
+    <button class="btn box-stepper-back">{% trans ' ←  Back' %}</button>
+  </div>
+ </div>
+
+<!-- STEP 5 -->
+<div class="box-step" data-id="step_5">
+  <div class="box flat-bottom">
+    <div class="row">
+      <div class="clearfix" id="upload">
+        <div class="input-spacing">
+          <i class="fas fa-user-tie"></i>
+          <div class="file-field input-field">
+            <div class="btn">
+              <span>{% trans 'Profile Image' %}</span>
+              <input type="file" name="profile_img" id="profile_img">
+            </div>
+            <span class="file">
+              {% if instance.profile_img != None %}
+                <i class="fas fa-image"></i>
+                {{ instance.profile_img }}"
+              {% endif %}
+            </span>
+            <div class="file-path-wrapper clearfix">
+              <input class="file-path validate" type="text"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-spacing">
+        <div class="input-field col s12">
+          <input
+            type="email"
+            id="id_email"
+            name="email"
+              {% if form.email.value != None %}
+                value="{{ form.email.value|stringformat:'s' }}"
+              {% endif %}
+            />
+          <label for="id_email">{% trans 'Email' %}</label>
+        </div>
+      </div>
+      <div class="input-spacing">
+        <div class="input-field col s12 l6">
+          <input type="password" id="id_password1" name="password1" />
+          <label id="id_password1">{% trans 'Password' %}</label>
+          <span class="input-helper">{% trans 'min 8 chars, no common words, no entire numeric' %}</span>
+        </div>
+      </div>
+      <div class="input-spacing">
+        <div class="input-field col s12 l6">
+          <input type="password" id="id_password2" name="password2" />
+          <label id="id_password2">{% trans 'Password - confirmation' %}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="btn-cover">
+    <button class="btn box-stepper-back">{% trans 'Back '%}</button>
+    <input class="btn form-submit" type="submit" value="{% trans 'Save' %}" />
+  </div>
+</div>
+
+
+

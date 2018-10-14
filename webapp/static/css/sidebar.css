@@ -1,0 +1,51 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 500px;
+  height: 100%;
+  padding: 50px 0px;
+  overflow: scroll;
+  background: #fff;
+  box-shadow: 0px 50px 100px 0 rgb(0,0,0, 0.3);
+  display: none;
+}
+
+.sidebar .close-sideber {
+  margin-bottom: 70px;
+  cursor: pointer;
+}
+
+.sidebar .close-sideber:hover {
+  color: #000 !important;
+}
+
+.sidebar .close-sideber .fas {
+  font-size: 30px;
+}
+
+.sidebar .btn {
+  color: #fff;
+}
+
+.sidebar .btn:hover {
+  background: #000 !important;
+}
+
+.sidebar label.active,
+.sidebar .input-field>label.active {
+  color: #000 !important;
+}
+
+.category-1.sidebar {border-left: 5px solid #50c5dc;}
+.category-2.sidebar {border-left: 5px solid #ff4143;}
+.category-3.sidebar {border-left: 5px solid #f4be49;}
+
+.category-1.sidebar .close-sideber {color: #50c5dc;}
+.category-2.sidebar .close-sideber {color: #ff4143;}
+.category-3.sidebar .close-sideber {color: #f4be49;}
+
+.category-1.sidebar .btn {background: #50c5dc;}
+.category-2.sidebar .btn {background: #ff4143;}
+.category-3.sidebar .btn {background: #f4be49;}

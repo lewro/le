@@ -1,0 +1,209 @@
+{% extends "webapp/base.html" %}
+{% block content %}
+{% load i18n %}
+
+
+<div class="index experts-details clients-details">
+
+  <div class="bg-top">
+    <div class="top-cover">
+      {% include 'webapp/partials/nav.html' %}
+      <div class="details-top">
+        <div class="top-icons">
+          <i class="fas fa-balance-scale"></i>
+          <i class="fas fa-calculator"></i>
+          <i class="fas fa-bullhorn"></i>
+        </div>
+        <h4>{% trans 'Welcome' %}</h4>
+        <h2>{% trans 'Find your local expert today' %}</h2>
+        <a class="marketing-button" href="/register">{% trans 'Join Local Experts for free now' %}</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="benefits-box page">
+    <h4>{% trans 'Looking for' %}</h4>
+    <h2>{% trans 'Lawyer' %}, {% trans 'Accountant' %}, {% trans 'Translator?' %}</h2>
+    <div class="clearfix">
+      <div class="benefit-icon">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>{% trans 'Location' %}</span>
+      </div>
+      <div class="benefit-icon">
+        <i class="far fa-clock"></i>
+        <span>{% trans 'Experience' %}</span>
+      </div>
+      <div class="benefit-icon">
+        <i class="fas fa-hand-holding-usd"></i>
+        <span>{% trans 'Rate' %}</span>
+      </div>
+      <div class="benefit-icon">
+        <i class="fas fa-tags"></i>
+        <span>{% trans 'Expertise' %}</span>
+      </div>
+      <div class="benefit-icon">
+        <i class="fas fa-star"></i>
+        <span>{% trans 'Rating' %}</span>
+      </div>
+    </div>
+
+
+    <div class="user-box category-1">
+      <div class="category-icon">
+        <i class="fas fa-balance-scale"></i>
+      </div>
+      <div class="user-box-top">
+        <div class="profile-pic" style="background: #f2f2f2 url('/static/images/img-home-user-6.jpg') center center no-repeat; background-size: cover;" >
+        </div>
+        <div class="user-full-name">
+           Marek Hascak
+        </div>
+        <div  class="distric">
+          <i class="fas fa-map-marker-alt"></i>
+          Praha 3
+        </div>
+      </div>
+      <div class="user-box-bottom">
+        <div class="user-value long">
+          <label>{% trans 'Experience' %}</label>
+          <div class="value">7</div>
+        </div>
+        <div class="user-value long">
+          <label>{% trans 'Hour rate' %}</label>
+          <div class="value">750 - 1000</div>
+        </div>
+        <div class="user-value">
+          <label>{% trans 'Rating' %}</label>
+          <div class="value">
+              5.0
+            <i class="fas fa-star"></i>
+          </div>
+        </div>
+       </div>
+    </div>
+
+    <div class="user-box category-2">
+      <div class="category-icon">
+        <i class="fas fa-calculator"></i>
+      </div>
+      <div class="user-box-top">
+        <div class="profile-pic" style="background: #f2f2f2 url('/static/images/img-home-user-5.jpg') center center no-repeat; background-size: cover;" >
+        </div>
+        <div class="user-full-name">
+           Marek Hascak
+        </div>
+        <div  class="distric">
+          <i class="fas fa-map-marker-alt"></i>
+          Praha 3
+        </div>
+      </div>
+      <div class="user-box-bottom">
+        <div class="user-value long">
+          <label>{% trans 'Experience' %}</label>
+          <div class="value">7</div>
+        </div>
+        <div class="user-value long">
+          <label>{% trans 'Hour rate' %}</label>
+          <div class="value">750 - 1000</div>
+        </div>
+        <div class="user-value">
+          <label>{% trans 'Rating' %}</label>
+          <div class="value">
+              5.0
+            <i class="fas fa-star"></i>
+          </div>
+        </div>
+       </div>
+    </div>
+  </div>
+
+  <div class="profile">
+    <div class="page home-section">
+      <h4>{% trans 'Expert Profile' %}</h4>
+      <h2>{% trans 'Easy to undersend the differences and chose the right one' %}</h2>
+    </div>
+    <div class="home-section">
+      {% include 'marketing/profile.html' %}
+    </div>
+  </div>
+
+  <div class="messages-box page">
+      <h4>{% trans 'Get in touch' %}</h4>
+      <h2>{% trans 'Clean, simle interface to communicate with your experts' %}</h2>
+
+      <p class="note"><i class="fas fa-info-circle"></i>{% trans 'We provide you with the tool but you are free to use email, phone, chat. Whatever suits you best.' %}</p>
+
+      <div class="messages home-section">
+        <div class="message-main">
+          <div class="message-table" id="received_messages">
+            <div class="message-row clearfix">
+              <div class="message-data clearfix">
+                <div class="message-header clearfix">
+                  <div class="status status-1">
+                     <i class="fas fa-bell"></i>
+                  </div><!-- Status -->
+                  <div class="from">marek.vondruska@gmail.com</div>
+                  <div class="replied"></div>
+                  <div class="recieved">12.5.2019 - 14:00</div>
+                </div><!-- Message Header -->
+                <div class="message-body clearfix first">
+                  Zdravím vás<br/><br/>
+
+                  Mohli bychom se sejít ve čtvrtek 22.5 v naší kanceláři - 9:00?<br/><br/>
+                  Děkuji<br/><br/>
+
+                  <a href="" class="reply-button">
+                    <i class="fas fa-reply"></i>
+                    <span>{% trans 'Reply' %}</span>
+                  </a>
+                </div><!-- Message Body -->
+              </div><!-- Message Data -->
+            </div><!-- Row -->
+            <div class="message-row clearfix">
+              <div class="message-data clearfix">
+                <div class="message-header clearfix">
+                  <div class="status status-2">
+                     <i class="fas fa-check-circle"></i>
+                  </div><!-- Status -->
+                  <div class="from">marek.vondruska@gmail.com</div>
+                  <div class="replied"></div>
+                  <div class="recieved">12.5.2019 - 14:00</div>
+                </div><!-- Message Header -->
+                <div class="message-body clearfix">
+                  Zdravím vás<br/><br/>
+
+                  Mohli bychom se sejít ve čtvrtek 22.5 v naší kanceláři - 9:00?<br/><br/>
+                  Děkuji
+                </div><!-- Message Body -->
+              </div><!-- Message Data -->
+            </div><!-- Row -->
+            <div class="message-row clearfix">
+              <div class="message-data clearfix">
+                <div class="message-header clearfix">
+                  <div class="status status-2">
+                     <i class="fas fa-check-circle"></i>
+                  </div><!-- Status -->
+                  <div class="from">marek.vondruska@gmail.com</div>
+                  <div class="replied"></div>
+                  <div class="recieved">12.5.2019 - 14:00</div>
+                </div><!-- Message Header -->
+                <div class="message-body clearfix">
+                  Zdravím vás<br/><br/>
+
+                  Mohli bychom se sejít ve čtvrtek 22.5 v naší kanceláři - 9:00?<br/><br/>
+                  Děkuji
+                </div><!-- Message Body -->
+              </div><!-- Message Data -->
+            </div><!-- Row -->
+        </div><!-- Message Table -->
+      </div>
+    </div>
+  </div>
+
+  {% include 'marketing/join.html' %}
+  {% include 'marketing/local_experts.html' %}
+  {% include 'includes/district_list.html' %}
+
+</div>
+
+{% endblock %}

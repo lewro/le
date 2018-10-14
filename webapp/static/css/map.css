@@ -1,0 +1,28 @@
+.gm-style-mtc {
+  display: none !important;
+}
+
+input#pac-input {
+  background: #fff;
+  margin-top: 10px;
+  left: 10px !important;
+  padding: 0 10px;
+  border-radius: 2px;
+  width: calc(100% - 90px);
+  height: 40px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+  transition: border-left .5s;
+}
+
+input#pac-input:focus {
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 50px 50px 0px !important;
+  border-left: 10px solid #50c5dc !important;
+  width: calc(100% - 100px);
+}
+
+.pac-container {
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 50px 50px 0px !important;
+  border-right: 10px solid #fff;
+}
+
+

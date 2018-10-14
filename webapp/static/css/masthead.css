@@ -1,0 +1,58 @@
+#top {
+  padding: 25px;
+  margin-bottom: 50px;
+  width: 100%;
+}
+
+#top a:hover {
+  opacity: .5;
+}
+
+#logo {
+  display: block;
+  background: url("/static/images/le-logo.png") 0 0 no-repeat;
+  background-size: 125%;
+  text-indent: -9999px;
+  width: 200px;
+  height: 30px;
+}
+
+.top-left {
+  float: left;
+  width: 45%;
+}
+
+.top-right {
+  float: right;
+  width: 50%;
+  padding-top: 10px;
+}
+
+.notification {
+  float: right;
+  margin-right: 30px;
+}
+
+.notification  i {
+  display: block;
+  color: #fff;
+}
+
+.notification  span {
+  background: #ff4950;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 13px;
+  color: #fff;
+  display: block;
+  position: relative;
+  top: -30px;
+  left: 12px;
+  border-radius: 100px;
+  text-align: center;
+}
+
+.logout-links a {
+  color: #fff;
+}

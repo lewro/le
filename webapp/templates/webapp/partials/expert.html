@@ -1,0 +1,52 @@
+{% load i18n %}
+
+<li class="user-box category-{{ expert.category_id }}">
+
+  <a href="/webapp/expert/?id={{ expert.id }}&category_id={{ expert.category_id }}&district_id={{expert.district_id}}&district={{ expert.district }}&expertise={{ expertise_ids }}&experience_minimal={{ experience_minimal }}&hour_rate_maximal={{ hour_rate_maximal }}&rating_minimal={{ rating_minimal }}">
+
+    <div class="category-icon">
+      {% if expert.category_id == 1 %}
+        <i class="fas fa-balance-scale"></i>
+      {% elif expert.category_id == 2 %}
+        <i class="fas fa-calculator"></i>
+      {% else %}
+        <i class="fas fa-bullhorn"></i>
+      {% endif %}
+    </div>
+    <div class="user-box-top">
+      <div class="profile-pic" style="background: #f2f2f2 url('/webapp/media/thumbs/{{ expert.profile_img }}') center center no-repeat; background-size: cover;" >
+      </div>
+      <div class="user-full-name">
+        {{ expert.first_name }}
+        {{ expert.last_name }}
+      </div>
+      <div  class="distric">
+        <i class="fas fa-map-marker-alt"></i>
+        {{ expert.district}}
+      </div>
+    </div>
+    <div class="user-box-bottom">
+      <div class="user-value long">
+        <label>{% trans 'Experience' %}</label>
+        <div class="value">{{ expert.experience}}</div>
+      </div>
+      <div class="user-value long">
+        {% if expert.category_id == 3 %}
+          <label>{% trans 'NS' %}</label>
+        {% else %}
+          <label>{% trans 'Hour rate' %}</label>
+        {% endif %}
+        <div class="value">{{ expert.hour_rate_from}} - {{ expert.hour_rate_to}} </div>
+      </div>
+      <div class="user-value">
+        <label>{% trans 'Rating' %}</label>
+        <div class="value">
+          {% if expert.rating %}
+            {{ expert.rating|floatformat:1 }}
+          {% endif %}
+          <i class="fas fa-star"></i>
+        </div>
+      </div>
+     </div>
+   </a>
+</li>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Local Experts</title>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+
+    {% load staticfiles %}
+
+     <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <!--  CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/general.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/nouislider.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/forms.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/buttons.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/steps.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/box.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/masthead.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/map.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/user-box.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/search-filters.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/rating.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/tabs.css' %}" />
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/templates/register.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/templates/search.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/templates/expert.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/templates/messages.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/templates/news.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/templates/marketing.css' %}" />
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mobile.css' %}" />
+
+
+
+</head>
+<body>
+
+    {% block content %}
+    {% endblock %}
+
+    {% include 'webapp/partials/footer.html' %}
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!-- Extract to separate file -->
+    <script>
+        $(document).ready(function(){
+            $('textarea').addClass('materialize-textarea');
+        });
+    </script>
+
+    <script src="{% static 'script/nouislider.js' %}"></script>
+
+    <script src="{% static 'script/register.js' %}"></script>
+    <script src="{% static 'script/search.js' %}"></script>
+    <script src="{% static 'script/expert.js' %}"></script>
+    <script src="{% static 'script/messages.js' %}"></script>
+
+    <script src="{% static 'script/general.js' %}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</body>
+</html>

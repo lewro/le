@@ -1,0 +1,90 @@
+{% extends "webapp/base.html" %}
+{% block content %}
+{% load i18n %}
+
+{% if just_registered == 'true' %}
+  {% include 'marketing/just_registered.html' %}
+{% endif %}
+
+<div class="index">
+
+  <div class="bg-top">
+    <div class="top-cover">
+      {% include 'webapp/partials/nav.html' %}
+      <h1>
+        <span>{% trans 'Find a Lawyer, Accountant, Translator' %}</span>
+      </h1>
+
+      <div class="row">
+        <div class="col s12 l3"></div>
+        <div class="col s12 l6">
+          {% include 'marketing/search.html' %}
+        </div>
+        <div class="col s12 l3"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="row">
+      <div class="col s12 home-section">
+        <h2>{% trans 'Find an Expert' %}</h2>
+        <h3>{% trans 'Our interface makes it easy to find a perfect translator for your job. Time, experience, reviews, price - you decide what is most critical to the kind of job you have.' %}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="index-experts home-section">
+    <ul class="index-user-boxes">
+      {% include 'marketing/experts.html' %}
+    </ul>
+  </div>
+
+  <div class="row profile home-section">
+    <div class="col s12 l7">
+      {% include 'marketing/profile.html' %}
+    </div>
+    <div class="col s12 l5 profile-content">
+      <h4>Local Experts</h4>
+      <h2>{% trans 'Get in touch' %}</h2>
+      <p>{% trans 'Todo make context Our interface makes it easy to find a perfect translator for your job. Our interface makes it easy to find a perfect translator for your job.' %}</p>
+      <p>{% trans 'Todo make context Our interface makes it easy to find a perfect translator for your job. Our interface makes it easy to find a perfect translator for your job.' %}</p>
+
+      <div class="profile-message messages">
+        {% include 'marketing/messages.html' %}
+      </div>
+
+    </div>
+  </div>
+
+  <div class="home-section">
+    <h2>{% trans 'Are you Expert or looking for one?' %}</h2>
+    <h3>{% trans 'Todo: Find out if they are the right fit for you project.' %}</h3>
+  </div>
+  <div class="home-section">
+    <div class="row">
+      <div class="col s12 l6 home-box" id="home-expert">
+        <div class="home-home-cover">
+          <h2>{% trans 'Experts' %}</h2>
+          <h3>{% trans 'Our platform is currently free to join and use.Get your qualified leads today!' %}</h3>
+          <a href="/experts_details" >{% trans 'Find out more' %}</a>
+        </div>
+      </div>
+      <div class="col s12 l6 home-box" id="home-client">
+        <div class="home-home-cover">
+          <h2>{% trans 'Clients' %}</h2>
+          <h3>{% trans 'Our platform is currently free to join and use. Find your new Lawyer, Accountant, Translator in your area.' %}</h3>
+          <a href="/clients_details" >{% trans 'Find out more' %}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include 'marketing/join.html' %}
+  {% include 'marketing/local_experts.html' %}
+  {% include 'marketing/industry_news.html' %}
+  {% include 'includes/district_list.html' %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+.user-rating {
+  margin-bottom: 50px;
+  padding: 0px !important;
+  width: 75%;
+  float: left;
+}
+
+.user-rating-value {
+  width: 15%;
+  float: right;
+}
+
+.user-rating-value .expert-value-section {
+  color: #333;
+  margin-right: 0px;
+}
+

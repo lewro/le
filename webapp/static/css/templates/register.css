@@ -1,0 +1,100 @@
+/* Hidden Form Elements */
+#id_experience,
+#id_hour_rate_from,
+#id_hour_rate_to,
+#id_longtitude,
+#id_latitude,
+#id_category_id {
+  display: none;
+}
+
+.register {
+  background: #333 url("/static/images/img_bm.jpg") center center no-repeat;
+  background-size: cover;
+}
+
+.box-step-1 {
+  display: none;
+}
+
+.register #google-map {
+  margin-bottom: -50px;
+}
+
+.register #map-canvas {
+  margin-top: 50px;
+}
+
+.process-save-btn {
+  background: none;
+  border: 1px solid #f2f2f2;
+  color: #999;
+  text-transform: none;
+}
+
+
+.signin .left {
+  background: #333 url("/static/images/img-home-expert.jpg") center center no-repeat;
+  background-size: cover;
+  height: 800px;
+}
+
+.signin .right {
+  padding: 100px;
+  background: #f4be49;
+  height: 800px;
+}
+
+.signup .right {
+  background: #50c5dc;
+}
+
+.signin .right .btn {
+  background: #000;
+  width: 100%;
+  padding: 10px;
+  height: auto;
+  box-shadow: 0px 10px 50px -3px rgb(0,0,0, 0.3);
+}
+
+.signin .right .btn:hover {
+  background: #333 !important;
+}
+
+.signin a {
+  color: #fff;
+}
+
+.signin a:hover {
+  color: #ff4143;
+}
+
+.signin h4 {
+  opacity: 1;
+}
+
+.signin .right h1 {
+  font-weight: 100;
+  margin: 10px 0 50px 0;
+  color: #fff;
+}
+
+.signin .right label {
+  color: #000 !important;
+}
+
+.signin .right input {
+  margin-bottom: 50px;
+}
+
+.signin .right input[type="text"] {
+  background: #f4be49;
+  border-bottom: 1px solid #000;
+}
+.signin  .big-button {
+  box-shadow: 0px 0px 50px 10px rgb(0,0,0, 0.1);
+}
+
+.signin .big-button i {
+  background: #ddd
+}

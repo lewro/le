@@ -1,0 +1,16 @@
+certifi==2018.8.24
+chardet==3.0.4
+Django==1.11.15
+django-appconf==1.0.2
+django-countries==5.3.2
+django-imagekit==4.0.2
+django-translation-manager==1.0.0
+djangorestframework==3.8.2
+idna==2.7
+pilkit==2.0
+Pillow==5.3.0
+polib==1.1.0
+pytz==2018.5
+requests==2.19.1
+six==1.11.0
+urllib3==1.23

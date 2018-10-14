@@ -1,0 +1,458 @@
+  /* Phones & Tablets*/
+  @media only screen and (max-width: 1200px) {
+
+    .profile-message,
+    .connecting-people-box,
+    .expert-sidebar,
+    .logout,
+    .noUi-target,
+    .label-helper {
+       display: none;
+    }
+
+    .messages-box .message-main,
+    .user-box,
+    .index .user-box:hover,
+    .news-box a,
+    .messages .message-header:hover,
+    .btn,
+    .big-button,
+    .tag,
+    .message-button {
+      box-shadow: none !important;
+    }
+
+    .index .profile-content,
+    .district-list,
+    .benefits-box {
+      padding: 100px !important;
+    }
+
+    .signin .right {
+      padding: 25px;
+    }
+
+    .page {
+      padding-right: 100px;
+      padding-left: 100px;
+    }
+
+    #id_experience,
+    #id_hour_rate_from,
+    #id_hour_rate_to,
+    .search input[type="number"] {
+      display: block;
+    }
+
+    .top-left {
+      width: 35px;
+      overflow: hidden;
+    }
+
+    .top-right {
+      width: calc(100% - 35px);
+      padding-top: 5px;
+    }
+
+    .top-right a {
+      margin: 0 0 0 20px;
+    }
+
+    .container {
+      width: 100%;
+      padding: 0 100px 25px 100px;
+    }
+
+    .index h3 {
+      width: 100%;
+    }
+
+    .index .profile h1 {
+      margin: 0 0 20px 0;
+      padding: 0px;
+    }
+
+    .index .profile .l7,
+    .index .profile .l5,
+    .messages .l8,
+    .messages .l4,
+    .expert .l8,
+    .expert .l4 {
+      width: 100% !important;
+    }
+
+    .index .profile .profile-content {
+      padding: 100px !important;
+    }
+
+    .index #expert-contacts {
+      float: left;
+    }
+
+    .expert-title-section {
+      margin-right: 20px;
+    }
+
+    .expert-value-iteger {
+      font-size: 40px;
+    }
+
+    .top-cover h1 {
+      font-size: 40px;
+    }
+
+    .top-right a {
+      margin-bottom: 20px;
+    }
+
+    .index .expert .bg-top,
+    .index .expert .top-cover {
+      height: 800px;
+    }
+
+    .expert-value-section .message-button {
+      margin: 100px 20px 0 0;
+     }
+
+    .expert-value-section.last {
+      float: left;
+      clear: both;
+    }
+
+    .index .index-user-boxes {
+      width: 2200px;
+    }
+
+    .experts-details .benefit-icon {
+      margin-right: 30px;
+    }
+
+    .clients-details .benefit-icon {
+      margin-right: 7px;
+    }
+
+    .other-experts .user-box,
+    .index-user-boxes .user-box {
+      width: 300px;
+      margin-left: 10px;
+    }
+
+    .index .index-experts {
+      -webkit-overflow-scrolling:touch;
+    }
+
+    .news-box {
+      margin: 50px 0;
+    }
+
+    .index .expert .expert-title {
+      margin: 75px 0;
+    }
+
+    #steps {
+      padding-bottom: 50px;
+    }
+
+    footer {
+      padding: 25px !important;
+    }
+
+    footer ul li a {
+      padding: 0;
+      line-height: 3em;
+    }
+
+    .expert .bg-top,
+    .expert .top-cover {
+      height: 800px;
+    }
+
+    #other-experts {
+      height: auto;
+    }
+
+    #other-experts ul {
+      width: 100%;
+      padding: 25px;
+    }
+
+    #other-experts .user-box,
+    .search .user-box {
+      width: 45%;
+      margin: 0 2% 80px 2%;
+      border: 1px solid #ddd;
+    }
+
+    .big-button {
+      margin: 5px;
+    }
+
+    .big-button:hover i,
+    .big-button.active i {
+      width: 85px;
+      height: 85px;
+      line-height: 85px;
+      font-size: 40px;
+    }
+
+    .box {
+      margin-top: 25px;
+      margin-bottom: -1px;
+    }
+
+    .box.extra-top-nav {
+      padding: 0px;
+    }
+
+    #lawyer, #accountant, #translator {
+      float: left;
+    }
+
+    .process-save-btn {
+      margin-top: 25px;
+      width: 100%;
+      text-align: center;
+      background: #ddd;
+      float: left;
+    }
+
+    .benefits-box .user-box {
+      display: none;
+    }
+
+    .messages .status {
+      width: 20%;
+    }
+
+    .message-header {
+      font-size: 10px;
+    }
+
+    .messages .from,
+    .messages-box .from {
+      overflow: hidden;
+    }
+
+    .messages .replied,
+    .messages-box .replied {
+      display: none;
+    }
+
+    .messages .recieved {
+      width: 45%;
+    }
+
+    .sidebar-nav,
+    .main-content {
+      padding: 0px 0 25px 0 !important;
+    }
+
+    .expert .sidebar-nav,
+    .expert .main-content {
+      padding-top: 50px !important;
+    }
+
+    .sidebar-nav ul li {
+      width: 50%;
+      float: left;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      border-left: 0px;
+    }
+
+    .sidebar-nav ul li.active {
+      border-bottom: 1px solid #000;
+      border-left: 0px;
+    }
+
+    .expert .expert-category-icon span {
+      width: 200px;
+    }
+
+    .news-box h2 {
+      font-size: 27px;
+    }
+
+  }
+
+  /* Phones */
+  @media only screen and (max-width: 600px) {
+
+    .index .profile-content,
+    .district-list,
+    .benefits-box,
+    .signin .right,
+    .message-box {
+      padding: 25px !important;
+    }
+
+    .messages-box {
+      margin-top: 100px;
+    }
+
+    .page {
+      padding-right: 25px;
+      padding-left: 25px;
+    }
+
+   .index .home-section {
+      margin-top: 25px;
+    }
+
+    .sidebar-nav,
+    .main-content {
+      padding: 25px 0 !important;
+    }
+
+    .benefit-icon {
+      width: 50%;
+      margin: 0 !important;
+      padding: 25px;
+    }
+
+    .expert .bg-top,
+    .expert .top-cover {
+      height: 1000px;
+    }
+
+    #expert-contacts {
+      top: 900px;
+    }
+
+    .district-list a {
+      width: 49%;
+      line-height: 3em;
+    }
+
+    .user-rating {
+      width: 63%;
+    }
+
+    .user-rating-value {
+      width: 31%;
+    }
+
+    .index .top-cover form {
+      margin: 0 25px;
+    }
+
+    .index .bg-top h1 {
+      margin-top: 170px;
+    }
+
+    .index .profile #expert-contacts {
+      top: 0;
+      padding: 25px 25px 0 25px;
+    }
+
+    #expert-contacts .expert-title-section  {
+      margin-bottom: 25px;
+      width: 100%;
+    }
+
+    #expert-contacts {
+      padding: 25px 25px 0 25px;
+    }
+
+    .user-box {
+      width: 100% !important;
+      margin-left: 0px;
+      border: 1px solid #ddd;
+    }
+
+    .input-field.erp {
+      padding-right: 0px !important;
+    }
+
+    .index .home-home-cover,
+    .index .details-top {
+      padding: 150px 25px 0 25px;
+    }
+
+    .index .profile .profile-content {
+      padding: 25px !important;
+    }
+
+    .expert .top-expert-content,
+    .index .expert .top-expert-content {
+      padding: 100px 25px;
+    }
+
+    .expert-value-section {
+      margin-bottom: 25px;
+      width: 100%;
+    }
+
+    .expert .expert-title h1 {
+      margin-left: 0;
+      font-size: 50px;
+    }
+
+    .expert .expert-title {
+      margin: 0 0 50px 0;
+    }
+
+    .expert-value-section .messages-button {
+      margin-left: 0;
+      margin-top: 20px;
+      clear: both;
+    }
+
+    .top-cover h1 {
+      font-size: 37px;
+      margin-right: 25px;
+      margin-left: 25px;
+    }
+
+     #top {
+      margin-bottom: 0px;
+    }
+
+    .map-button {
+      float: left;
+      margin: 25px 0;
+      clear: both;
+    }
+
+    .signin .left {
+      height: 200px;
+    }
+
+    .sidebar {
+      width: 350px;
+    }
+
+    #steps {padding-top: 0;}
+    .step:after {top: 15px;}
+    .step .number {margin-bottom: 25px;}
+    .step .name {display: none}
+
+    .box-step .col {
+      margin: 0;
+      padding: 0;
+      float: none;
+    }
+
+    .input-spacing {
+      padding: 0 25px 25px 25px;
+      width: 100%;
+      clear: both;
+    }
+
+    .input-field.col label {
+      left: 0;
+    }
+
+    .col.s12 {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+
+    .container {
+      width: 100%;
+      padding: 0 25px 25px 25px;
+    }
+
+
+  }
+

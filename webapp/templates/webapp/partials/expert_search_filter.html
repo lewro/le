@@ -1,0 +1,147 @@
+{% load i18n %}
+
+<div class="row" id="filters">
+
+  <div class="page">
+
+    <div class="filter-switch active">
+      <i class="fas fa-sliders-h"></i>
+      <i class="fas fa-times-circle"></i>
+      <span>{% trans 'Filters' %}</span>
+    </div>
+
+
+    <form action="" method="get" id="experience-search-filter">
+
+        <input
+          type="hidden"
+          name="category_id"
+          {% if request.GET.category_id != None %}
+            value="{{ request.GET.category_id }}"
+          {% else %}
+            value="1"
+          {% endif %}
+          />
+
+       <input
+          type="hidden"
+          name="district_id"
+          {% if request.GET.district_id != None %}
+            value="{{ request.GET.district_id }}"
+          {% else %}
+            value="1"
+          {% endif %}
+          />
+
+       <input
+          type="hidden"
+          name="district"
+          {% if request.GET.district != None %}
+            value="{{ request.GET.district }}"
+          {% else %}
+            value="Praha 1"
+          {% endif %}
+          />
+
+
+        <!-- SLIDER FOR EXPERTISE -->
+        <div class="row">
+        <div class="input-field">
+          {% for expertise_value in expertieses %}
+            <div class="tag" data-expertise-id="{{ expertise_value.id }}">
+              {{ expertise_value.title }}
+              <i class="fas fa-check"></i>
+            </div>
+          {% endfor %}
+          <input
+            type="hidden"
+            id="id_expertise"
+            name="expertise"
+            {% if request.GET.expertise != None %}
+              value="{{ request.GET.expertise }}"
+            {% endif %}
+          />
+        </div>
+
+        <!-- SLIDER FOR EXPERIENCE -->
+        <div class="input-field col s12 m12 l4 erp">
+          <label class="custom-label">
+            {% trans 'Minimal Experience (in years):' %}
+            <span class="label-helper">
+              <span id="experience"></span>
+            </span>
+          </label>
+
+          <div id="experience-slider-minimal"></div>
+
+          <input
+            type="number"
+            id="id_experience_minimal"
+            name="experience_minimal"
+            {% if request.GET.experience_minimal != None %}
+              value="{{ request.GET.experience_minimal }}"
+            {% else %}
+              value="0"
+            {% endif %}
+            />
+
+        </div>
+
+
+        <!-- SLIDER FOR RATE -->
+        <div class="input-field col s12 m12 l4 erp">
+          <label class="custom-label">
+            {% if request.GET.category_id == 3 %}
+              {% trans 'Maximal Hour Rate:' %}
+            {% else %}
+              {% trans 'Maximal Normopage Rate:' %}
+            {% endif %}
+            <span class="label-helper">
+              <span id="rate"></span>
+            </span>
+          </label>
+
+          <div id="rate-slider-maximal"></div>
+
+          <input
+            type="number"
+            id="id_hour_rate_maximal"
+            name="hour_rate_maximal"
+            {% if request.GET.hour_rate_maximal != None %}
+              value="{{ request.GET.hour_rate_maximal }}"
+            {% else %}
+              value="1000000"
+            {% endif %}
+            />
+        </div>
+
+
+        <!-- SLIDER FOR MIN RATING -->
+        <div class="input-field col s12 m12 l4 erp">
+
+          <label class="custom-label">
+            {% trans 'Minimal Rating:' %}
+            <span class="label-helper">
+              <span id="rating"></span>
+            </span>
+          </label>
+
+          <div id="rating-slider"></div>
+
+          <input
+            type="number"
+            step="any"
+            id="id_rating_minimal"
+            name="rating_minimal"
+            {% if request.GET.rating_minimal != None %}
+              value="{{ request.GET.rating_minimal }}"
+            {% else %}
+              value="0"
+            {% endif %}
+            />
+        </div>
+        </div>
+      <input type="submit" class="btn" value="{% trans 'Apply Filter' %}" />
+    </form>
+  </div>
+</div>

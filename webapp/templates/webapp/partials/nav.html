@@ -1,0 +1,46 @@
+{% load i18n %}
+
+<div id="top" class="clearfix">
+
+  {% include 'webapp/partials/logo.html' %}
+
+  {% if user.is_authenticated %}
+    <div class="top-right">
+      <a class="profile-button logout" href="/logout">
+        <i class="fas fa-power-off"></i>
+        <span>Logout</span>
+      </a>
+      {% if unread_messages_count > 0 %}
+        <a href="/webapp/messages/" class="notification">
+          <i class="fas fa-bell"></i>
+          <span class="number">{{ unread_messages_count }}</span>
+        </a>
+      {% else %}
+        <a href="/webapp/messages/" class="profile-button">
+          <i class="fas fa-inbox"></i>
+          <span>{% trans 'Messages' %}</span>
+        </a>
+      {% endif %}
+
+      {% if user.is_client %}
+      {% else %}
+        <a class="profile-button" href="/webapp/expert/?id={{ request.user.id }}">
+          <i class="fas fa-user"></i>
+          <span>{% trans 'Your Profile' %}</span>
+        </a>
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="top-right logout-links">
+      <a class="profile-button" href="/login">
+        <i class="fas fa-power-off"></i>
+        <span>Login</span>
+      </a>
+      <a class="profile-button" href="/register">
+        <i class="fas fa-user-plus"></i>
+        <span>Register</span>
+      </a>
+    </div>
+  {% endif %}
+
+</div>

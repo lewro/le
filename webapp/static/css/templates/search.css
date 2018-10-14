@@ -1,0 +1,23 @@
+.search #filters {
+  padding: 20px 0;
+  background: #f2f2f2;
+  margin-bottom: 100px;
+}
+
+.search .custom-label {
+  color: #000 !important;
+}
+
+.search.category-1  .top-cover{background-color:rgba(80,197,220, 0.9);}
+.search.category-2  .top-cover{background-color:rgba(255,65,67, 0.9);}
+.search.category-3  .top-cover{background-color:rgba(244,190,73, 0.9);}
+
+.top-category-icon {background: #fff;}
+
+.search.category-1 .top-category-icon i {color: #50c5dc;}
+.search.category-2 .top-category-icon i {color: #ff4143;}
+.search.category-3 .top-category-icon i {color: #f4be49;}
+
+.search.category-1 .tag.active {background: #50c5dc;}
+.search.category-2 .tag.active {background: #ff4143;}
+.search.category-3 .tag.active {background: #f4be49;}

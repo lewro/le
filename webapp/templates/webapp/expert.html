@@ -1,0 +1,335 @@
+{% extends "webapp/base.html" %}
+{% block content %}
+{% load i18n %}
+
+{% if message_sent == 'true' %}
+  {% include 'expert/message_sent.html' %}
+{% endif %}
+
+{% if rating_sent == 'true' %}
+  {% include 'expert/rating_applied.html' %}
+{% endif %}
+
+{% load staticfiles %}
+
+<div class="expert category-{{ expert.category_id }}">
+
+  <div class="bg-top" style="background: url('/webapp/media/{{ expert.profile_img }}') center center no-repeat; background-size: cover;" >
+    <div class="top-cover">
+
+      {% include 'webapp/partials/nav.html' %}
+
+      <div  class="top-expert-content">
+        <div class="expert-category-icon clearfix">
+          {% if expert.category_id == 1 %}
+            <i class="fas fa-balance-scale"></i>
+            <span>{% trans 'Lawyer'  %}</span>
+          {% elif expert.category_id == 2 %}
+            <i class="fas fa-calculator"></i>
+            <span>{% trans 'Accountant'  %}</span>
+          {% else %}
+            <i class="fas fa-bullhorn"></i>
+            <span>{% trans 'Translator'  %}</span>
+          {% endif %}
+        </div>
+
+        <div class="expert-title clearfix">
+          <h1>{{ expert.first_name }} {{ expert.last_name }}</h1>
+          <div class="clearfix">
+            <div class="expert-title-section">
+              <i class="fas fa-building"></i>
+              <span>{{ expert.company }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="expert-values clearfix">
+          <div class="expert-value-section">
+            <div class="expert-value-header">{% trans 'Rating' %}</div>
+            <div class="expert-value-iteger">
+              {% if expert.rating %}
+                <span>{{ expert.rating|floatformat:1 }}</span>
+              {% endif %}
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+          <div class="expert-value-section">
+            <div class="expert-value-header">
+            {% if expert.category_id == 3 %}
+              {% trans 'Normostrana (CZK)' %}
+            {% else %}
+              {% trans 'Hour Rate (CZK)' %}
+            {% endif %}
+            </div>
+            <div class="expert-value-iteger">{{ expert.hour_rate_from }}-{{ expert.hour_rate_to }}</div>
+          </div>
+          <div class="expert-value-section">
+            <div class="expert-value-header">{% trans 'Years' %}</div>
+            <div class="expert-value-iteger">{{ expert.experience }}</div>
+          </div>
+
+
+          {% if expert.id == request.user.id %}
+            <!-- Your Profile -->
+            <div class="expert-value-section last">
+              <a href="/webapp/update_profile/?id={{ expert.id }}" class="message-button">
+                <i class="fas fa-edit"></i>
+                <span>{% trans 'Update Your Profile' %}</span>
+              </a>
+            </div>
+          {% else %}
+            <div class="expert-value-section last">
+                <a href="" class="message-button" id="send-message">
+                  <i class="far fa-envelope"></i>
+                  <span>{% trans 'Message' %}</span>
+                </a>
+              <a href="" class="message-button" id="send-rating">
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <span>{% trans 'Rate' %}</span>
+              </a>
+              <a href="" class="message-button" id="share">
+                <i class="fas fa-share-alt"></i>
+              </a>
+
+            </div>
+          {% endif %}
+
+        </div>
+
+        <div class="clearfix" id="expert-contacts">
+          <div class="expert-title-section">
+            <i class="fas fa-envelope"></i>
+            <span><a href="mailto:{{ expert.email }}">{{ expert.email }}</a></span>
+          </div>
+          <div class="expert-title-section">
+            <i class="fas fa-home"></i>
+            <span><a target="_blank" href="http://{{ expert.web }}">{{ expert.web }}</a></span>
+          </div>
+          <div class="expert-title-section">
+            <i class="fas fa-phone"></i>
+            <span>{{ expert.phone }}</span>
+          </div>
+          <div class="expert-title-section">
+            <i class="fas fa-mobile-alt"></i>
+            <span>{{ expert.mobile }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="row">
+      <div class="expert-sidebar sidebar-nav col s12 l4">
+        <ul>
+          <li class="active" data-target="#welcome">{% trans '01 Welcome' %}</li>
+          <li data-target="#expertise">{% trans '02 Expertise' %}</li>
+          <li data-target="#location">{% trans '03 Location' %}</li>
+          <li data-target="#reviews">{% trans '04 Reviews' %}</li>
+        </ul>
+      </div>
+
+      <div class="expert-main  main-content col s12 l8">
+        <div class="expert-section" id="welcome">
+          <h2>{% trans 'Welcome' %}</h2>
+          <div class="expert-section-text">
+            {% if  expert.id == request.user.id and expert.bio == "" %}
+              <p class="no-data do-something"><i class="fas fa-pencil-alt"></i>{% trans 'You have not defined any welcome text.' %} <a href="/webapp/update_profile/?id={{ expert.id }}">{% trans 'You can add it in here.' %}</a></p>
+            {% else %}
+              {{ expert.bio|linebreaks }}
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="expert-section" id="expertise">
+          <h2>{% trans 'Expertise' %}</h2>
+          <div class="expert-section-text">
+            {% if  expert.id == request.user.id and expertieses == "" %}
+              <p class="no-data do-something"><i class="fas fa-pencil-alt"></i>{% trans 'You have not defined any expertises.' %} <a href="/webapp/update_profile/?id={{ expert.id }}">{% trans 'You can add them in here.' %}</a></p>
+            {% else %}
+              {% if expertieses == "" %}
+                <p class="no-data"><i class="fas fa-tags"></i>{% trans 'Unknown expertieses.' %}</p>
+              {% else %}
+                {% for expertise_value in expertieses %}
+                  <div class="expert-tag">
+                    {{ expertise_value.title }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="expert-section" id="location">
+          <h2>{% trans 'Location' %}</h2>
+          <div class="expert-section-text clearfix">
+            {% if  expert.id == request.user.id and expert.street == None %}
+              <p class="no-data do-something"><i class="fas fa-pencil-alt"></i>{% trans 'You have not defined you full location.' %}<a href="/webapp/update_profile/?id={{ expert.id }}">{% trans 'You can add it in here.' %}</a></p>
+            {% else %}
+              {% if  expert.street == None %}
+                <p class="no-data"><i class="fas fa-map"></i>cUnknown location.' %}</p>
+              {% else %}
+                <div class="address">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>{{ expert.street }} {{ expert.street_number }}, {{ expert.zipcode }} {{ expert.city }}, {{ expert.country }}</span>
+                </div>
+                {% if  expert.latitude > 0 %}
+                  <a target="_blank" href='https://www.google.com/maps?saddr=My+Location&&daddr={{ expert.latitude }},{{ expert.longtitude }}' class="map-button">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span>{% trans 'Directions' %}</span>
+                  </a>
+                {% endif %}
+              {% endif %}
+            {% endif %}
+          </div>
+
+         <!-- GOOGLE MAP FOR LOCATION -->
+          <div id="google-map" class="clearfix">
+            <input
+              id="id_longtitude"
+              name="longtitude"
+              type="hidden"
+              value="{{ expert.longtitude }}"
+              />
+            <input
+              id="id_latitude"
+              name="latitude"
+              type="hidden"
+              value="{{ expert.latitude }}"
+              />
+            {% if  expert.latitude > 0 %}
+              <div id="map-canvas" style="height:500px; width:100%"></div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="expert-section" id="reviews">
+          <h2>{% trans 'Reviews' %}</h2>
+
+          {% if ratings.count < 1 %}
+            <p class="no-data"><i class="fas fa-users"></i>{% trans 'There are no reviews yet.' %}</p>
+          {% endif %}
+
+
+          {% for rating in ratings %}
+            <div class="expert-section-text clearfix">
+              <div class="user-rating">
+                <div class="user-rating-base">
+                  <strong>
+                    {{ rating.to_user.first_name }}
+                  </strong>
+                  <span> - {{ rating.created_date|date:"d M Y" }}</span>
+                </div>
+                <div class="user-rating-body">
+                  {{ rating.body |linebreaks}}
+                </div>
+              </div>
+              <div class="user-rating-value">
+                <div class="expert-value-section">
+                  <div class="expert-value-header">{% trans 'Rating' %}</div>
+                  <div class="expert-value-iteger">
+                    <span>{{ rating.rating|floatformat:1 }}</span>
+                    <i class="fas fa-star"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  {% if expert.id != request.user.id %}
+    {% if experts.count > 0 %}
+      <div id="other-experts">
+        <h2>{% trans 'Other experts from your search' %}</h2>
+        <ul class="user-boxes">
+          {% for expert in experts %}
+            {% include 'webapp/partials/expert.html' %}
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  {% endif %}
+</div>
+
+<div class="message-sidebar sidebar category-{{ expert.category_id }}">
+
+
+  <div class="input-spacing">
+    <div class="close-sideber">
+      <i class="fas fa-times-circle"></i>
+    </div>
+  </div>
+
+  {% if user.is_authenticated %}
+    <form action="/webapp/create_message/" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="to_user" id="to_user_id" value="{{ expert.id }}" />
+      <input type="hidden" name="from_user" id="from_user_id" value="{{ request.user.id }}" />
+      <input type='hidden' name="replied_message" id="replied_message_id" value="0" />
+      <div class="input-spacing">
+        <div class="input-field">
+          <textarea type="text" id="id_body" name="body" required="true" autofocus></textarea>
+          <label for="id_body">{% trans 'Send Message to Expert' %}</label>
+        </div>
+      </div>
+      <div class="input-spacing">
+        <input class="btn" type="submit" name="submit" value="{% trans 'Send' %}" />
+      </div>
+    </form>
+  {% else %}
+    {% include 'marketing/not_logged_in.html' %}
+  {% endif %}
+</div>
+
+<div class="rating-sidebar sidebar category-{{ expert.category_id }}" >
+  <div class="input-spacing">
+    <div class="close-sideber">
+      <i class="fas fa-times-circle"></i>
+    </div>
+  </div>
+
+  {% if user.is_authenticated %}
+    <form action="/webapp/create_rating/" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="to_user" id="to_user_id" value="{{ expert.id }}" />
+      <input type="hidden" name="from_user" id="from_user_id" value="{{ request.user.id }}" />
+      <div class="input-spacing etp">
+        <div class="input-field">
+          <textarea type="text" id="id_body" name="body" required="true" autofocus></textarea>
+          <label for="id_body">{% trans 'Your rating text' %}</label>
+        </div>
+      </div>
+      <div class="input-spacing">
+        <label for="id_rating" class="active">{% trans 'Your rating' %}</label>
+        <div class="input-field">
+          <div class="star-rating">
+            <i class="far fa-star" data-value="1"></i>
+            <i class="far fa-star" data-value="2"></i>
+            <i class="far fa-star" data-value="3"></i>
+            <i class="far fa-star" data-value="4"></i>
+            <i class="far fa-star" data-value="5"></i>
+          </div>
+          <input type='hidden' name="rating" id="id_rating" value="5" />
+        </div>
+      </div>
+      <div class="input-spacing">
+        <input class="btn" type="submit" name="submit" value="{% trans 'Send' %}" />
+      </div>
+    </form>
+  {% else %}
+    {% include 'marketing/not_logged_in.html' %}
+  {% endif %}
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC08FThB6s0M7plHZRcLyySLsFgK0BFmE&v=3.exp&libraries=places"></script>
+<script src="{% static 'script/google_map.js' %}"></script>
+
+{% endblock %}
+

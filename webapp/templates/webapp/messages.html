@@ -1,0 +1,154 @@
+{% extends "webapp/base.html" %}
+{% block content %}
+{% load i18n %}
+
+
+<div class="messages">
+
+  <div class="bg-top">
+    <div class="top-cover">
+      {% include 'webapp/partials/nav.html' %}
+      <div class="top-category-icon">
+        <i class="fas fa-inbox"></i>
+      </div>
+      <h1>
+        <span>{% trans 'Messages' %}</span>
+      </h1>
+    </div>
+  </div>
+
+  {% if user.is_client %}
+    <a class="marketing-button full-width" href="/">
+      <i class="fas fa-search"></i>
+      <span>{% trans 'Search for an Expert' %}</span>
+    </a>
+  {% endif %}
+
+  <div class="page">
+    <div class="row">
+      <div class="messages-sidebar sidebar-nav col s12 l4">
+        <ul>
+          <li class="active" data-target="#received_messages">{% trans '01 Received' %}</li>
+          <li data-target="#sent_messages">{% trans '02 Sent' %}</li>
+        </ul>
+      </div>
+      <div class="message-main main-content col s12 l8">
+
+        <!-- Sent Messages -->
+        <div class="message-table" id="sent_messages">
+
+          {% if sent_message.count < 1%}
+            <p class="no-data"><i class="fas fa-envelope"></i>{% trans 'You have not sent any messages so far.' %}</p>
+          {% else %}
+
+            <div class="header clearfix">
+              <div class="status"></div>
+              <div class="from">{% trans 'To' %}</div>
+              <div class="replied"></div>
+              <div class="recieved">{% trans 'Sent' %}</div>
+            </div>
+
+            {% for s_message in sent_message %}
+            <div class="message-row clearfix">
+              <div class="message-data clearfix">
+                <div class="message-header clearfix">
+                  <div class="status status-3">
+                    <i class="fab fa-telegram-plane"></i>
+                  </div><!-- Status -->
+                  <div class="from">{{ s_message.to_user }}</div>
+                  <div class="replied">{{ s_message.replied_date|date:"d M Y h:i:s "}}</div>
+                  <div class="recieved">{{ s_message.created_date|date:"d M Y h:i:s " }}</div>
+                </div><!-- Message Header -->
+                <div class="message-body clearfix">
+                  {{ s_message.body|linebreaks}}
+
+                  {% if s_message.to_user.is_client %}
+                  {% else %}
+                    {% include 'webapp/partials/expert.html' with expert=s_message.to_user %}
+                  {% endif %}
+
+                </div><!-- Message Body -->
+              </div><!-- Message Data -->
+            </div><!-- Row -->
+            {% endfor %}
+          {% endif %}
+        </div><!-- Message Table -->
+
+
+        <!-- Received Messages -->
+        <div class="message-table" id="received_messages">
+
+          {% if received_message.count < 1%}
+            <p class="no-data"><i class="fas fa-envelope"></i>{% trans 'You have not received any messages so far.' %}</p>
+          {% else %}
+
+            <div class="header clearfix">
+              <div class="status"></div>
+              <div class="from">{% trans 'From' %}</div>
+              <div class="replied">{% trans 'Replied' %}</div>
+              <div class="recieved">{% trans 'Received' %}</div>
+            </div>
+
+            {% for r_message in received_message %}
+            <div class="message-row clearfix">
+              <div class="message-data clearfix">
+                <div class="message-header clearfix">
+                  <div class="status status-{{ r_message.status }}">
+                    {% if r_message.status == 1 %}
+                      <i class="fas fa-bell"></i>
+                    {% else %}
+                      <i class="fas fa-check-circle"></i>
+                    {% endif %}
+                  </div><!-- Status -->
+                  <div class="from">{{ r_message.from_user }}</div>
+                  <div class="replied">{{ r_message.replied_date|date:"d M Y h:i:s "}}</div>
+                  <div class="recieved">{{ r_message.created_date|date:"d M Y h:i:s " }}</div>
+                </div><!-- Message Header -->
+                <div class="message-body clearfix">
+                  <div class="clearfix">
+                    {{ r_message.body|linebreaks}}
+                  </div>
+
+                  {% if r_message.status == 1 %}
+                    <a href="" class="reply-button">
+                      <i class="fas fa-reply"></i>
+                      <span>{% trans 'Reply' %}</span>
+                    </a>
+
+                    <form action="/webapp/create_message/" method="post" class="reply-form">
+                      {% csrf_token %}
+                      <input type="hidden" name="to_user" id="to_user_id" value="{{ r_message.from_user.id }}" />
+                      <input type="hidden" name="from_user" id="from_user_id" value="{{ request.user.id }}" />
+                      <input type='hidden' name="replied_message" id="replied_message_id" value="{{ r_message.id }}" />
+                      <div class="input-field">
+                        <textarea type="text" id="id_body" name="body" required="true"></textarea>
+                        <label for="id_body">{% trans 'Specify Reply' %}</label>
+                      </div>
+                      <input class="btn" type="submit" name="submit" value="{% trans 'Send' %}" />
+                    </form>
+                  {% endif %}
+
+                  {% if r_message.from_user.is_client %}
+                  {% else %}
+                    {% include 'webapp/partials/expert.html' with expert=r_message.from_user %}
+                  {% endif %}
+
+                </div><!-- Message Body -->
+              </div><!-- Message Data -->
+            </div><!-- Row -->
+            {% endfor %}
+          {% endif %}
+        </div><!-- Message Table -->
+      </div><!-- Message Main -->
+    </div><!-- Row -->
+  </div><!-- Page -->
+
+  {% if user.is_client %}
+    {% include 'includes/district_list.html' %}
+  {% endif %}
+
+</div><!-- Message -->
+
+{% endblock %}
+
+

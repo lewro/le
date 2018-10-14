@@ -1,0 +1,63 @@
+{% load i18n %}
+
+<div class="expert category-2">
+  <div class="bg-top" style="background: url('/static/images/img-male-profile.jpg') center center no-repeat; background-size: cover;" >
+    <div class="top-cover">
+      <div  class="top-expert-content">
+        <div class="expert-category-icon clearfix">
+            <i class="fas fa-calculator"></i>
+            <span>{% trans 'Accountant' %}</span>
+        </div>
+        <div class="expert-title clearfix">
+          <h1>Peter Brazda</h1>
+          <div class="clearfix">
+            <div class="expert-title-section">
+              <i class="fas fa-building"></i>
+              <span>Brazda a Syn</span>
+            </div>
+          </div>
+        </div>
+        <div class="expert-values clearfix">
+          <div class="expert-value-section">
+            <div class="expert-value-header">{% trans 'Rating' %}</div>
+            <div class="expert-value-iteger">
+              <span>4.8</span>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+          <div class="expert-value-section">
+            <div class="expert-value-header">
+              {% trans 'Hour Rate (CZK)' %}
+            </div>
+            <div class="expert-value-iteger">500-750</div>
+          </div>
+          <div class="expert-value-section">
+            <div class="expert-value-header">{% trans 'Years' %}</div>
+            <div class="expert-value-iteger">10</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clearfix" id="expert-contacts">
+      <div class="expert-title-section">
+        <i class="fas fa-envelope"></i>
+        <span><a href="mailto:{{ expert.email }}">peter.brazda@gmail.com</a></span>
+      </div>
+      <div class="expert-title-section">
+        <i class="fas fa-home"></i>
+        <span><a target="_blank" href="http://{{ expert.web }}">brazdasyn.cz</a></span>
+      </div>
+      <div class="expert-title-section">
+        <i class="fas fa-phone"></i>
+        <span>02 432 423 328</span>
+      </div>
+      <div class="expert-title-section">
+        <i class="fas fa-mobile-alt"></i>
+        <span>902 342 342</span>
+      </div>
+    </div>
+
+
+  </div>
+</div>

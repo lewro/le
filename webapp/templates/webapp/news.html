@@ -1,0 +1,81 @@
+{% extends "webapp/base.html" %}
+{% block content %}
+{% load i18n %}
+
+<div class="news category-{{ category_id}}">
+
+  <div class="bg-top">
+    <div class="top-cover">
+      {% include 'webapp/partials/nav.html' %}
+      <div class="top-category-icon">
+        <i class="far fa-newspaper"></i>
+      </div>
+      <h1>
+        {% if category_id == '1' %}
+          <span>{% trans 'Industry News - Law' %}</span>
+        {% elif category_id == '2' %}
+          <span>{% trans 'Industry News - Accounting' %}</span>
+        {% elif category_id == '3' %}
+          <span>{% trans 'Industry News - Translations' %}</span>
+        {% else %}
+          <span>{% trans 'Industry News' %}</span>
+        {% endif %}
+      </h1>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="row">
+      <div class="col s12 l6 main-content">
+
+        {% for news_element in news %}
+          <div class="article">
+            <span class="source">{{ news_element.source }}</span>
+
+            <h1>
+              {{ news_element.title }}
+            </h1>
+            <div class="body">
+              {{ news_element.body|linebreaks }}
+            </div>
+            <span class="created-date">{{ news_element.created_date }}</span>
+            <span class="source-link">
+              <a href="{{ news_element.link }}">
+                <i class="fas fa-external-link-alt"></i>
+              </a>
+            </span>
+          </div>
+        {% endfor %}
+
+        <div class="pagination clearfix">
+          <span class="current">
+            {{ news.number }} / {{ news.paginator.num_pages }}
+          </span>
+
+          {% if news.has_next %}
+            <a class="pagination-button" href="?page={{ news.next_page_number }}&category_id={{ category_id }}"><i class="fas fa-arrow-right"></i></a>
+          {% endif %}
+
+          {% if news.has_previous %}
+            <a class="pagination-button" href="?page={{ news.previous_page_number }}&category_id={{ category_id }}"><i class="fas fa-arrow-left"></i></a>
+          {% endif %}
+
+        </div>
+      </div>
+      <div class="col s12 l1"></div>
+      <div class="col s12 l5 news-sidebar">
+        {% if experts.count > 0 %}
+          <ul>
+            {% for expert in experts %}
+              {% include 'webapp/partials/expert.html' %}
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </div><!-- Row -->
+  </div><!-- Page -->
+</div><!-- News -->
+
+{% endblock %}
+
+

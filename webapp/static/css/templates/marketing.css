@@ -1,0 +1,343 @@
+/* Marketing General and Home */
+.index .top-cover {
+  background-color:rgba(0,0,0, 0.5);
+  height: 800px;
+}
+
+.index .bg-top {
+  background: url("/static/images/img_home.jpg") center center no-repeat;
+  background-size: cover;
+  height:  800px;
+}
+
+.index h1 {
+  margin: 450px 0 30px 0;
+  font-size: 40px;
+  font-weight: 200;
+}
+
+.index h2 {
+  font-size: 37px;
+  font-weight: 200;
+  text-align: center;
+}
+
+.index h3 {
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: center;
+  width: 70%;
+  margin: auto;
+  opacity: .7;
+}
+
+.index .top-cover form input.select-dropdown {
+  margin: 0px;
+  padding: 2px 15px;
+  background: #fff;
+  width: 90%;
+}
+
+.index .top-cover form .select-wrapper .caret {
+  fill: #ddd;
+}
+
+.index .top-cover form .btn {
+  border-radius: 0;
+  padding: 7px 35px;
+  height: auto;
+  background: #ff4143;
+  width: 100%;
+  text-transform: none;
+  font-size: 13px;
+}
+
+.index .index-experts {
+  width: 100%;
+  height: 550px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.index .index-user-boxes {
+  margin-top: 35px;
+  height: 550px;
+  margin-left: -120px;
+  width: 1900px;
+}
+
+.index .user-box:hover {
+  box-shadow: 0px 10px 50px -3px rgb(0,0,0, 0.1);
+}
+
+.index .home-section {
+  margin-top: 100px;
+}
+
+.index #expert-contacts {
+  margin-top: 0px;
+  position: inherit;
+  padding: 20px 20px 20px 100px;
+}
+
+.index .profile h1 {
+  margin: 0 0 20px 0;
+  font-weight: bold;
+}
+
+.index .expert .top-expert-content {
+  padding: 350px 100px;
+}
+
+.index .profile-content {
+  text-align: left;
+  padding: 50px;
+}
+.index .profile-content h2 {
+  text-align: left;
+}
+
+.index .home-box {
+  background: #000;
+  color: #fff;
+  background-size: cover;
+  padding: 0;
+  height: 700px;
+}
+
+.index .home-home-cover {
+  background: rgba(0,0,0, 0.5);
+  height: 700px;
+  width: 100%;
+  padding: 100px;
+}
+
+.index .home-box h2 {
+  margin-top: 300px;
+  text-align: left;
+}
+
+.index .home-box h3 {
+  margin: 30px 0;
+  text-align: left;
+ }
+
+.index .home-box a {
+  display: inline-block;
+  padding: 15px 50px;
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+.index .home-box a:hover {
+  background: #ff4143;
+  color: #fff;
+  border: 1px solid #ff4143;
+}
+
+.index .profile-message {
+  position: absolute;
+  left: 40%;
+  width: 600px;
+  margin-top: 100px;
+  box-shadow: 0px 10px 100px -3px rgb(0,0,0, 0.3);
+}
+
+.index  .profile-message .message-body {
+  display: block;
+}
+
+#home-expert {background: url("/static/images/img-home-expert.jpg") top center no-repeat;}
+#home-client {background: url("/static/images/img-home-client.jpg") top center no-repeat;}
+
+
+/* Join Box */
+.join-box {
+  text-align: center;
+  background: #f8f8f8;
+}
+
+.join-box h2 {
+  text-align: center !important;
+}
+
+.join-box .marketing-button {
+  margin: 50px 0;
+}
+
+/* Connecting People Box */
+.connecting-people-box {
+  background: url("/static/images/img-connecting.jpg") top left no-repeat;
+  width: 100%;
+  height:1000px;
+}
+
+.connecting-people-box {
+  padding: 411px 229px;
+  color: #fff;
+}
+
+.connecting-people-box p {
+  width: 400px;
+  font-size: 37px;
+  font-weight: 200;
+ }
+
+/* News Box */
+.industry-news h2 {
+  text-align: center !important;
+}
+
+.news-box {
+  margin: 50px 0 100px 0;
+}
+
+.news-box a {
+ display: block;
+ padding: 25px !important;
+ text-align: left;
+ color: #fff;
+ box-shadow: 0px 10px 100px -3px rgb(0,0,0, 0.1);
+}
+
+.news-box a:hover {
+  background: #fff;
+  color: #999;
+ }
+
+.news-box a h2, .news-box a h4 {
+  text-align: left;
+  margin: 0 0 5px 0;
+}
+
+.news-box .category-1 {background: #50c5dc;}
+.news-box .category-2 {background: #ff4143;}
+.news-box .category-3 {background: #f4be49;}
+
+
+/* Experts Details */
+.experts-details .bg-top { background: url("/static/images/img_bm.jpg") center center no-repeat; }
+.clients-details .bg-top { background: url("/static/images/img_cl.jpg") center center no-repeat; }
+
+.details-top {
+  padding: 250px 0 0 100px;
+  text-align: left;
+  color: #fff;
+}
+
+.details-top .marketing-button {
+  margin-top: 30px;
+}
+
+.experts-details h2,
+.clients-details h2 {
+  text-align: left;
+  margin: 20px 0 20px 0;
+}
+
+.top-icons i {
+  background: #fff;
+  border-radius: 100px;
+  height: 50px;
+  width: 50px;
+  line-height: 50px;
+  text-align: center;
+  margin-right: 15px;
+}
+
+.top-icons .fa-balance-scale {background: #50c5dc;}
+.top-icons .fa-calculator {background: #ff4143;}
+.top-icons .fa-bullhorn {background: #f4be49;}
+
+/* Benefits Box */
+.benefits-box {
+  background: #50c5dc;
+  color: #fff;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.clients-details .benefits-box {
+  background: #f4be49;
+}
+
+.benefits-box h4 {
+  color: #000;
+  opacity: 1;
+}
+
+.experts-details .benefits-box .user-box  {
+  position: absolute;
+  right: 100px;
+  margin-top: -463px;
+  color: #000;
+}
+
+.clients-details .benefits-box .category-2  { right: 340px; }
+.clients-details .benefits-box .category-1  { right: 20px; }
+
+
+.benefit-icon {
+  float: left;
+  width: 100px;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.experts-details .benefit-icon { margin-right: 50px; }
+.experts-details.clients-details .benefit-icon { margin-right: 30px; }
+
+.benefit-icon i {
+  font-size: 50px;
+  margin: 20px 0;
+  opacity: .3;
+}
+
+.benefit-icon span {
+  display: block;
+  color: #fff;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+/* Messages Box */
+.messages-box {
+  background: #fff;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.messages-box .message-main {
+  box-shadow: 0px 10px 100px -3px rgb(0,0,0, 0.1);
+}
+
+.messages-box .message-body.first {
+  display: block;
+}
+
+/* District List */
+.district-list {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.district-list a {
+  display: inline-block;
+  color: #fff;
+  line-height: 2em;
+  width: 19%;
+  margin-right: 5%;
+}
+
+.district-list a:hover{
+  color: #000;
+}
+
+#lawyers {background: #50c5dc;}
+#accountants {background: #ff4143;}
+#translators {background: #f4be49;}
+
+#translators a {color: #000;}
+#translators a:hover {color: #fff;}
+
+

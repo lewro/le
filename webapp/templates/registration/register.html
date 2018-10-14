@@ -1,0 +1,33 @@
+{% extends "webapp/base.html" %}
+{% block content %}
+{% load i18n %}
+
+<div class="row signin signup">
+  <div class="col s12 m6 l6 left">
+    <div id="top" class="clearfix">
+      {% include 'webapp/partials/logo.html' %}
+    </div>
+  </div>
+  <div class="col s12 m6 l6 right">
+    <h4>{% trans 'Already have account' %} <a href="/login">{% trans 'Login here' %}</a></h4>
+    <h1>{% trans 'Signup' %}</h1>
+
+    <div class="row">
+      <div class="col s12 l6">
+        <a href="/register_expert" class="big-button profession">
+          <i class="fas fa-user-tie"></i>
+          <div class="button-label">{% trans 'I am an expert' %}</div>
+        </a>
+      </div>
+      <div class="col s12 l6">
+        <a href="/register_client" class="big-button profession">
+          <i class="fas fa-user-plus"></i>
+          <div class="button-label">{% trans 'I am a client' %}</div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

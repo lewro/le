@@ -1,0 +1,80 @@
+.search .filter-switch {
+  text-transform: uppercase;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.search .filter-switch:hover {
+  font-weight: bold;
+}
+
+.search .filter-switch .fas {
+  font-size: 30px;
+}
+
+.search .filter-switch .fas,
+.search .filter-switch span {
+    float: left;
+    line-height: 30px;
+ }
+
+.search .filter-switch.active .fa-times-circle {display: none;}
+.search .filter-switch.active .fa-sliders-h {display: block;}
+
+.search .filter-switch .fa-times-circle {display: block;}
+.search .filter-switch .fa-sliders-h  {display: none;}
+
+.search .filter-switch span {
+  padding-left: 15px;
+  display: block;
+}
+
+.search form {
+  display: none;
+  padding-top: 50px;
+}
+
+.category-1 .filter-switch .fas {color: #50c5dc;}
+.category-2 .filter-switch .fas {color: #ff4143;}
+.category-3 .filter-switch .fas {color: #f4be49;}
+
+
+.search .noUi-target.noUi-horizontal .noUi-tooltip {
+  background: #fff;
+  box-shadow: 0px 0px 30px 5px rgb(0,0,0, 0.1)
+}
+
+.search .input-field {
+  margin: 30px 0;
+}
+
+.search input[type="number"]{
+  display: none;
+}
+
+.search .btn {color: #fff;}
+
+.search.category-1 .noUi-tooltip span {color: #50c5dc;}
+.search.category-2 .noUi-tooltip span {color: #ff4143;}
+.search.category-3 .noUi-tooltip span {color: #f4be49;}
+
+.search.category-1 .noUi-target {background: #50c5dc;}
+.search.category-2 .noUi-target {background: #ff4143;}
+.search.category-3 .noUi-target {background: #f4be49;}
+
+.search.category-1 .custom-label span {color: #50c5dc;}
+.search.category-2 .custom-label span {color: #ff4143;}
+.search.category-3 .custom-label span {color: #f4be49;}
+
+.search.category-1 .btn{background: #50c5dc;}
+.search.category-2 .btn {background: #ff4143;}
+.search.category-3 .btn {background: #f4be49;}
+
+.search.category-1 .noUi-horizontal .noUi-handle, .search.category-1 .noUi-vertical .noUi-handle {background: #50c5dc;}
+.search.category-2 .noUi-horizontal .noUi-handle, .search.category-2 .noUi-vertical .noUi-handle {background: #ff4143;}
+.search.category-3 .noUi-horizontal .noUi-handle, .search.category-3 .noUi-vertical .noUi-handle {background: #f4be49;}
+
+.search .btn:hover {
+  background: #000;
+  box-shadow: 0px 10px 10px -3px rgb(0,0,0, 0.1);
+}

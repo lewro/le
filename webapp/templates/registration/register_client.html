@@ -1,0 +1,70 @@
+{% extends "webapp/base.html" %}
+{% block content %}
+{% load i18n %}
+
+{% load staticfiles %}
+
+{% if form.errors %}
+  <div class="errors row">
+    <div class="col s12">
+      <strong>Errors</strong>
+      {% for field in form %}
+         <span>{% trans 'Password:' %} {{ field.errors|striptags }} || </span>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+<div class="register">
+  <div id="top" class="clearfix">
+    {% include 'webapp/partials/logo.html' %}
+  </div>
+  <div class="container">
+    <div class="col s12">
+      <form method="post" action="{% url 'register_client' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <input type="hidden" id="country" name="country" value="CZ" />
+
+        <div class="clearfix">
+          <div class="box flat-bottom">
+            <div class="row">
+              <div class="input-spacing">
+                <div class="input-field col s12">
+                  <input
+                    type="email"
+                    id="id_email"
+                    name="email"
+                      {% if form.email.value != None %}
+                        value="{{ form.email.value|stringformat:'s' }}"
+                      {% endif %}
+                    />
+                  <label for="id_email">{% trans 'Email' %}</label>
+                </div>
+              </div>
+              <div class="input-spacing">
+                <div class="input-field col s12 l6">
+                  <input type="password" id="id_password1" name="password1" />
+                  <label id="id_password1">{% trans 'Password' %}</label>
+                  <span class="input-helper">{% trans 'min 8 chars, no common words, no entire numeric' %}</span>
+                </div>
+              </div>
+              <div class="input-spacing">
+                <div class="input-field col s12 l6">
+                  <input type="password" id="id_password2" name="password2" />
+                  <label id="id_password2">{% trans 'Password - confirmation' %}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="btn-cover">
+            <a href="/register/" class="btn box-stepper-back">{% trans 'Back '%}</a>
+            <input class="btn form-submit" type="submit" value="{% trans 'Save' %}" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

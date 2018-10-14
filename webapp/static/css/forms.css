@@ -1,0 +1,83 @@
+input[type=text],
+input[type=number],
+input[type=email],
+input[type=password],
+textarea {
+  border-bottom: 1px solid #ddd !important;
+  font-size: 13px !important;
+}
+
+input:focus, textarea:focus {
+  border-bottom: 1px solid #50c5dc !important;
+  box-shadow: none !important;
+  color: #000 !important;
+}
+
+label.active {
+  color: #50c5dc !important;
+}
+
+.input-spacing {
+  padding: 0 50px;
+}
+
+.custom-label span {
+  color: #50c5dc;
+  padding-left: 5px;
+  font-weight: bold;
+}
+
+.dropdown-trigger {
+  border-bottom: 1px solid #50c5dc !important;
+}
+
+.select-wrapper .caret {
+  z-index: 1;
+  right: 10px;
+  fill: #50c5dc;
+}
+
+.dropdown-content {
+  background-color: #fff;
+}
+
+.dropdown-content li>a,
+.dropdown-content li>span {
+  font-size: 13px !important;
+  color: #000;
+}
+
+.dropdown-content li:hover {
+  background-color: #f2f2f2 !important;
+}
+
+.dropdown-content li.selected {
+  background-color: #ff4143 !important;
+}
+
+.dropdown-content li.selected a,
+.dropdown-content li.selected>span {
+  color: #fff !important;
+}
+
+.label-helper {
+  color: #50c5dc;
+}
+
+.input-helper {
+  font-size: 9px;
+}
+
+.errors {
+  background: #ff4143;
+  color: #fff;
+  padding: 20px;
+  font-size: 9px;
+  text-transform: uppercase;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 50px 50px 0px !important;
+}

@@ -1,0 +1,23 @@
+.tabs {
+  text-align: center;
+  background: none;
+}
+
+.tabs .tab {
+  background: none !important;
+}
+
+.tabs .tab a {
+  color: #999;
+  background: none !important;
+}
+
+.tabs .tab a:hover,
+.tabs .tab a.active  {
+  color: #000;
+  background: none;
+}
+
+.tabs .indicator {
+  background: #000;
+}

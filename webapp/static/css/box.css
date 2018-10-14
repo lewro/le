@@ -1,0 +1,23 @@
+.box {
+  background-color: #fff;
+  border-radius: 25px;
+  margin: 75px auto 0 auto;
+  padding: 75px 0 50px 0;
+}
+
+.flat-bottom {
+  border-bottom-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+}
+
+.box.extra-top-nav {
+  padding: 0 0 50px 0;
+}
+
+.box.extra-top-nav .btn-cover {
+  margin-bottom: 50px;
+  border-top-right-radius: 25px;
+  border-top-left-radius: 25px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}

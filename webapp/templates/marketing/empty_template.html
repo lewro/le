@@ -1,0 +1,30 @@
+{% extends "webapp/base.html" %}
+{% block content %}
+{% load i18n %}
+
+<div class="news category-{{ category_id}}">
+
+  <div class="bg-top">
+    <div class="top-cover">
+      {% include 'webapp/partials/nav.html' %}
+      <div class="top-category-icon">
+        <i class="far fa-newspaper"></i>
+      </div>
+      <h1>
+          <span>{% trans 'Terms' %}</span>
+      </h1>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="row">
+      <div class="col s12 main-content">
+      </div>
+    </div><!-- Row -->
+  </div><!-- Page -->
+</div><!-- News -->
+
+
+{% endblock %}
+
+

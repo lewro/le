@@ -1,0 +1,24 @@
+{% extends "webapp/base.html" %}
+{% block content %}
+{% load i18n %}
+
+{% load staticfiles %}
+
+<div class="register ">
+
+  {% include 'webapp/partials/nav.html' %}
+
+  <div class="container">
+    <div class="col s12">
+      <form method="post" action="{% url 'update_profile' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% include 'includes/custom_form_update.html' %}
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC08FThB6s0M7plHZRcLyySLsFgK0BFmE&v=3.exp&libraries=places"></script>
+<script src="{% static 'script/google_map.js' %}"></script>
+
+{% endblock %}

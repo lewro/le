@@ -1,0 +1,23 @@
+{% load i18n %}
+
+<div class="home-section industry-news page">
+  <h2>{% trans 'Read industry news' %}</h2>
+  <h3>{% trans 'Todo: Find out if they are the right fit for you project.' %}</h3>
+</div>
+
+<div class="page">
+  <div class="news-box row clearfix">
+    <a class="category-1 col s12 m4 l4" href="/news/?category_id=1">
+      <h4>{% trans 'News' %}</h4>
+      <h2>{% trans 'Lawyer' %}</h2>
+    </a>
+    <a class="category-2 col s12 m4 l4" href="/news/?category_id=2">
+      <h4>{% trans 'News' %}</h4>
+      <h2>{% trans 'Accountant' %}</h2>
+    </a>
+    <a class="category-3 col s12 m4 l4" href="/news/?category_id=3">
+      <h4>{% trans 'News' %}</h4>
+      <h2>{% trans 'Translator' %}</h2>
+    </a>
+  </div>
+</div>
