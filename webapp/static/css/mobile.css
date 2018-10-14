@@ -135,6 +135,7 @@
     .index-user-boxes .user-box {
       width: 300px;
       margin-left: 10px;
+      border: 1px solid #ddd;
     }
 
     .index .index-experts {
@@ -273,6 +274,10 @@
       font-size: 27px;
     }
 
+    .register .container {
+      padding-bottom: 100px;
+    }
+
   }
 
   /* Phones */
@@ -320,7 +325,7 @@
     }
 
     .district-list a {
-      width: 49%;
+      width: 44%;
       line-height: 3em;
     }
 
@@ -358,6 +363,12 @@
       width: 100% !important;
       margin-left: 0px;
       border: 1px solid #ddd;
+    }
+
+    .other-experts .user-box,
+    .index-user-boxes .user-box {
+      width: 300px !important;
+      margin-left: 10px;
     }
 
     .input-field.erp {
