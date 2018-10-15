@@ -55,9 +55,9 @@
           <div class="expert-value-section">
             <div class="expert-value-header">
             {% if expert.category_id == 3 %}
-              {% trans 'Normostrana (CZK)' %}
+              {% trans 'Normo-page' %}
             {% else %}
-              {% trans 'Hour Rate (CZK)' %}
+              {% trans 'Hour Rate' %}
             {% endif %}
             </div>
             <div class="expert-value-iteger">{{ expert.hour_rate_from }}-{{ expert.hour_rate_to }}</div>
@@ -167,7 +167,7 @@
           <h2>{% trans 'Location' %}</h2>
           <div class="expert-section-text clearfix">
             {% if  expert.id == request.user.id and expert.street == None %}
-              <p class="no-data do-something"><i class="fas fa-pencil-alt"></i>{% trans 'You have not defined you full location.' %}<a href="/webapp/update_profile/?id={{ expert.id }}">{% trans 'You can add it in here.' %}</a></p>
+              <p class="no-data do-something"><i class="fas fa-pencil-alt"></i>{% trans 'You have not defined your full location.' %}<a href="/webapp/update_profile/?id={{ expert.id }}">{% trans 'You can add it in here.' %}</a></p>
             {% else %}
               {% if  expert.street == None %}
                 <p class="no-data"><i class="fas fa-map"></i>cUnknown location.' %}</p>

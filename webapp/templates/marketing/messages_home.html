@@ -1,0 +1,64 @@
+{% load i18n %}
+
+<div class="messages home-section">
+  <div class="message-main">
+    <div class="message-table" id="received_messages">
+      <div class="message-row clearfix">
+        <div class="message-data clearfix">
+          <div class="message-header clearfix">
+            <div class="status status-1">
+               <i class="fas fa-bell"></i>
+            </div><!-- Status -->
+            <div class="from">marek.vondruska@gmail.com</div>
+            <div class="replied"></div>
+            <div class="recieved">12.5.2019 - 14:00</div>
+          </div><!-- Message Header -->
+          <div class="message-body clearfix first">
+            {% trans 'Hello' %}<br/><br/>
+
+            {% trans 'Could we meet on Thursday in our office at 9AM' %}<br/><br/>
+
+            {% trans 'Thank you!' %}<br/><br/>
+
+            <a href="" class="reply-button">
+              <i class="fas fa-reply"></i>
+              <span>{% trans 'Reply' %}</span>
+            </a>
+          </div><!-- Message Body -->
+        </div><!-- Message Data -->
+      </div><!-- Row -->
+      <div class="message-row clearfix">
+        <div class="message-data clearfix">
+          <div class="message-header clearfix">
+            <div class="status status-2">
+               <i class="fas fa-check-circle"></i>
+            </div><!-- Status -->
+            <div class="from">peter.beran@gmail.com</div>
+            <div class="replied"></div>
+            <div class="recieved">14.4.2019 - 13:21</div>
+          </div><!-- Message Header -->
+          <div class="message-body clearfix">
+            {% trans 'Hello' %}<br/><br/>
+            {% trans 'We are happy with your rate can we start ASAP?' %}<br/><br/>
+          </div><!-- Message Body -->
+        </div><!-- Message Data -->
+      </div><!-- Row -->
+      <div class="message-row clearfix">
+        <div class="message-data clearfix">
+          <div class="message-header clearfix">
+            <div class="status status-2">
+               <i class="fas fa-check-circle"></i>
+            </div><!-- Status -->
+            <div class="from">zuzana.krasna@gmail.com</div>
+            <div class="replied"></div>
+            <div class="recieved">18.3.2019 - 21:30</div>
+          </div><!-- Message Header -->
+          <div class="message-body clearfix">
+            {% trans 'Hello' %}<br/><br/>
+            {% trans 'Where can I send you the details?' %}<br/><br/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

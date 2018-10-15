@@ -8,7 +8,7 @@
     <div class="top-right">
       <a class="profile-button logout" href="/logout">
         <i class="fas fa-power-off"></i>
-        <span>Logout</span>
+        <span>{% trans 'Logout' %}</span>
       </a>
       {% if unread_messages_count > 0 %}
         <a href="/webapp/messages/" class="notification">
@@ -34,11 +34,11 @@
     <div class="top-right logout-links">
       <a class="profile-button" href="/login">
         <i class="fas fa-power-off"></i>
-        <span>Login</span>
+        <span>{% trans 'Login' %}</span>
       </a>
       <a class="profile-button" href="/register">
         <i class="fas fa-user-plus"></i>
-        <span>Register</span>
+        <span>{% trans 'Register' %}</span>
       </a>
     </div>
   {% endif %}
