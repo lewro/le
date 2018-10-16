@@ -89,6 +89,10 @@
       width: calc(100% - 30px);
     }
 
+    .expert #expert-contacts {
+      padding: 20px 20px 20px 100px;
+    }
+
     .index #expert-contacts {
       float: left;
     }
@@ -181,6 +185,7 @@
       padding: 25px;
     }
 
+    .news-sidebar .user-box,
     #other-experts .user-box,
     .search .user-box {
       width: 45%;
@@ -285,7 +290,7 @@
   }
 
   /* Phones */
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 670px) {
 
     .index .profile-content,
     .district-list,
@@ -321,11 +326,11 @@
 
     .expert .bg-top,
     .expert .top-cover {
-      height: 1000px;
+      height: 100px;
     }
 
     #expert-contacts {
-      top: 900px;
+      top: 950px;
     }
 
     .district-list a {
@@ -365,7 +370,7 @@
 
     .user-box {
       width: 100% !important;
-      margin-left: 0px;
+      margin: 0 0 80px 0 !important;
       border: 1px solid #ddd;
     }
 

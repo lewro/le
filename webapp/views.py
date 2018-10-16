@@ -33,9 +33,13 @@ def logout_user(request):
    return redirect('/')
 
 def index(request):
+
   just_registered = request.GET.get('just_registered')
+  question_sent   = request.GET.get('question_sent')
+
   context = {
-    'just_registered'   : just_registered
+    'just_registered'   : just_registered,
+    'question_sent'     : question_sent
   }
 
   #Redirect if coming from login with next param
@@ -59,6 +63,22 @@ def clients_details(request):
 
 def experts_details(request):
   return render(request, 'webapp/experts_details.html')
+
+def contact(request):
+
+  subject     = "Question from Local Experts"
+  question    = request.POST['message']
+  email       = request.POST['email']
+
+  message     = email + " : " + "question"
+
+  from_email  = settings.EMAIL_HOST_USER
+  password    = settings.EMAIL_HOST_PASSWORD
+  to_list     = ['app.localexperts@gmail.com']
+
+  send_mail(subject, message, from_email, to_list, fail_silently=True)
+
+  return redirect('/webapp/?question_sent=true')
 
 @login_required
 def create_rating(request):

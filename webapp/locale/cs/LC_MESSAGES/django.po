@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-15 17:14+0200\n"
+"POT-Creation-Date: 2018-10-16 09:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -198,6 +198,7 @@ msgstr "Obrázek profilu"
 #: le/webapp/templates/includes/custom_form.html:415
 #: le/webapp/templates/includes/custom_form_update.html:413
 #: le/webapp/templates/registration/register_client.html:42
+#: le/webapp/templates/webapp/partials/footer-form.html:17
 msgid "Email"
 msgstr "Email"
 
@@ -358,6 +359,7 @@ msgstr "Spojujeme lidi k vyřešení jejich problémů"
 #: le/webapp/templates/marketing/messages_home.html:17
 #: le/webapp/templates/marketing/messages_home.html:41
 #: le/webapp/templates/marketing/messages_home.html:57
+#: le/webapp/templates/webapp/partials/footer-form.html:8
 msgid "Hello"
 msgstr "Zdravím Vás"
 
@@ -398,6 +400,7 @@ msgid "Register"
 msgstr "Registrace"
 
 #: le/webapp/templates/marketing/profile.html:30
+#: le/webapp/templates/webapp/clients_details.html:38
 #: le/webapp/templates/webapp/expert.html:60
 #: le/webapp/templates/webapp/experts_details.html:38
 msgid "Hour Rate"
@@ -407,6 +410,10 @@ msgstr "Hodinová Sadzba"
 #: le/webapp/templates/webapp/expert.html:66
 msgid "Years"
 msgstr "Roky"
+
+#: le/webapp/templates/marketing/question_sent.html:5
+msgid "Your question was sent."
+msgstr "Vaše otázka byla odeslána"
 
 #: le/webapp/templates/marketing/search.html:71
 msgid "Search"
@@ -472,11 +479,6 @@ msgstr "Advokáta, účetního, překladatele?"
 msgid "Location"
 msgstr "Místo"
 
-#: le/webapp/templates/webapp/clients_details.html:38
-#: le/webapp/templates/webapp/expert.html:91
-msgid "Rate"
-msgstr "Ohodnoť"
-
 #: le/webapp/templates/webapp/clients_details.html:122
 msgid "Expert Profile"
 msgstr "Profil experta"
@@ -487,7 +489,7 @@ msgstr "Vyberte si ty správné experty, podle vašich kritérií."
 
 #: le/webapp/templates/webapp/clients_details.html:131
 #: le/webapp/templates/webapp/experts_details.html:92
-#: le/webapp/templates/webapp/index.html:49
+#: le/webapp/templates/webapp/index.html:53
 msgid "Get in touch"
 msgstr "Buďte v kontaktu"
 
@@ -506,6 +508,10 @@ msgstr "Aktualizujte svůj profil"
 #: le/webapp/templates/webapp/expert.html:83
 msgid "Message"
 msgstr "Zpráva"
+
+#: le/webapp/templates/webapp/expert.html:91
+msgid "Rate"
+msgstr "Ohodnoť"
 
 #: le/webapp/templates/webapp/expert.html:128
 msgid "01 Welcome"
@@ -571,6 +577,7 @@ msgstr "Odeslat zprávu expertovi"
 #: le/webapp/templates/webapp/expert.html:283
 #: le/webapp/templates/webapp/expert.html:323
 #: le/webapp/templates/webapp/messages.html:127
+#: le/webapp/templates/webapp/partials/footer-form.html:24
 msgid "Send"
 msgstr "Poslat"
 
@@ -607,22 +614,22 @@ msgstr "Prezentujte své služby v moderním, efektivním rozhraní"
 msgid "Clean, simple way to communicate with your clients"
 msgstr "Čistý a jednoduchý způsob komunikace s vašimi klienty"
 
-#: le/webapp/templates/webapp/index.html:15
+#: le/webapp/templates/webapp/index.html:19
 msgid "Find a Lawyer, Accountant, Translator"
 msgstr "Najděte právníka, účetního, překladatele"
 
-#: le/webapp/templates/webapp/index.html:31
+#: le/webapp/templates/webapp/index.html:35
 msgid "Find an Expert"
 msgstr "Najděte svého experta"
 
-#: le/webapp/templates/webapp/index.html:32
+#: le/webapp/templates/webapp/index.html:36
 msgid ""
 "Filter experts by location, experience, rate, reviews to find the right one "
 "for your job."
 msgstr ""
 "Filtrujte experty pro váš projekt podle lokality, zkušeností, sazby, recenzí."
 
-#: le/webapp/templates/webapp/index.html:50
+#: le/webapp/templates/webapp/index.html:54
 msgid ""
 "Local Experts provides simple messaging system for quick communication "
 "between clients and experts."
@@ -630,25 +637,25 @@ msgstr ""
 "Local Experts poskytuje jednoduchý systém zasílání zpráv pro rychlou "
 "komunikaci mezi klienty a experty."
 
-#: le/webapp/templates/webapp/index.html:51
+#: le/webapp/templates/webapp/index.html:55
 msgid "It is up to you which way you stay in touch, phone, email, chat."
 msgstr ""
 "Je však plne na vás, jakým způsobem zůstanete v kontaktu, telefonem, e-"
 "mailem, chatem."
 
-#: le/webapp/templates/webapp/index.html:61
+#: le/webapp/templates/webapp/index.html:65
 msgid "Are you an Expert or looking for one?"
 msgstr "Jste expert nebo experta hledáte?"
 
-#: le/webapp/templates/webapp/index.html:62
+#: le/webapp/templates/webapp/index.html:66
 msgid "Find out more about how you can benefit from our platform."
 msgstr "Zjistěte více o tom, jak můžete využít naší platformy."
 
-#: le/webapp/templates/webapp/index.html:68
+#: le/webapp/templates/webapp/index.html:72
 msgid "Experts"
 msgstr "Experti"
 
-#: le/webapp/templates/webapp/index.html:69
+#: le/webapp/templates/webapp/index.html:73
 msgid ""
 "Get your qualified leads today! It only takes 2 minuts to create your "
 "profile. Our platform is currently free to join and use."
@@ -656,16 +663,16 @@ msgstr ""
 "Získejte své kvalifikované potenciální zákazníky dnes! Vytvořte si profil za "
 "2 minuty. Naše platforma je v současné době zdarma."
 
-#: le/webapp/templates/webapp/index.html:70
-#: le/webapp/templates/webapp/index.html:77
+#: le/webapp/templates/webapp/index.html:74
+#: le/webapp/templates/webapp/index.html:81
 msgid "Find out more"
 msgstr "Zjistit více"
 
-#: le/webapp/templates/webapp/index.html:75
+#: le/webapp/templates/webapp/index.html:79
 msgid "Clients"
 msgstr "Klienti"
 
-#: le/webapp/templates/webapp/index.html:76
+#: le/webapp/templates/webapp/index.html:80
 msgid ""
 "Find your new Lawyer, Accountant, Translator in your area. Our platform is "
 "currently free to join and use. "
@@ -762,6 +769,14 @@ msgstr "Minimální hodnocení:"
 msgid "Apply Filter"
 msgstr "Použijte filtr"
 
+#: le/webapp/templates/webapp/partials/footer-form.html:9
+msgid "Need help? Ask us anything."
+msgstr "Potřebujete pomoc? Zeptejte se nás cokoli."
+
+#: le/webapp/templates/webapp/partials/footer-form.html:21
+msgid "Question"
+msgstr "Vaše otázka"
+
 #: le/webapp/templates/webapp/partials/footer.html:7
 msgid "Feedback"
 msgstr "Zpětná vazba"
@@ -792,7 +807,7 @@ msgstr "Twitter"
 
 #: le/webapp/templates/webapp/partials/nav.html:11
 msgid "Logout"
-msgstr ""
+msgstr "Odhlásit se"
 
 #: le/webapp/templates/webapp/partials/step_buttons.html:3
 msgid "Next  →"

@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^terms/$', views.terms, name = 'terms'),
     url(r'^privacy/$', views.privacy, name = 'privacy'),
     url(r'^about/$', views.about, name = 'about'),
+    url(r'^contact/$', views.contact, name = 'contact'),
 
 
 ]

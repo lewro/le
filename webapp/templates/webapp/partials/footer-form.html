@@ -1,0 +1,25 @@
+{% load i18n %}
+
+<div class="footer-message-top clearfix">
+  <div class="close-fm">
+    <i class="fas fa-times-circle"></i>
+  </div>
+
+  <h4>{% trans 'Hello' %}</h4>
+  <p>{% trans 'Need help? Ask us anything.' %}</p>
+</div>
+
+<form action="/webapp/contact/" method="post">
+  {% csrf_token %}
+  <div class="form-cover">
+    <div class="input-field first">
+      <input type="email" id="id_email" name="email" />
+      <label id="id_email">{% trans 'Email' %}</label>
+    </div>
+    <div class="input-field">
+      <textarea type="text" id="id_message" name="message"></textarea>
+      <label id="id_email">{% trans 'Question' %}</label>
+    </div>
+  </div>
+  <input class="form-submit" type="submit" value="{% trans 'Send' %}" />
+</form>

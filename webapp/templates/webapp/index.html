@@ -6,6 +6,10 @@
   {% include 'marketing/just_registered.html' %}
 {% endif %}
 
+{% if question_sent == 'true' %}
+  {% include 'marketing/question_sent.html' %}
+{% endif %}
+
 <div class="index">
 
   <div class="bg-top">

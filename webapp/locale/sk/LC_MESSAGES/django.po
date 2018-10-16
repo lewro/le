@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-15 17:14+0200\n"
+"POT-Creation-Date: 2018-10-16 09:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -198,6 +198,7 @@ msgstr ""
 #: le/webapp/templates/includes/custom_form.html:415
 #: le/webapp/templates/includes/custom_form_update.html:413
 #: le/webapp/templates/registration/register_client.html:42
+#: le/webapp/templates/webapp/partials/footer-form.html:17
 msgid "Email"
 msgstr ""
 
@@ -355,6 +356,7 @@ msgstr ""
 #: le/webapp/templates/marketing/messages_home.html:17
 #: le/webapp/templates/marketing/messages_home.html:41
 #: le/webapp/templates/marketing/messages_home.html:57
+#: le/webapp/templates/webapp/partials/footer-form.html:8
 msgid "Hello"
 msgstr ""
 
@@ -395,6 +397,7 @@ msgid "Register"
 msgstr ""
 
 #: le/webapp/templates/marketing/profile.html:30
+#: le/webapp/templates/webapp/clients_details.html:38
 #: le/webapp/templates/webapp/expert.html:60
 #: le/webapp/templates/webapp/experts_details.html:38
 msgid "Hour Rate"
@@ -403,6 +406,10 @@ msgstr ""
 #: le/webapp/templates/marketing/profile.html:35
 #: le/webapp/templates/webapp/expert.html:66
 msgid "Years"
+msgstr ""
+
+#: le/webapp/templates/marketing/question_sent.html:5
+msgid "Your question was sent."
 msgstr ""
 
 #: le/webapp/templates/marketing/search.html:71
@@ -469,11 +476,6 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
-#: le/webapp/templates/webapp/clients_details.html:38
-#: le/webapp/templates/webapp/expert.html:91
-msgid "Rate"
-msgstr ""
-
 #: le/webapp/templates/webapp/clients_details.html:122
 msgid "Expert Profile"
 msgstr ""
@@ -484,7 +486,7 @@ msgstr ""
 
 #: le/webapp/templates/webapp/clients_details.html:131
 #: le/webapp/templates/webapp/experts_details.html:92
-#: le/webapp/templates/webapp/index.html:49
+#: le/webapp/templates/webapp/index.html:53
 msgid "Get in touch"
 msgstr ""
 
@@ -502,6 +504,10 @@ msgstr ""
 
 #: le/webapp/templates/webapp/expert.html:83
 msgid "Message"
+msgstr ""
+
+#: le/webapp/templates/webapp/expert.html:91
+msgid "Rate"
 msgstr ""
 
 #: le/webapp/templates/webapp/expert.html:128
@@ -568,6 +574,7 @@ msgstr ""
 #: le/webapp/templates/webapp/expert.html:283
 #: le/webapp/templates/webapp/expert.html:323
 #: le/webapp/templates/webapp/messages.html:127
+#: le/webapp/templates/webapp/partials/footer-form.html:24
 msgid "Send"
 msgstr ""
 
@@ -604,58 +611,58 @@ msgstr ""
 msgid "Clean, simple way to communicate with your clients"
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:15
+#: le/webapp/templates/webapp/index.html:19
 msgid "Find a Lawyer, Accountant, Translator"
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:31
+#: le/webapp/templates/webapp/index.html:35
 msgid "Find an Expert"
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:32
+#: le/webapp/templates/webapp/index.html:36
 msgid ""
 "Filter experts by location, experience, rate, reviews to find the right one "
 "for your job."
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:50
+#: le/webapp/templates/webapp/index.html:54
 msgid ""
 "Local Experts provides simple messaging system for quick communication "
 "between clients and experts."
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:51
+#: le/webapp/templates/webapp/index.html:55
 msgid "It is up to you which way you stay in touch, phone, email, chat."
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:61
+#: le/webapp/templates/webapp/index.html:65
 msgid "Are you an Expert or looking for one?"
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:62
+#: le/webapp/templates/webapp/index.html:66
 msgid "Find out more about how you can benefit from our platform."
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:68
+#: le/webapp/templates/webapp/index.html:72
 msgid "Experts"
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:69
+#: le/webapp/templates/webapp/index.html:73
 msgid ""
 "Get your qualified leads today! It only takes 2 minuts to create your "
 "profile. Our platform is currently free to join and use."
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:70
-#: le/webapp/templates/webapp/index.html:77
+#: le/webapp/templates/webapp/index.html:74
+#: le/webapp/templates/webapp/index.html:81
 msgid "Find out more"
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:75
+#: le/webapp/templates/webapp/index.html:79
 msgid "Clients"
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:76
+#: le/webapp/templates/webapp/index.html:80
 msgid ""
 "Find your new Lawyer, Accountant, Translator in your area. Our platform is "
 "currently free to join and use. "
@@ -748,6 +755,14 @@ msgstr ""
 
 #: le/webapp/templates/webapp/partials/expert_search_filter.html:144
 msgid "Apply Filter"
+msgstr ""
+
+#: le/webapp/templates/webapp/partials/footer-form.html:9
+msgid "Need help? Ask us anything."
+msgstr ""
+
+#: le/webapp/templates/webapp/partials/footer-form.html:21
+msgid "Question"
 msgstr ""
 
 #: le/webapp/templates/webapp/partials/footer.html:7

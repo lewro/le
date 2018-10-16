@@ -23,3 +23,90 @@ footer a {
 footer a:hover {
   color: #000;
 }
+
+
+.footer-form {
+  box-shadow: 0px 10px 200px -3px rgb(0,0,0, 0.5);
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 400px;
+  background: #f9f9f9;
+  display: none;
+  border-radius: 15px;
+}
+
+.footer-form-btn {
+  box-shadow: 0px 10px 100px -3px rgb(0,0,0, 0.5);
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #ff4143;
+  color: #fff;
+  border-radius: 80px;
+  font-size: 30px;
+  line-height: 80px;
+  height: 80px;
+  width: 80px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.footer-form-btn:hover {
+  background: #f4be49;
+}
+
+.footer-form .footer-message-top .fas {
+  font-size: 50px;
+  text-align: center;
+}
+
+.footer-form .close-fm {
+  float: right;
+  opacity: .5;
+  cursor: pointer;
+}
+
+.footer-form .close-fm:hover {
+  opacity: 1;
+}
+
+.footer-form .close-fm .fas {
+  font-size: 30px;
+}
+
+.footer-form .footer-message-top {
+  padding: 25px;
+  background: #ff4143;
+  color: #fff;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.footer-form .form-cover {
+  padding: 25px;
+}
+
+.footer-form .input-field.first {
+  padding-bottom: 25px;
+}
+
+.footer-form .form-submit {
+  width: 100%;
+  padding: 25px;
+  color: #333;
+  background: #eee;
+  cursor: pointer;
+  border: none;
+  -webkit-transition: background-color 500ms ease-out 0.1s;
+  -moz-transition: background-color 500ms ease-out 0.1s;
+  -o-transition: background-color 500ms ease-out 0.1s;
+  transition: background-color 500ms ease-out 0.1s;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.footer-form .form-submit:hover {
+  background: #50c5dc;
+  color: #fff;
+}
