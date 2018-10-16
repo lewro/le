@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-16 09:52+0200\n"
+"POT-Creation-Date: 2018-10-16 14:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: le/webapp/templates/expert/expert_removed.html:5
+msgid "Your profile was removed."
+msgstr ""
 
 #: le/webapp/templates/expert/message_sent.html:5
 msgid "Your message was sent."
@@ -33,12 +37,12 @@ msgid "Password:"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:21
-#: le/webapp/templates/includes/custom_form_update.html:10
+#: le/webapp/templates/includes/custom_form_update.html:9
 msgid "Identification"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:25
-#: le/webapp/templates/includes/custom_form_update.html:14
+#: le/webapp/templates/includes/custom_form_update.html:13
 #: le/webapp/templates/marketing/experts.html:21
 #: le/webapp/templates/marketing/experts.html:56
 #: le/webapp/templates/marketing/experts.html:91
@@ -55,9 +59,9 @@ msgid "Experience"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:29
-#: le/webapp/templates/includes/custom_form_update.html:18
+#: le/webapp/templates/includes/custom_form_update.html:17
 #: le/webapp/templates/webapp/clients_details.html:42
-#: le/webapp/templates/webapp/expert.html:148
+#: le/webapp/templates/webapp/expert.html:166
 #: le/webapp/templates/webapp/experts_details.html:42
 msgid "Expertise"
 msgstr ""
@@ -67,12 +71,12 @@ msgid "Contacts "
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:37
-#: le/webapp/templates/includes/custom_form_update.html:26
+#: le/webapp/templates/includes/custom_form_update.html:25
 msgid "Account"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:48
-#: le/webapp/templates/includes/custom_form_update.html:37
+#: le/webapp/templates/includes/custom_form_update.html:36
 #: le/webapp/templates/marketing/industry_news.html:12
 #: le/webapp/templates/marketing/search.html:14
 #: le/webapp/templates/webapp/expert.html:26
@@ -81,7 +85,7 @@ msgid "Lawyer"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:54
-#: le/webapp/templates/includes/custom_form_update.html:43
+#: le/webapp/templates/includes/custom_form_update.html:42
 #: le/webapp/templates/marketing/industry_news.html:16
 #: le/webapp/templates/marketing/profile.html:9
 #: le/webapp/templates/marketing/search.html:15
@@ -99,12 +103,12 @@ msgid "Experience (years): "
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:103
-#: le/webapp/templates/includes/custom_form_update.html:97
+#: le/webapp/templates/includes/custom_form_update.html:96
 msgid "Hour Rate (from - to):"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:104
-#: le/webapp/templates/includes/custom_form_update.html:98
+#: le/webapp/templates/includes/custom_form_update.html:97
 msgid "Normo-page Rate (from - to):"
 msgstr ""
 
@@ -121,101 +125,101 @@ msgid " ←  Back"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:182
-#: le/webapp/templates/includes/custom_form_update.html:179
+#: le/webapp/templates/includes/custom_form_update.html:178
 msgid "First name"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:196
-#: le/webapp/templates/includes/custom_form_update.html:193
+#: le/webapp/templates/includes/custom_form_update.html:192
 msgid "Last name"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:202
-#: le/webapp/templates/includes/custom_form_update.html:199
+#: le/webapp/templates/includes/custom_form_update.html:198
 msgid "Bio"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:215
-#: le/webapp/templates/includes/custom_form_update.html:212
+#: le/webapp/templates/includes/custom_form_update.html:211
 msgid "Company"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:230
-#: le/webapp/templates/includes/custom_form_update.html:227
+#: le/webapp/templates/includes/custom_form_update.html:226
 msgid "District"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:244
-#: le/webapp/templates/includes/custom_form_update.html:241
+#: le/webapp/templates/includes/custom_form_update.html:240
 msgid "Country"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:257
-#: le/webapp/templates/includes/custom_form_update.html:254
+#: le/webapp/templates/includes/custom_form_update.html:253
 msgid "Phone"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:270
-#: le/webapp/templates/includes/custom_form_update.html:267
+#: le/webapp/templates/includes/custom_form_update.html:266
 msgid "Mobile"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:283
-#: le/webapp/templates/includes/custom_form_update.html:280
+#: le/webapp/templates/includes/custom_form_update.html:279
 msgid "Web"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:296
-#: le/webapp/templates/includes/custom_form_update.html:293
+#: le/webapp/templates/includes/custom_form_update.html:292
 msgid "Street"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:309
-#: le/webapp/templates/includes/custom_form_update.html:306
+#: le/webapp/templates/includes/custom_form_update.html:305
 msgid "Street number"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:322
-#: le/webapp/templates/includes/custom_form_update.html:319
+#: le/webapp/templates/includes/custom_form_update.html:318
 msgid "City"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:335
-#: le/webapp/templates/includes/custom_form_update.html:332
+#: le/webapp/templates/includes/custom_form_update.html:331
 msgid "Zip"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:360
-#: le/webapp/templates/includes/custom_form_update.html:357
+#: le/webapp/templates/includes/custom_form_update.html:356
 msgid "Click here to find your address on map"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:388
-#: le/webapp/templates/includes/custom_form_update.html:392
+#: le/webapp/templates/includes/custom_form_update.html:391
 msgid "Profile Image"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:415
-#: le/webapp/templates/includes/custom_form_update.html:413
+#: le/webapp/templates/includes/custom_form_update.html:412
 #: le/webapp/templates/registration/register_client.html:42
 #: le/webapp/templates/webapp/partials/footer-form.html:17
 msgid "Email"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:421
-#: le/webapp/templates/includes/custom_form_update.html:428
+#: le/webapp/templates/includes/custom_form_update.html:427
 #: le/webapp/templates/registration/register_client.html:48
 msgid "Password"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:422
-#: le/webapp/templates/includes/custom_form_update.html:429
+#: le/webapp/templates/includes/custom_form_update.html:428
 #: le/webapp/templates/registration/register_client.html:49
 msgid "min 8 chars, no common words, no entire numeric"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:428
-#: le/webapp/templates/includes/custom_form_update.html:442
+#: le/webapp/templates/includes/custom_form_update.html:441
 #: le/webapp/templates/registration/register_client.html:55
 msgid "Password - confirmation"
 msgstr ""
@@ -226,17 +230,17 @@ msgid "Back "
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form.html:435
-#: le/webapp/templates/includes/custom_form_update.html:380
-#: le/webapp/templates/includes/custom_form_update.html:449
+#: le/webapp/templates/includes/custom_form_update.html:379
+#: le/webapp/templates/includes/custom_form_update.html:448
 #: le/webapp/templates/registration/register_client.html:62
 msgid "Save"
 msgstr ""
 
-#: le/webapp/templates/includes/custom_form_update.html:22
+#: le/webapp/templates/includes/custom_form_update.html:21
 msgid "Contact"
 msgstr ""
 
-#: le/webapp/templates/includes/custom_form_update.html:49
+#: le/webapp/templates/includes/custom_form_update.html:48
 #: le/webapp/templates/marketing/industry_news.html:20
 #: le/webapp/templates/marketing/search.html:16
 #: le/webapp/templates/webapp/expert.html:32
@@ -244,12 +248,12 @@ msgstr ""
 msgid "Translator"
 msgstr ""
 
-#: le/webapp/templates/includes/custom_form_update.html:77
+#: le/webapp/templates/includes/custom_form_update.html:76
 msgid "Experience (years):"
 msgstr ""
 
-#: le/webapp/templates/includes/custom_form_update.html:379
-#: le/webapp/templates/includes/custom_form_update.html:448
+#: le/webapp/templates/includes/custom_form_update.html:378
+#: le/webapp/templates/includes/custom_form_update.html:447
 msgid "Back"
 msgstr ""
 
@@ -270,7 +274,7 @@ msgstr ""
 
 #: le/webapp/templates/includes/login_form.html:24
 #: le/webapp/templates/marketing/not_logged_in.html:6
-#: le/webapp/templates/webapp/partials/nav.html:37
+#: le/webapp/templates/webapp/partials/nav.html:38
 msgid "Login"
 msgstr ""
 
@@ -307,7 +311,7 @@ msgstr ""
 #: le/webapp/templates/webapp/clients_details.html:76
 #: le/webapp/templates/webapp/clients_details.html:110
 #: le/webapp/templates/webapp/expert.html:47
-#: le/webapp/templates/webapp/expert.html:231
+#: le/webapp/templates/webapp/expert.html:249
 #: le/webapp/templates/webapp/experts_details.html:71
 #: le/webapp/templates/webapp/partials/expert.html:42
 msgid "Rating"
@@ -392,7 +396,7 @@ msgid "or"
 msgstr ""
 
 #: le/webapp/templates/marketing/not_logged_in.html:8
-#: le/webapp/templates/webapp/partials/nav.html:41
+#: le/webapp/templates/webapp/partials/nav.html:42
 msgid "Register"
 msgstr ""
 
@@ -449,7 +453,7 @@ msgid "I am a client"
 msgstr ""
 
 #: le/webapp/templates/webapp/clients_details.html:17
-#: le/webapp/templates/webapp/expert.html:137
+#: le/webapp/templates/webapp/expert.html:155
 msgid "Welcome"
 msgstr ""
 
@@ -471,7 +475,7 @@ msgid "Lawyer, Accountant, Translator?"
 msgstr ""
 
 #: le/webapp/templates/webapp/clients_details.html:30
-#: le/webapp/templates/webapp/expert.html:167
+#: le/webapp/templates/webapp/expert.html:185
 #: le/webapp/templates/webapp/experts_details.html:30
 msgid "Location"
 msgstr ""
@@ -486,7 +490,7 @@ msgstr ""
 
 #: le/webapp/templates/webapp/clients_details.html:131
 #: le/webapp/templates/webapp/experts_details.html:92
-#: le/webapp/templates/webapp/index.html:53
+#: le/webapp/templates/webapp/index.html:58
 msgid "Get in touch"
 msgstr ""
 
@@ -502,87 +506,107 @@ msgstr ""
 msgid "Update Your Profile"
 msgstr ""
 
-#: le/webapp/templates/webapp/expert.html:83
-msgid "Message"
+#: le/webapp/templates/webapp/expert.html:80
+msgid "Remove Profile"
+msgstr ""
+
+#: le/webapp/templates/webapp/expert.html:88
+msgid "You are about to remove your profile forever"
+msgstr ""
+
+#: le/webapp/templates/webapp/expert.html:89
+msgid "Are you sure?"
 msgstr ""
 
 #: le/webapp/templates/webapp/expert.html:91
+msgid "No, not now."
+msgstr ""
+
+#: le/webapp/templates/webapp/expert.html:92
+msgid "Yes"
+msgstr ""
+
+#: le/webapp/templates/webapp/expert.html:101
+msgid "Message"
+msgstr ""
+
+#: le/webapp/templates/webapp/expert.html:109
 msgid "Rate"
 msgstr ""
 
-#: le/webapp/templates/webapp/expert.html:128
+#: le/webapp/templates/webapp/expert.html:146
 msgid "01 Welcome"
 msgstr ""
 
-#: le/webapp/templates/webapp/expert.html:129
+#: le/webapp/templates/webapp/expert.html:147
 msgid "02 Expertise"
 msgstr ""
 
-#: le/webapp/templates/webapp/expert.html:130
+#: le/webapp/templates/webapp/expert.html:148
 msgid "03 Location"
 msgstr ""
 
-#: le/webapp/templates/webapp/expert.html:131
+#: le/webapp/templates/webapp/expert.html:149
 msgid "04 Reviews"
 msgstr ""
 
-#: le/webapp/templates/webapp/expert.html:140
+#: le/webapp/templates/webapp/expert.html:158
 msgid "You have not defined any welcome text."
 msgstr ""
 
-#: le/webapp/templates/webapp/expert.html:140
-#: le/webapp/templates/webapp/expert.html:170
+#: le/webapp/templates/webapp/expert.html:158
+#: le/webapp/templates/webapp/expert.html:188
 msgid "You can add it in here."
 msgstr ""
 
-#: le/webapp/templates/webapp/expert.html:151
+#: le/webapp/templates/webapp/expert.html:169
 msgid "You have not defined any expertises."
 msgstr ""
 
-#: le/webapp/templates/webapp/expert.html:151
+#: le/webapp/templates/webapp/expert.html:169
 msgid "You can add them in here."
 msgstr ""
 
-#: le/webapp/templates/webapp/expert.html:154
+#: le/webapp/templates/webapp/expert.html:172
 msgid "Unknown expertieses."
 msgstr ""
 
-#: le/webapp/templates/webapp/expert.html:170
+#: le/webapp/templates/webapp/expert.html:188
 msgid "You have not defined your full location."
 msgstr ""
 
-#: le/webapp/templates/webapp/expert.html:182
+#: le/webapp/templates/webapp/expert.html:200
 msgid "Directions"
 msgstr ""
 
-#: le/webapp/templates/webapp/expert.html:209
+#: le/webapp/templates/webapp/expert.html:227
 msgid "Reviews"
 msgstr ""
 
-#: le/webapp/templates/webapp/expert.html:212
+#: le/webapp/templates/webapp/expert.html:230
 msgid "There are no reviews yet."
 msgstr ""
 
-#: le/webapp/templates/webapp/expert.html:250
+#: le/webapp/templates/webapp/expert.html:268
 msgid "Other experts from your search"
 msgstr ""
 
-#: le/webapp/templates/webapp/expert.html:279
+#: le/webapp/templates/webapp/expert.html:297
 msgid "Send Message to Expert"
 msgstr ""
 
-#: le/webapp/templates/webapp/expert.html:283
-#: le/webapp/templates/webapp/expert.html:323
+#: le/webapp/templates/webapp/expert.html:301
+#: le/webapp/templates/webapp/expert.html:341
 #: le/webapp/templates/webapp/messages.html:127
 #: le/webapp/templates/webapp/partials/footer-form.html:24
 msgid "Send"
 msgstr ""
 
-#: le/webapp/templates/webapp/expert.html:306
+#: le/webapp/templates/webapp/expert.html:324
 msgid "Your rating text"
 msgstr ""
 
-#: le/webapp/templates/webapp/expert.html:310
+#: le/webapp/templates/webapp/expert.html:328
 msgid "Your rating"
 msgstr ""
 
@@ -599,7 +623,7 @@ msgid "Qualified leads which fits you"
 msgstr ""
 
 #: le/webapp/templates/webapp/experts_details.html:83
-#: le/webapp/templates/webapp/partials/nav.html:29
+#: le/webapp/templates/webapp/partials/nav.html:30
 msgid "Your Profile"
 msgstr ""
 
@@ -611,58 +635,58 @@ msgstr ""
 msgid "Clean, simple way to communicate with your clients"
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:19
+#: le/webapp/templates/webapp/index.html:24
 msgid "Find a Lawyer, Accountant, Translator"
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:35
+#: le/webapp/templates/webapp/index.html:40
 msgid "Find an Expert"
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:36
+#: le/webapp/templates/webapp/index.html:41
 msgid ""
 "Filter experts by location, experience, rate, reviews to find the right one "
 "for your job."
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:54
+#: le/webapp/templates/webapp/index.html:59
 msgid ""
 "Local Experts provides simple messaging system for quick communication "
 "between clients and experts."
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:55
+#: le/webapp/templates/webapp/index.html:60
 msgid "It is up to you which way you stay in touch, phone, email, chat."
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:65
+#: le/webapp/templates/webapp/index.html:70
 msgid "Are you an Expert or looking for one?"
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:66
+#: le/webapp/templates/webapp/index.html:71
 msgid "Find out more about how you can benefit from our platform."
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:72
+#: le/webapp/templates/webapp/index.html:77
 msgid "Experts"
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:73
+#: le/webapp/templates/webapp/index.html:78
 msgid ""
 "Get your qualified leads today! It only takes 2 minuts to create your "
 "profile. Our platform is currently free to join and use."
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:74
-#: le/webapp/templates/webapp/index.html:81
+#: le/webapp/templates/webapp/index.html:79
+#: le/webapp/templates/webapp/index.html:86
 msgid "Find out more"
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:79
+#: le/webapp/templates/webapp/index.html:84
 msgid "Clients"
 msgstr ""
 
-#: le/webapp/templates/webapp/index.html:80
+#: le/webapp/templates/webapp/index.html:85
 msgid ""
 "Find your new Lawyer, Accountant, Translator in your area. Our platform is "
 "currently free to join and use. "

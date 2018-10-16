@@ -21,3 +21,12 @@
   border-bottom-right-radius: 0px;
   border-bottom-left-radius: 0px;
 }
+
+.modal {
+  text-align: center !important;
+
+}
+
+.modal .modal-content {
+  padding: 50px;
+}

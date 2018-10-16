@@ -36,10 +36,12 @@ def index(request):
 
   just_registered = request.GET.get('just_registered')
   question_sent   = request.GET.get('question_sent')
+  expert_removed  = request.GET.get('expert_removed')
 
   context = {
     'just_registered'   : just_registered,
-    'question_sent'     : question_sent
+    'question_sent'     : question_sent,
+    'expert_removed'    : expert_removed
   }
 
   #Redirect if coming from login with next param
@@ -271,6 +273,15 @@ def expert(request):
 
 
   return render(request, 'webapp/expert.html', context)
+
+@login_required
+def remove_profile(request):
+  user_id   = request.user.id
+  expert    = User.objects.get(id=user_id)
+  expert.delete()
+
+  return redirect('/webapp/?expert_removed=true')
+
 
 @login_required
 def update_profile(request):

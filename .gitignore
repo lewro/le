@@ -14,3 +14,4 @@ build/
 tests/report/
 
 le/settings.py
+le/db.sqlite3

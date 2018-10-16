@@ -34,6 +34,7 @@ footer a:hover {
   background: #f9f9f9;
   display: none;
   border-radius: 15px;
+  z-index: 99;
 }
 
 .footer-form-btn {

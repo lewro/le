@@ -37,6 +37,8 @@
       padding-left: 100px;
     }
 
+
+
     #id_experience,
     #id_hour_rate_from,
     #id_hour_rate_to,
@@ -291,6 +293,10 @@
 
   /* Phones */
   @media only screen and (max-width: 670px) {
+
+     .footer-form-btn {
+       display: none;
+     }
 
     .index .profile-content,
     .district-list,

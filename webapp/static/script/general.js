@@ -3,6 +3,9 @@ $(document).ready(function(){
   // Init select drop downs
   $('select').formSelect();
 
+  // Init modal
+  $('.modal').modal();
+
   // Tabs
   $(document).ready(function(){
     $('.tabs').tabs();

@@ -38,6 +38,11 @@
   margin-right: 10px;
 }
 
+.marketing-button.secondary {
+  background: #f2f2f2;
+  color: #333;
+}
+
 .marketing-button:hover {
   background: #f4be49;
 }
@@ -84,6 +89,7 @@
   text-transform: uppercase;
   float: left;
   background: rgb(0,0,0, 0.2);
+  cursor: pointer;
 }
 
 .message-button:hover {

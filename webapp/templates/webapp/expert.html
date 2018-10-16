@@ -75,7 +75,25 @@
                 <i class="fas fa-edit"></i>
                 <span>{% trans 'Update Your Profile' %}</span>
               </a>
+              <a hre="#!" class="message-button  modal-trigger" data-target="modal1">
+                <i class="fas fa-user-times"></i>
+                <span>{% trans 'Remove Profile' %}</span>
+            </a>
             </div>
+
+
+
+            <div id="modal1" class="modal">
+              <div class="modal-content">
+                <h4>{% trans 'You are about to remove your profile forever' %}</h4>
+                <p>{% trans 'Are you sure?' %}</p>
+              </div>
+              <a href="#!" class="modal-close marketing-button secondary half-width">{% trans 'No, not now.' %}
+              <a href="/remove_profile/" class="marketing-button half-width">{% trans 'Yes' %}</a>
+            </div>
+
+
+
           {% else %}
             <div class="expert-value-section last">
                 <a href="" class="message-button" id="send-message">
