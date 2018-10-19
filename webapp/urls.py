@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^about/$', views.about, name = 'about'),
     url(r'^contact/$', views.contact, name = 'contact'),
     url(r'^remove_profile/$', views.remove_profile, name = 'remove_profile'),
+    url(r'^lang/$', views.lang, name = 'lang'),
 
 
 ]

@@ -112,3 +112,22 @@ footer a:hover {
   background: #50c5dc;
   color: #fff;
 }
+
+
+.languages {
+   background: #eee;
+}
+
+.languages a {
+  display: inline-block;
+  padding: 5px 15px;
+  margin: 20px 10px 20px 0;
+  background: #fff;
+  color: #999;
+  font-size: 9px;
+  text-transform: uppercase;
+}
+.languages a:hover {
+  background: #333;
+  color: #fff;
+}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-19 12:40+0200\n"
+"POT-Creation-Date: 2018-10-19 17:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -284,7 +284,7 @@ msgid "About us"
 msgstr "O nás"
 
 #: le/webapp/templates/marketing/empty_template.html:14
-#: le/webapp/templates/webapp/partials/footer.html:11
+#: le/webapp/templates/webapp/partials/footer.html:10
 msgid "Terms"
 msgstr "Obchodní podmínky"
 
@@ -572,7 +572,7 @@ msgstr "Můžete je přidat zde."
 
 #: le/webapp/templates/webapp/expert.html:172
 msgid "Unknown expertieses."
-msgstr "Neznámé experty"
+msgstr "Neznámé odbornosti."
 
 #: le/webapp/templates/webapp/expert.html:188
 msgid "You have not defined your full location."
@@ -625,7 +625,7 @@ msgstr "Čistý a jednoduchý způsob komunikace s vašimi klienty"
 
 #: le/webapp/templates/webapp/index.html:24
 msgid "Find a Lawyer, Accountant, Translator"
-msgstr "Najděte právníka, účetního, překladatele"
+msgstr "Najděte advokáta, účetního, překladatele"
 
 #: le/webapp/templates/webapp/index.html:40
 msgid "Find an Expert"
@@ -794,30 +794,26 @@ msgid "Question"
 msgstr "Vaše otázka"
 
 #: le/webapp/templates/webapp/partials/footer.html:7
-msgid "Feedback"
-msgstr "Zpětná vazba"
-
-#: le/webapp/templates/webapp/partials/footer.html:8
 msgid "Contact us"
 msgstr "Kontaktujte nás"
 
-#: le/webapp/templates/webapp/partials/footer.html:12
+#: le/webapp/templates/webapp/partials/footer.html:11
 msgid "Privacy"
 msgstr "Podmínky ochrany osobních údajů"
 
-#: le/webapp/templates/webapp/partials/footer.html:13
+#: le/webapp/templates/webapp/partials/footer.html:12
 msgid "Press & Media"
 msgstr "Tisk a média"
 
-#: le/webapp/templates/webapp/partials/footer.html:16
+#: le/webapp/templates/webapp/partials/footer.html:15
 msgid "Facebook"
 msgstr "Facebook"
 
-#: le/webapp/templates/webapp/partials/footer.html:17
+#: le/webapp/templates/webapp/partials/footer.html:16
 msgid "Instagram"
 msgstr "Instagram"
 
-#: le/webapp/templates/webapp/partials/footer.html:18
+#: le/webapp/templates/webapp/partials/footer.html:17
 msgid "Twitter"
 msgstr "Twitter"
 
@@ -856,6 +852,9 @@ msgstr "Dokončil jsem úpravu. Uložit a zavřít"
 #: le/webapp/templates/webapp/search.html:30
 msgid "in"
 msgstr " - "
+
+#~ msgid "Feedback"
+#~ msgstr "Zpětná vazba"
 
 #~ msgid "Translator?"
 #~ msgstr "Překladatel?"

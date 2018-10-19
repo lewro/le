@@ -1,11 +1,17 @@
 {% load i18n %}
 
+<div class="languages">
+  <div class="page">
+    <a href="/lang/?lang=cs">Cesky</a>
+    <a href="/lang/?c=en">English</a>
+  </div>
+</div>
+
 <footer class="clearfix page">
   <div class="row">
     <ul class="col s4">
       <li><a href="/about/">{% trans 'About us' %}</a></li>
-      <li><a href="">{% trans 'Feedback' %}</a></li>
-      <li><a href="">{% trans 'Contact us' %}</a></li>
+      <li><a href="mailto:support@localexperts.cz">{% trans 'Contact us' %}</a></li>
     </ul>
     <ul class="col s4">
       <li><a href="/terms/">{% trans 'Terms' %}</a></li>
@@ -14,8 +20,8 @@
     </ul>
     <ul class="col s4">
       <li><a href="https://www.facebook.com/toplocalexperts/">{% trans 'Facebook' %}</a></li>
-      <li><a href="">{% trans 'Instagram' %}</a></li>
-      <li><a href="">{% trans 'Twitter' %}</a></li>
+      <li><a href="https://www.instagram.com/local.experts/">{% trans 'Instagram' %}</a></li>
+      <li><a href="https://twitter.com/localexpertscz">{% trans 'Twitter' %}</a></li>
     </ul>
   </div>
 
@@ -27,3 +33,4 @@
     {% include 'webapp/partials/footer-form.html' %}
   </div>
 </footer>
+

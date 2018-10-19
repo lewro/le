@@ -32,8 +32,14 @@ def logout_user(request):
    logout(request)
    return redirect('/')
 
-def index(request):
+def lang(request):
+  from django.utils import translation
+  user_language = request.GET.get('lang')
+  translation.activate(user_language)
+  request.session[translation.LANGUAGE_SESSION_KEY] = user_language
+  return redirect('/')
 
+def index(request):
   just_registered = request.GET.get('just_registered')
   question_sent   = request.GET.get('question_sent')
   expert_removed  = request.GET.get('expert_removed')

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-19 12:40+0200\n"
+"POT-Creation-Date: 2018-10-19 17:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -284,7 +284,7 @@ msgid "About us"
 msgstr ""
 
 #: le/webapp/templates/marketing/empty_template.html:14
-#: le/webapp/templates/webapp/partials/footer.html:11
+#: le/webapp/templates/webapp/partials/footer.html:10
 msgid "Terms"
 msgstr ""
 
@@ -782,30 +782,26 @@ msgid "Question"
 msgstr ""
 
 #: le/webapp/templates/webapp/partials/footer.html:7
-msgid "Feedback"
-msgstr ""
-
-#: le/webapp/templates/webapp/partials/footer.html:8
 msgid "Contact us"
 msgstr ""
 
-#: le/webapp/templates/webapp/partials/footer.html:12
+#: le/webapp/templates/webapp/partials/footer.html:11
 msgid "Privacy"
 msgstr ""
 
-#: le/webapp/templates/webapp/partials/footer.html:13
+#: le/webapp/templates/webapp/partials/footer.html:12
 msgid "Press & Media"
 msgstr ""
 
-#: le/webapp/templates/webapp/partials/footer.html:16
+#: le/webapp/templates/webapp/partials/footer.html:15
 msgid "Facebook"
 msgstr ""
 
-#: le/webapp/templates/webapp/partials/footer.html:17
+#: le/webapp/templates/webapp/partials/footer.html:16
 msgid "Instagram"
 msgstr ""
 
-#: le/webapp/templates/webapp/partials/footer.html:18
+#: le/webapp/templates/webapp/partials/footer.html:17
 msgid "Twitter"
 msgstr ""
 
