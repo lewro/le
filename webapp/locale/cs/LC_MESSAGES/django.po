@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-16 14:24+0200\n"
+"POT-Creation-Date: 2018-10-19 12:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,8 +19,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: le/webapp/templates/expert/expert_removed.html:5
-#, fuzzy
-#| msgid "Your rating was applied."
 msgid "Your profile was removed."
 msgstr "Vaše hodnocení bylo použito."
 
@@ -580,6 +578,10 @@ msgstr "Neznámé experty"
 msgid "You have not defined your full location."
 msgstr "Nezadali jste úplnou polohu."
 
+#: le/webapp/templates/webapp/expert.html:191
+msgid "Unknown location."
+msgstr "Neznámá adresa."
+
 #: le/webapp/templates/webapp/expert.html:200
 msgid "Directions"
 msgstr "Jak se k nám dostanete"
@@ -595,25 +597,6 @@ msgstr "Nejsou prozatím žádné recenze."
 #: le/webapp/templates/webapp/expert.html:268
 msgid "Other experts from your search"
 msgstr "Ostatní experti z vašeho hledání"
-
-#: le/webapp/templates/webapp/expert.html:297
-msgid "Send Message to Expert"
-msgstr "Odeslat zprávu expertovi"
-
-#: le/webapp/templates/webapp/expert.html:301
-#: le/webapp/templates/webapp/expert.html:341
-#: le/webapp/templates/webapp/messages.html:127
-#: le/webapp/templates/webapp/partials/footer-form.html:24
-msgid "Send"
-msgstr "Poslat"
-
-#: le/webapp/templates/webapp/expert.html:324
-msgid "Your rating text"
-msgstr "Text hodnocení"
-
-#: le/webapp/templates/webapp/expert.html:328
-msgid "Your rating"
-msgstr "Vaše hodnocení"
 
 #: le/webapp/templates/webapp/experts_details.html:18
 msgid "Clean, modern presentation of your services"
@@ -755,6 +738,13 @@ msgstr "Přijato"
 msgid "Specify Reply"
 msgstr "Zadejte odpověď"
 
+#: le/webapp/templates/webapp/messages.html:127
+#: le/webapp/templates/webapp/partials/footer-form.html:24
+#: le/webapp/templates/webapp/partials/sidebar_message.html:23
+#: le/webapp/templates/webapp/partials/sidebar_rating.html:35
+msgid "Send"
+msgstr "Poslat"
+
 #: le/webapp/templates/webapp/news.html:15
 msgid "Industry News - Law"
 msgstr "Zprávy - právo"
@@ -834,6 +824,22 @@ msgstr "Twitter"
 #: le/webapp/templates/webapp/partials/nav.html:11
 msgid "Logout"
 msgstr "Odhlásit se"
+
+#: le/webapp/templates/webapp/partials/sidebar_message.html:19
+msgid "Send Message to Expert"
+msgstr "Odeslat zprávu expertovi"
+
+#: le/webapp/templates/webapp/partials/sidebar_rating.html:18
+msgid "Your rating text"
+msgstr "Text hodnocení"
+
+#: le/webapp/templates/webapp/partials/sidebar_rating.html:22
+msgid "Your rating"
+msgstr "Vaše hodnocení"
+
+#: le/webapp/templates/webapp/partials/sidebar_sharing.html:11
+msgid "Share with friends today"
+msgstr "Sdílejte s přáteli"
 
 #: le/webapp/templates/webapp/partials/step_buttons.html:3
 msgid "Next  →"

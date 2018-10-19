@@ -188,7 +188,7 @@
               <p class="no-data do-something"><i class="fas fa-pencil-alt"></i>{% trans 'You have not defined your full location.' %}<a href="/webapp/update_profile/?id={{ expert.id }}">{% trans 'You can add it in here.' %}</a></p>
             {% else %}
               {% if  expert.street == None %}
-                <p class="no-data"><i class="fas fa-map"></i>cUnknown location.' %}</p>
+                <p class="no-data"><i class="fas fa-map"></i>{% trans 'Unknown location.' %}</p>
               {% else %}
                 <div class="address">
                   <i class="fas fa-map-marker-alt"></i>

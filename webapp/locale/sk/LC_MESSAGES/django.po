@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-16 14:24+0200\n"
+"POT-Creation-Date: 2018-10-19 12:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -575,6 +575,10 @@ msgstr ""
 msgid "You have not defined your full location."
 msgstr ""
 
+#: le/webapp/templates/webapp/expert.html:191
+msgid "Unknown location."
+msgstr ""
+
 #: le/webapp/templates/webapp/expert.html:200
 msgid "Directions"
 msgstr ""
@@ -589,25 +593,6 @@ msgstr ""
 
 #: le/webapp/templates/webapp/expert.html:268
 msgid "Other experts from your search"
-msgstr ""
-
-#: le/webapp/templates/webapp/expert.html:297
-msgid "Send Message to Expert"
-msgstr ""
-
-#: le/webapp/templates/webapp/expert.html:301
-#: le/webapp/templates/webapp/expert.html:341
-#: le/webapp/templates/webapp/messages.html:127
-#: le/webapp/templates/webapp/partials/footer-form.html:24
-msgid "Send"
-msgstr ""
-
-#: le/webapp/templates/webapp/expert.html:324
-msgid "Your rating text"
-msgstr ""
-
-#: le/webapp/templates/webapp/expert.html:328
-msgid "Your rating"
 msgstr ""
 
 #: le/webapp/templates/webapp/experts_details.html:18
@@ -741,6 +726,13 @@ msgstr ""
 msgid "Specify Reply"
 msgstr ""
 
+#: le/webapp/templates/webapp/messages.html:127
+#: le/webapp/templates/webapp/partials/footer-form.html:24
+#: le/webapp/templates/webapp/partials/sidebar_message.html:23
+#: le/webapp/templates/webapp/partials/sidebar_rating.html:35
+msgid "Send"
+msgstr ""
+
 #: le/webapp/templates/webapp/news.html:15
 msgid "Industry News - Law"
 msgstr ""
@@ -819,6 +811,22 @@ msgstr ""
 
 #: le/webapp/templates/webapp/partials/nav.html:11
 msgid "Logout"
+msgstr ""
+
+#: le/webapp/templates/webapp/partials/sidebar_message.html:19
+msgid "Send Message to Expert"
+msgstr ""
+
+#: le/webapp/templates/webapp/partials/sidebar_rating.html:18
+msgid "Your rating text"
+msgstr ""
+
+#: le/webapp/templates/webapp/partials/sidebar_rating.html:22
+msgid "Your rating"
+msgstr ""
+
+#: le/webapp/templates/webapp/partials/sidebar_sharing.html:11
+msgid "Share with friends today"
 msgstr ""
 
 #: le/webapp/templates/webapp/partials/step_buttons.html:3
