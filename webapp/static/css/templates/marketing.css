@@ -101,7 +101,6 @@
 .index .home-box {
   background: #000;
   color: #fff;
-  background-size: cover;
   padding: 0;
   height: 700px;
 }
@@ -148,9 +147,15 @@
   display: block;
 }
 
-#home-expert {background: url("/static/images/img-home-expert.jpg") top center no-repeat;}
-#home-client {background: url("/static/images/img-home-client.jpg") top center no-repeat;}
+#home-expert {
+  background: url("/static/images/img-home-expert.jpg") top center no-repeat;
+  background-size: cover;
+}
 
+#home-client {
+  background: url("/static/images/img-home-client.jpg") top center no-repeat;
+  background-size: cover;
+}
 
 /* Join Box */
 .join-box {

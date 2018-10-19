@@ -25,6 +25,11 @@ $(document).ready(function(){
     return false;
   });
 
+  $('#share').click(function(){
+    $('.sharing-sidebar').toggle("slide");
+    return false;
+  });
+
   $('.close-sideber').click(function(){
     $('.sidebar').hide();
   });

@@ -27,5 +27,4 @@ $(document).ready(function(){
     $('.footer-form').show(250);
     $(this).hide()
   });
-
 });

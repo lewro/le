@@ -480,7 +480,7 @@
     }
   }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 420px) {
   .signin .left {
     height: 200px;
   }

@@ -1,0 +1,41 @@
+{% load i18n %}
+
+<div class="rating-sidebar sidebar category-{{ expert.category_id }}" >
+  <div class="input-spacing">
+    <div class="close-sideber">
+      <i class="fas fa-times-circle"></i>
+    </div>
+  </div>
+
+  {% if user.is_authenticated %}
+    <form action="/webapp/create_rating/" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="to_user" id="to_user_id" value="{{ expert.id }}" />
+      <input type="hidden" name="from_user" id="from_user_id" value="{{ request.user.id }}" />
+      <div class="input-spacing etp">
+        <div class="input-field">
+          <textarea type="text" id="id_body" name="body" required="true" autofocus></textarea>
+          <label for="id_body">{% trans 'Your rating text' %}</label>
+        </div>
+      </div>
+      <div class="input-spacing">
+        <label for="id_rating" class="active">{% trans 'Your rating' %}</label>
+        <div class="input-field">
+          <div class="star-rating">
+            <i class="far fa-star" data-value="1"></i>
+            <i class="far fa-star" data-value="2"></i>
+            <i class="far fa-star" data-value="3"></i>
+            <i class="far fa-star" data-value="4"></i>
+            <i class="far fa-star" data-value="5"></i>
+          </div>
+          <input type='hidden' name="rating" id="id_rating" value="5" />
+        </div>
+      </div>
+      <div class="input-spacing">
+        <input class="btn" type="submit" name="submit" value="{% trans 'Send' %}" />
+      </div>
+    </form>
+  {% else %}
+    {% include 'marketing/not_logged_in.html' %}
+  {% endif %}
+</div>

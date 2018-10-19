@@ -67,7 +67,6 @@ def experts_details(request):
   return render(request, 'webapp/experts_details.html')
 
 def contact(request):
-
   subject     = "Question from Local Experts"
   question    = request.POST['message']
   email       = request.POST['email']
@@ -76,7 +75,7 @@ def contact(request):
 
   from_email  = settings.EMAIL_HOST_USER
   password    = settings.EMAIL_HOST_PASSWORD
-  to_list     = ['app.localexperts@gmail.com']
+  to_list     = ['support@localexperts.cz']
 
   send_mail(subject, message, from_email, to_list, fail_silently=True)
 
@@ -151,6 +150,7 @@ def create_message(request):
   if request.method == 'POST':
     form     = MessageForm(request.POST)
     user_id  = request.POST['to_user']
+    expert   = User.objects.get(id=expert_id)
 
     if form.is_valid():
       form.save()
@@ -162,7 +162,7 @@ def create_message(request):
       message     = request.POST['body']
       from_email  = settings.EMAIL_HOST_USER
       password    = settings.EMAIL_HOST_PASSWORD
-      to_list     = ['roman.leinwather@gmail.com'] #Update with Expert Email
+      to_list     = ['support@localexperts.cz', expert.email] #Update with Expert Email
 
       send_mail(subject, message, from_email, to_list, fail_silently=True)
 
@@ -378,7 +378,7 @@ def register_client(request):
       message     = "New client joined Local Experts. | Email: " + username
       from_email  = settings.EMAIL_HOST_USER
       password    = settings.EMAIL_HOST_PASSWORD
-      to_list     = ['app.localexperts@gmail.com']
+      to_list     = ['support@localexperts.cz']
 
       send_mail(subject, message, from_email, to_list, fail_silently=True)
 
