@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 12:27+0200\n"
+"POT-Creation-Date: 2018-10-23 13:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,18 +30,12 @@ msgstr "Vaše zpráva byla odeslána"
 msgid "Your rating was applied."
 msgstr "Vaše hodnocení bylo použito."
 
-#: le/webapp/templates/includes/custom_form.html:9
-#: le/webapp/templates/includes/login_form.html:9
-#: le/webapp/templates/registration/register_client.html:12
-msgid "Password:"
-msgstr "Heslo"
-
-#: le/webapp/templates/includes/custom_form.html:21
+#: le/webapp/templates/includes/custom_form.html:19
 #: le/webapp/templates/includes/custom_form_update.html:9
 msgid "Identification"
 msgstr "Identifikace"
 
-#: le/webapp/templates/includes/custom_form.html:25
+#: le/webapp/templates/includes/custom_form.html:23
 #: le/webapp/templates/includes/custom_form_update.html:13
 #: le/webapp/templates/marketing/experts.html:21
 #: le/webapp/templates/marketing/experts.html:56
@@ -58,7 +52,7 @@ msgstr "Identifikace"
 msgid "Experience"
 msgstr "Zkušenosti"
 
-#: le/webapp/templates/includes/custom_form.html:29
+#: le/webapp/templates/includes/custom_form.html:27
 #: le/webapp/templates/includes/custom_form_update.html:17
 #: le/webapp/templates/webapp/clients_details.html:42
 #: le/webapp/templates/webapp/expert.html:166
@@ -66,16 +60,16 @@ msgstr "Zkušenosti"
 msgid "Expertise"
 msgstr "Odbornost"
 
-#: le/webapp/templates/includes/custom_form.html:33
+#: le/webapp/templates/includes/custom_form.html:31
 msgid "Contacts "
 msgstr "Kontakty"
 
-#: le/webapp/templates/includes/custom_form.html:37
+#: le/webapp/templates/includes/custom_form.html:35
 #: le/webapp/templates/includes/custom_form_update.html:25
 msgid "Account"
 msgstr "Účet"
 
-#: le/webapp/templates/includes/custom_form.html:48
+#: le/webapp/templates/includes/custom_form.html:46
 #: le/webapp/templates/includes/custom_form_update.html:36
 #: le/webapp/templates/marketing/industry_news.html:12
 #: le/webapp/templates/marketing/search.html:14
@@ -84,7 +78,7 @@ msgstr "Účet"
 msgid "Lawyer"
 msgstr "Advokát"
 
-#: le/webapp/templates/includes/custom_form.html:54
+#: le/webapp/templates/includes/custom_form.html:52
 #: le/webapp/templates/includes/custom_form_update.html:42
 #: le/webapp/templates/marketing/industry_news.html:16
 #: le/webapp/templates/marketing/profile.html:9
@@ -94,141 +88,142 @@ msgstr "Advokát"
 msgid "Accountant"
 msgstr "Účetní"
 
-#: le/webapp/templates/includes/custom_form.html:60
+#: le/webapp/templates/includes/custom_form.html:58
 msgid "Translator "
 msgstr "Překladatel"
 
-#: le/webapp/templates/includes/custom_form.html:83
+#: le/webapp/templates/includes/custom_form.html:81
 msgid "Experience (years): "
 msgstr "Zkušenosti (v letech):"
 
-#: le/webapp/templates/includes/custom_form.html:103
+#: le/webapp/templates/includes/custom_form.html:101
 #: le/webapp/templates/includes/custom_form_update.html:96
 msgid "Hour Rate (from - to):"
 msgstr "Hodinová mzda (od - do):"
 
-#: le/webapp/templates/includes/custom_form.html:104
+#: le/webapp/templates/includes/custom_form.html:102
 #: le/webapp/templates/includes/custom_form_update.html:97
 msgid "Normo-page Rate (from - to):"
 msgstr "Normo-strana (od - do):"
 
-#: le/webapp/templates/includes/custom_form.html:133
-#: le/webapp/templates/includes/custom_form.html:163
-#: le/webapp/templates/includes/custom_form.html:374
+#: le/webapp/templates/includes/custom_form.html:131
+#: le/webapp/templates/includes/custom_form.html:161
+#: le/webapp/templates/includes/custom_form.html:372
 msgid "Next  →   "
 msgstr "  →   Další"
 
-#: le/webapp/templates/includes/custom_form.html:134
-#: le/webapp/templates/includes/custom_form.html:164
-#: le/webapp/templates/includes/custom_form.html:375
+#: le/webapp/templates/includes/custom_form.html:132
+#: le/webapp/templates/includes/custom_form.html:162
+#: le/webapp/templates/includes/custom_form.html:373
 msgid " ←  Back"
 msgstr " ←  Předchozí"
 
-#: le/webapp/templates/includes/custom_form.html:182
+#: le/webapp/templates/includes/custom_form.html:180
 #: le/webapp/templates/includes/custom_form_update.html:178
 msgid "First name"
 msgstr "Jméno"
 
-#: le/webapp/templates/includes/custom_form.html:196
+#: le/webapp/templates/includes/custom_form.html:194
 #: le/webapp/templates/includes/custom_form_update.html:192
 msgid "Last name"
 msgstr "Příjmení"
 
-#: le/webapp/templates/includes/custom_form.html:202
+#: le/webapp/templates/includes/custom_form.html:200
 #: le/webapp/templates/includes/custom_form_update.html:198
 msgid "Bio"
 msgstr "Popis služeb"
 
-#: le/webapp/templates/includes/custom_form.html:215
+#: le/webapp/templates/includes/custom_form.html:213
 #: le/webapp/templates/includes/custom_form_update.html:211
+#: le/webapp/templates/marketing/press.html:24
 msgid "Company"
 msgstr "Společnost"
 
-#: le/webapp/templates/includes/custom_form.html:230
+#: le/webapp/templates/includes/custom_form.html:228
 #: le/webapp/templates/includes/custom_form_update.html:226
 msgid "District"
 msgstr "Okres"
 
-#: le/webapp/templates/includes/custom_form.html:244
+#: le/webapp/templates/includes/custom_form.html:242
 #: le/webapp/templates/includes/custom_form_update.html:240
 msgid "Country"
 msgstr "Země"
 
-#: le/webapp/templates/includes/custom_form.html:257
+#: le/webapp/templates/includes/custom_form.html:255
 #: le/webapp/templates/includes/custom_form_update.html:253
 msgid "Phone"
 msgstr "Telefon"
 
-#: le/webapp/templates/includes/custom_form.html:270
+#: le/webapp/templates/includes/custom_form.html:268
 #: le/webapp/templates/includes/custom_form_update.html:266
 msgid "Mobile"
 msgstr "Mobil"
 
-#: le/webapp/templates/includes/custom_form.html:283
+#: le/webapp/templates/includes/custom_form.html:281
 #: le/webapp/templates/includes/custom_form_update.html:279
 msgid "Web"
 msgstr "Web"
 
-#: le/webapp/templates/includes/custom_form.html:296
+#: le/webapp/templates/includes/custom_form.html:294
 #: le/webapp/templates/includes/custom_form_update.html:292
 msgid "Street"
 msgstr "Ulice"
 
-#: le/webapp/templates/includes/custom_form.html:309
+#: le/webapp/templates/includes/custom_form.html:307
 #: le/webapp/templates/includes/custom_form_update.html:305
 msgid "Street number"
 msgstr "Číslo ulice"
 
-#: le/webapp/templates/includes/custom_form.html:322
+#: le/webapp/templates/includes/custom_form.html:320
 #: le/webapp/templates/includes/custom_form_update.html:318
 msgid "City"
 msgstr "Město"
 
-#: le/webapp/templates/includes/custom_form.html:335
+#: le/webapp/templates/includes/custom_form.html:333
 #: le/webapp/templates/includes/custom_form_update.html:331
 msgid "Zip"
 msgstr "PSČ"
 
-#: le/webapp/templates/includes/custom_form.html:360
+#: le/webapp/templates/includes/custom_form.html:358
 #: le/webapp/templates/includes/custom_form_update.html:356
 msgid "Click here to find your address on map"
 msgstr "Klikněte zde pro nalezení adresy na mapě"
 
-#: le/webapp/templates/includes/custom_form.html:388
+#: le/webapp/templates/includes/custom_form.html:386
 #: le/webapp/templates/includes/custom_form_update.html:391
 msgid "Profile Image"
 msgstr "Obrázek profilu"
 
-#: le/webapp/templates/includes/custom_form.html:416
+#: le/webapp/templates/includes/custom_form.html:414
 #: le/webapp/templates/includes/custom_form_update.html:413
 #: le/webapp/templates/registration/register_client.html:43
 #: le/webapp/templates/webapp/partials/footer-form.html:17
 msgid "Email"
 msgstr "Email"
 
-#: le/webapp/templates/includes/custom_form.html:422
+#: le/webapp/templates/includes/custom_form.html:420
 #: le/webapp/templates/includes/custom_form_update.html:429
 #: le/webapp/templates/registration/register_client.html:49
 msgid "Password"
 msgstr "Heslo"
 
-#: le/webapp/templates/includes/custom_form.html:423
+#: le/webapp/templates/includes/custom_form.html:421
 #: le/webapp/templates/registration/register_client.html:50
 msgid "min 5 chars"
-msgstr ""
+msgstr "min 5 znaků"
 
-#: le/webapp/templates/includes/custom_form.html:429
+#: le/webapp/templates/includes/custom_form.html:427
 #: le/webapp/templates/includes/custom_form_update.html:444
 #: le/webapp/templates/registration/register_client.html:56
 msgid "Password - confirmation"
 msgstr "Potvrzení hesla"
 
-#: le/webapp/templates/includes/custom_form.html:435
+#: le/webapp/templates/includes/custom_form.html:433
 #: le/webapp/templates/registration/register_client.html:62
 msgid "Back "
 msgstr "Zpátky"
 
-#: le/webapp/templates/includes/custom_form.html:436
+#: le/webapp/templates/includes/custom_form.html:434
 #: le/webapp/templates/includes/custom_form_update.html:379
 #: le/webapp/templates/includes/custom_form_update.html:451
 #: le/webapp/templates/registration/register_client.html:63
@@ -274,6 +269,11 @@ msgstr "Účetní"
 #: le/webapp/templates/webapp/search.html:28
 msgid "Translators"
 msgstr "Překladatelé"
+
+#: le/webapp/templates/includes/login_form.html:9
+#: le/webapp/templates/registration/register_client.html:12
+msgid "Password:"
+msgstr "Heslo"
 
 #: le/webapp/templates/includes/login_form.html:24
 #: le/webapp/templates/marketing/not_logged_in.html:6
@@ -406,6 +406,30 @@ msgstr "nebo"
 msgid "Register"
 msgstr "Registrace"
 
+#: le/webapp/templates/marketing/press.html:13
+#: le/webapp/templates/webapp/partials/footer.html:19
+msgid "Press & Media"
+msgstr "Tisk a média"
+
+#: le/webapp/templates/marketing/press.html:34
+#: le/webapp/templates/webapp/clients_details.html:122
+msgid "Expert Profile"
+msgstr "Profil experta"
+
+#: le/webapp/templates/marketing/press.html:35
+#: le/webapp/templates/marketing/press.html:39
+#: le/webapp/templates/marketing/press.html:43
+msgid "Download Image"
+msgstr "Stáhnout obrázek"
+
+#: le/webapp/templates/marketing/press.html:38
+msgid "Expert Cards"
+msgstr "Karty odborníků"
+
+#: le/webapp/templates/marketing/press.html:42
+msgid "Logo"
+msgstr "Logo"
+
 #: le/webapp/templates/marketing/profile.html:30
 #: le/webapp/templates/webapp/clients_details.html:38
 #: le/webapp/templates/webapp/expert.html:60
@@ -485,10 +509,6 @@ msgstr "Advokáta, účetního, překladatele?"
 #: le/webapp/templates/webapp/experts_details.html:30
 msgid "Location"
 msgstr "Místo"
-
-#: le/webapp/templates/webapp/clients_details.html:122
-msgid "Expert Profile"
-msgstr "Profil experta"
 
 #: le/webapp/templates/webapp/clients_details.html:123
 msgid "Chose the right expert for you job based on various criteria."
@@ -804,10 +824,6 @@ msgstr "Kontaktujte nás"
 msgid "Privacy"
 msgstr "Podmínky ochrany osobních údajů"
 
-#: le/webapp/templates/webapp/partials/footer.html:19
-msgid "Press & Media"
-msgstr "Tisk a média"
-
 #: le/webapp/templates/webapp/partials/footer.html:22
 msgid "Facebook"
 msgstr "Facebook"
@@ -855,6 +871,10 @@ msgstr "Dokončil jsem úpravu. Uložit a zavřít"
 #: le/webapp/templates/webapp/search.html:30
 msgid "in"
 msgstr " - "
+
+#: le/webapp/templates/webapp/search.html:48
+msgid "There are no data matching search criteria."
+msgstr "Neexistují žádná data odpovídající kritériím vyhledávání."
 
 #~ msgid "Feedback"
 #~ msgstr "Zpětná vazba"

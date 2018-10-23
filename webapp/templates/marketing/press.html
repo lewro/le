@@ -1,0 +1,53 @@
+{% extends "webapp/base.html" %}
+{% block content %}
+{% load i18n %}
+
+<div class="expert">
+  <div class="bg-top">
+    <div class="top-cover">
+      {% include 'webapp/partials/nav.html' %}
+      <div class="top-category-icon">
+        <i class="far fa-building"></i>
+      </div>
+      <h1>
+          <span>{% trans 'Press & Media' %}</span>
+      </h1>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="row">
+      <div class="col s12 main-content">
+
+        <h3>Local Experts</h3>
+
+        <h4>{% trans 'Company' %}</h4>
+        <ul>
+          <li>Getquantify s.r.o</li>
+          <li>Benadicka 7, 851 06 Bratislava, SK</li>
+          <li>IČO: 47 538 953<li/>
+          <li>DIČ: SK2023949785<li/>
+          <li>Email: support@localexperts.cz</li>
+        </ul>
+
+
+        <h4>{% trans 'Expert Profile' %}</h4>
+        <p><a class="btn" target="_blank" href="/static/images/promo_1.jpg">{% trans 'Download Image' %}</a></p>
+        <img src="/static/images/promo_1.jpg" alt="Sample Profile" style="width: 100%;" />
+
+        <h4>{% trans 'Expert Cards' %}</h4>
+        <p><a class="btn" target="_blank" href="/static/images/promo_2.png">{% trans 'Download Image' %}</a></p>
+        <img src="/static/images/promo_2.png" alt="Sample Profile" style="width: 100%;" />
+
+        <h4>{% trans 'Logo' %}</h4>
+        <p><a class="btn" target="_blank" href="/static/images/le_logo.png">{% trans 'Download Image' %}</a></p>
+        <img src="/static/images/le_logo.png" alt="logo" style="width: 50%;" />
+
+      </div>
+    </div><!-- Row -->
+  </div><!-- Page -->
+</div>
+
+{% endblock %}
+
+

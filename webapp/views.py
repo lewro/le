@@ -60,6 +60,9 @@ def index(request):
 def about(request):
   return render(request, 'marketing/about.html')
 
+def press(request):
+  return render(request, 'marketing/press.html')
+
 def terms(request):
   return render(request, 'marketing/terms.html')
 

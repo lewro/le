@@ -5,9 +5,7 @@
     <div class="col s12">
       <strong>Errors</strong>
       {% for field in form %}
-        {% if field.name == "password1" %}
-          <p>{% trans 'Password:' %} {{ field.errors|striptags }}</p>
-        {% endif %}
+        <p>{{ field.errors|striptags }}</p>
       {% endfor %}
     </div>
   </div>

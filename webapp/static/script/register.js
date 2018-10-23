@@ -3,6 +3,13 @@ $(document).ready(function(){
   // Only on Register View
   if($('.register').length > 0){
 
+    // On Enter
+    $('input').keypress(function (e) {
+      if (e.which == 13) {
+        return false;
+      }
+    });
+
     // Tags
     $('.tag').click(function(){
       if ($(this).hasClass('active')){
@@ -113,21 +120,26 @@ $(document).ready(function(){
       var active_step = $('.step.active');
       $('.step').removeClass('active');
       $(active_step).prev().addClass('active');
+
       return false;
     });
 
     $('.step').click(function(){
 
-      // Boxes
-      var box_id = $(this).attr('id');
-      $('.box-step').removeClass('active');
-      var new_box = $('body').find("[data-id='"+box_id+"']");
-      $(new_box).addClass('active');
+      if ($('#step_1').hasClass('active')) {
+        // User needs to chose profession, this step can't be skipped
+      } else {
+        // Boxes
+        var box_id = $(this).attr('id');
+        $('.box-step').removeClass('active');
+        var new_box = $('body').find("[data-id='"+box_id+"']");
+        $(new_box).addClass('active');
 
-      // Steppers
-      $('.step').removeClass('active');
-      $(this).addClass('active');
+        // Steppers
+        $('.step').removeClass('active');
+        $(this).addClass('active');
 
+      }
       return false;
     });
 
@@ -137,6 +149,7 @@ $(document).ready(function(){
       street_no    = $('#id_street_number').val();
       city         = $('#id_city').val();
       zip          = $('#id_zipcode').val();
+
       $('#pac-input').val(street + " " + street_no);
     });
 
