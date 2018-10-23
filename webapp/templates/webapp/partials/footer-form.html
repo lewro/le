@@ -13,12 +13,12 @@
   {% csrf_token %}
   <div class="form-cover">
     <div class="input-field first">
-      <input type="email" id="id_email" name="email" />
-      <label id="id_email">{% trans 'Email' %}</label>
+      <input type="email" id="id_email_ff" name="email" data-required="true" />
+      <label id="id_email__ff">{% trans 'Email' %}</label>
     </div>
     <div class="input-field">
-      <textarea type="text" id="id_message" name="message"></textarea>
-      <label id="id_email">{% trans 'Question' %}</label>
+      <textarea type="text" id="id_message" name="message" data-required="true"></textarea>
+      <label id="id_message">{% trans 'Question' %}</label>
     </div>
   </div>
   <input class="form-submit" type="submit" value="{% trans 'Send' %}" />

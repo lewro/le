@@ -17,6 +17,11 @@ label.active {
   color: #50c5dc !important;
 }
 
+input.validation_error,
+textarea.validation_error  {
+  border-bottom: 1px solid #ff4143 !important;
+}
+
 .input-spacing {
   padding: 0 50px;
 }

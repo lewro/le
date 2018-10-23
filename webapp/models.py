@@ -112,7 +112,7 @@ class User(AbstractBaseUser):
     return True
 
   def is_client(self):
-    if self.category_id == None:
+    if self.category_id > 0:
       return False
     else:
       return True

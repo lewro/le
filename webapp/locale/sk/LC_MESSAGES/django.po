@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-19 17:01+0200\n"
+"POT-Creation-Date: 2018-10-23 12:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -199,40 +199,39 @@ msgstr ""
 msgid "Profile Image"
 msgstr ""
 
-#: le/webapp/templates/includes/custom_form.html:415
-#: le/webapp/templates/includes/custom_form_update.html:412
-#: le/webapp/templates/registration/register_client.html:42
+#: le/webapp/templates/includes/custom_form.html:416
+#: le/webapp/templates/includes/custom_form_update.html:413
+#: le/webapp/templates/registration/register_client.html:43
 #: le/webapp/templates/webapp/partials/footer-form.html:17
 msgid "Email"
 msgstr ""
 
-#: le/webapp/templates/includes/custom_form.html:421
-#: le/webapp/templates/includes/custom_form_update.html:427
-#: le/webapp/templates/registration/register_client.html:48
+#: le/webapp/templates/includes/custom_form.html:422
+#: le/webapp/templates/includes/custom_form_update.html:429
+#: le/webapp/templates/registration/register_client.html:49
 msgid "Password"
 msgstr ""
 
-#: le/webapp/templates/includes/custom_form.html:422
-#: le/webapp/templates/includes/custom_form_update.html:428
-#: le/webapp/templates/registration/register_client.html:49
-msgid "min 8 chars, no common words, no entire numeric"
+#: le/webapp/templates/includes/custom_form.html:423
+#: le/webapp/templates/registration/register_client.html:50
+msgid "min 5 chars"
 msgstr ""
 
-#: le/webapp/templates/includes/custom_form.html:428
-#: le/webapp/templates/includes/custom_form_update.html:441
-#: le/webapp/templates/registration/register_client.html:55
+#: le/webapp/templates/includes/custom_form.html:429
+#: le/webapp/templates/includes/custom_form_update.html:444
+#: le/webapp/templates/registration/register_client.html:56
 msgid "Password - confirmation"
 msgstr ""
 
-#: le/webapp/templates/includes/custom_form.html:434
-#: le/webapp/templates/registration/register_client.html:61
+#: le/webapp/templates/includes/custom_form.html:435
+#: le/webapp/templates/registration/register_client.html:62
 msgid "Back "
 msgstr ""
 
-#: le/webapp/templates/includes/custom_form.html:435
+#: le/webapp/templates/includes/custom_form.html:436
 #: le/webapp/templates/includes/custom_form_update.html:379
-#: le/webapp/templates/includes/custom_form_update.html:448
-#: le/webapp/templates/registration/register_client.html:62
+#: le/webapp/templates/includes/custom_form_update.html:451
+#: le/webapp/templates/registration/register_client.html:63
 msgid "Save"
 msgstr ""
 
@@ -253,8 +252,12 @@ msgid "Experience (years):"
 msgstr ""
 
 #: le/webapp/templates/includes/custom_form_update.html:378
-#: le/webapp/templates/includes/custom_form_update.html:447
+#: le/webapp/templates/includes/custom_form_update.html:450
 msgid "Back"
+msgstr ""
+
+#: le/webapp/templates/includes/custom_form_update.html:430
+msgid "min 8 chars, no common words, no entire numeric"
 msgstr ""
 
 #: le/webapp/templates/includes/district_list.html:8
@@ -274,17 +277,17 @@ msgstr ""
 
 #: le/webapp/templates/includes/login_form.html:24
 #: le/webapp/templates/marketing/not_logged_in.html:6
-#: le/webapp/templates/webapp/partials/nav.html:38
+#: le/webapp/templates/webapp/partials/nav.html:39
 msgid "Login"
 msgstr ""
 
 #: le/webapp/templates/marketing/about.html:13
-#: le/webapp/templates/webapp/partials/footer.html:6
+#: le/webapp/templates/webapp/partials/footer.html:13
 msgid "About us"
 msgstr ""
 
 #: le/webapp/templates/marketing/empty_template.html:14
-#: le/webapp/templates/webapp/partials/footer.html:10
+#: le/webapp/templates/webapp/partials/footer.html:17
 msgid "Terms"
 msgstr ""
 
@@ -396,7 +399,7 @@ msgid "or"
 msgstr ""
 
 #: le/webapp/templates/marketing/not_logged_in.html:8
-#: le/webapp/templates/webapp/partials/nav.html:42
+#: le/webapp/templates/webapp/partials/nav.html:43
 msgid "Register"
 msgstr ""
 
@@ -781,27 +784,27 @@ msgstr ""
 msgid "Question"
 msgstr ""
 
-#: le/webapp/templates/webapp/partials/footer.html:7
+#: le/webapp/templates/webapp/partials/footer.html:14
 msgid "Contact us"
 msgstr ""
 
-#: le/webapp/templates/webapp/partials/footer.html:11
+#: le/webapp/templates/webapp/partials/footer.html:18
 msgid "Privacy"
 msgstr ""
 
-#: le/webapp/templates/webapp/partials/footer.html:12
+#: le/webapp/templates/webapp/partials/footer.html:19
 msgid "Press & Media"
 msgstr ""
 
-#: le/webapp/templates/webapp/partials/footer.html:15
+#: le/webapp/templates/webapp/partials/footer.html:22
 msgid "Facebook"
 msgstr ""
 
-#: le/webapp/templates/webapp/partials/footer.html:16
+#: le/webapp/templates/webapp/partials/footer.html:23
 msgid "Instagram"
 msgstr ""
 
-#: le/webapp/templates/webapp/partials/footer.html:17
+#: le/webapp/templates/webapp/partials/footer.html:24
 msgid "Twitter"
 msgstr ""
 

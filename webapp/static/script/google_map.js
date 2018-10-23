@@ -97,6 +97,6 @@ function init() {
 
 google.maps.event.addDomListener(window, 'load', init);
 
-$(document).ready(function(){
+document.addEventListener("DOMContentLoaded", function(event) {
   init();
 });

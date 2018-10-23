@@ -431,7 +431,7 @@ def register_expert(request):
       message     = "New expert joined Local Experts. | Email: " + username + " | Category_id: " + str(user.category_id) + " | District: " + user.district
       from_email  = settings.EMAIL_HOST_USER
       password    = settings.EMAIL_HOST_PASSWORD
-      to_list     = ['app.localexperts@gmail.com']
+      to_list     = ['support@localexperts.cz']
 
       send_mail(subject, message, from_email, to_list, fail_silently=True)
 

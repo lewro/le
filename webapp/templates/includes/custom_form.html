@@ -405,6 +405,7 @@
       <div class="input-spacing">
         <div class="input-field col s12">
           <input
+            data-required="true"
             type="email"
             id="id_email"
             name="email"
@@ -417,14 +418,14 @@
       </div>
       <div class="input-spacing">
         <div class="input-field col s12 l6">
-          <input type="password" id="id_password1" name="password1" />
+          <input type="password" id="id_password1" name="password1" data-required="true" />
           <label id="id_password1">{% trans 'Password' %}</label>
-          <span class="input-helper">{% trans 'min 8 chars, no common words, no entire numeric' %}</span>
+          <span class="input-helper">{% trans 'min 5 chars' %}</span>
         </div>
       </div>
       <div class="input-spacing">
         <div class="input-field col s12 l6">
-          <input type="password" id="id_password2" name="password2" />
+          <input type="password" id="id_password2" name="password2" data-required="true" />
           <label id="id_password2">{% trans 'Password - confirmation' %}</label>
         </div>
       </div>

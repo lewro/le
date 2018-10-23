@@ -27,4 +27,8 @@ $(document).ready(function(){
     $('.footer-form').show(250);
     $(this).hide()
   });
+
+  $('form').on('submit', function(e) {
+     return validateForm(this);
+  });
 });
