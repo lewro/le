@@ -91,10 +91,10 @@
         <!-- SLIDER FOR RATE -->
         <div class="input-field col s12 m12 l4 erp">
           <label class="custom-label">
-            {% if request.GET.category_id == 3 %}
-              {% trans 'Maximal Hour Rate:' %}
-            {% else %}
+            {% if request.GET.category_id == "3" %}
               {% trans 'Maximal Normopage Rate:' %}
+            {% else %}
+              {% trans 'Maximal Hour Rate:' %}
             {% endif %}
             <span class="label-helper">
               <span id="rate"></span>
