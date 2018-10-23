@@ -12,6 +12,5 @@ tests/coverage_html/
 tests/.coverage
 build/
 tests/report/
-
 le/settings.py
-le/db.sqlite3
+db.sqlite3
