@@ -18,7 +18,7 @@ function max_size(element) {
   if (filter.test($(element).val())) {
       return invalidate(element);
   } else {
-    if ($(element).val().length < 200) {
+    if ($(element).val().length < 10000) {
       validate(element);
       return not_empty_input(element);
     } else {

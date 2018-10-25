@@ -1,0 +1,80 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Localexperts.cz</title>
+  <style type="text/css">
+
+    /* Layout */
+    body {
+      min-width: 630px;
+    }
+
+    /* Aesthetics */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family:Sans-serif;
+      line-height: 1.5em;
+    }
+
+    #cover {
+      padding: 50px 20%;
+      background: #333;
+    }
+
+    #container {
+      box-shadow: 0px 10px 20px -3px rgb(0,0,0, 0.1);
+    }
+
+    #body {
+      padding: 30px;
+      background: #fff;
+    }
+
+    #top {
+      background: #ff4143;
+      padding: 30px;
+    }
+
+    h1 {
+      text-transform: uppercase;
+      font-size: 11px;
+      color: #000;
+    }
+
+    p {
+      color: #000;
+    }
+
+    a {
+      color: #ff4143;
+    }
+
+  </style>
+</head>
+
+<body>
+  {% block content %}
+
+  <div id="cover">
+    <div id="container">
+      <div id="top">
+        <img height="20px" src="https://localexperts.cz/static/images/le-logo.png"/>
+      </div>
+      <div id="image">
+        <img width="100%" src="https://localexperts.cz/static/images/img_home.jpg" />
+      </div>
+      <div id="body">
+        <p>From: <a class="link" href="{{ email }}">{{ email }}</a></p>
+        <p>{{ body|linebreaks }}</p>
+        <p><a class="link" href="https://localexperts.cz">Reply on localexperts.cz →  </a></p>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+</body>
+</html>
+
+

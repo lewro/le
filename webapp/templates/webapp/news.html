@@ -33,14 +33,16 @@
             <span class="source">{{ news_element.source }}</span>
 
             <h1>
-              {{ news_element.title }}
+              <a target="_blank" href="{{ news_element.link }}">
+                {{ news_element.title }}
+              </a>
             </h1>
             <div class="body">
               {{ news_element.body|linebreaks }}
             </div>
             <span class="created-date">{{ news_element.created_date }}</span>
             <span class="source-link">
-              <a href="{{ news_element.link }}">
+              <a target="_blank" href="{{ news_element.link }}">
                 <i class="fas fa-external-link-alt"></i>
               </a>
             </span>

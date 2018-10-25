@@ -9,7 +9,7 @@
     <div class="col s12">
       <strong>Errors</strong>
       {% for field in form %}
-         <span>{% trans 'Password:' %} {{ field.errors|striptags }} || </span>
+         <span>{{ field.errors|striptags }}</span>
       {% endfor %}
     </div>
   </div>

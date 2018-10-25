@@ -22,6 +22,14 @@
   letter-spacing: -3px;
 }
 
+.article h1 a {
+  color: #000;
+}
+
+.news.category-1 .article h1 a:hover { color: #50c5dc;}
+.news.category-2 .article h1 a:hover { color: #ff4143;}
+.news.category-3 .article h1 a:hover { color: #f4be49;}
+
 .article .source {
   font-size: 12px;
   text-transform: uppercase;

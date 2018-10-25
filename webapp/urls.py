@@ -32,7 +32,6 @@ urlpatterns = [
     url(r'^remove_profile/$', views.remove_profile, name = 'remove_profile'),
     url(r'^lang/$', views.lang, name = 'lang'),
 
-
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

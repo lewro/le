@@ -26,6 +26,10 @@ from django.shortcuts import render
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
+from django.core.mail import EmailMessage
+
+from django.template import Context
+from django.template.loader import render_to_string, get_template
 
 
 def logout_user(request):
@@ -156,25 +160,43 @@ def news(request):
 
 @login_required
 def create_message(request):
+
   if request.method == 'POST':
-    form     = MessageForm(request.POST)
-    user_id  = request.POST['to_user']
-    expert   = User.objects.get(id=expert_id)
+    form           = MessageForm(request.POST)
+    user_id        = request.POST['to_user']
+    from_user_id   = request.POST['from_user']
+    expert         = User.objects.get(id=user_id)
+    from_user      = User.objects.get(id=from_user_id)
 
     if form.is_valid():
       form.save()
 
-      now = datetime.datetime.now()
-      replied_id = form.cleaned_data['replied_message']
+      now           = datetime.datetime.now()
+      replied_id    = form.cleaned_data['replied_message']
+      subject       = "Local Experts: " + from_user.email
+      body       = request.POST['body']
+      from_email    = from_user.email
+      to_list       = [expert.email]
+      bcc           = ['support@localexperts.cz']
 
-      subject     = "Message from Local Experts"
-      message     = request.POST['body']
-      from_email  = settings.EMAIL_HOST_USER
-      password    = settings.EMAIL_HOST_PASSWORD
-      to_list     = ['support@localexperts.cz', expert.email] #Update with Expert Email
+      ctx = {
+        'email'   : from_email,
+        'body'    : body,
+      }
 
-      send_mail(subject, message, from_email, to_list, fail_silently=True)
+      message = get_template('email/user_message.html').render(ctx)
 
+      msg = EmailMessage(
+        subject,
+        message,
+        from_email,
+        to_list,
+        bcc,
+        reply_to=[from_email]
+      )
+
+      msg.content_subtype = "html"
+      msg.send()
 
       if replied_id > 0:
         replied_message = Message.objects.get(id=replied_id)
