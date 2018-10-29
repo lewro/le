@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 14:19+0200\n"
+"POT-Creation-Date: 2018-10-29 14:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -271,7 +271,6 @@ msgid "Translators"
 msgstr ""
 
 #: le/webapp/templates/includes/login_form.html:9
-#: le/webapp/templates/registration/register_client.html:12
 msgid "Password:"
 msgstr ""
 
@@ -781,11 +780,11 @@ msgid "Minimal Experience (in years):"
 msgstr ""
 
 #: le/webapp/templates/webapp/partials/expert_search_filter.html:95
-msgid "Maximal Hour Rate:"
+msgid "Maximal Normopage Rate:"
 msgstr ""
 
 #: le/webapp/templates/webapp/partials/expert_search_filter.html:97
-msgid "Maximal Normopage Rate:"
+msgid "Maximal Hour Rate:"
 msgstr ""
 
 #: le/webapp/templates/webapp/partials/expert_search_filter.html:123
