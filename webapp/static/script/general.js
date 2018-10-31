@@ -20,7 +20,6 @@ $(document).ready(function(){
     $('.footer-form').hide(250, function() {
       $('.footer-form-btn').show();
     });
-
   });
 
   $('.footer-form-btn').click(function() {
@@ -31,4 +30,10 @@ $(document).ready(function(){
   $('form').on('submit', function(e) {
      return validateForm(this);
   });
+
+  // Facebook Pixel - Registration Event
+  $( '.box-step #form-submit' ).click(function() {
+      fbq('track', 'CompleteRegistration');
+  }
+
 });
