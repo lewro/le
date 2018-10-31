@@ -34,6 +34,6 @@ $(document).ready(function(){
   // Facebook Pixel - Registration Event
   $( '.box-step #form-submit' ).click(function() {
       fbq('track', 'CompleteRegistration');
-  }
+  });
 
 });
