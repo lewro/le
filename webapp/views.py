@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import operator
 import datetime
-import pandas as pd
 
 from PIL import Image
 
