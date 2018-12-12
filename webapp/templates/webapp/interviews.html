@@ -21,7 +21,7 @@
       <div class="col s12 l12 main-content">
 
         {% for interview in interviews %}
-          <div class="article col s12 l6">
+          <div class="article col s12 l8">
             <span class="created-date">{{ interview.created_date }}</span>
             <h1>
               <a target="_blank" href="{{ news_element.link }}">
@@ -33,7 +33,7 @@
             </div>
 
           </div>
-          <div class="article col s12 l3">
+          <div class="article col s12 l1">
           </div>
           <div class="article col s12 l3">
             {% include 'webapp/partials/expert.html' with expert=interview.user_id %}
