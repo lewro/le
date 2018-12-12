@@ -31,13 +31,14 @@
         <div class="value">{{ expert.experience}}</div>
       </div>
       <div class="user-value long">
-        {% if expert.category_id == 3 %}
-          <label>{% trans 'NS' %}</label>
-        {% else %}
-          <label>{% trans 'Hour rate' %}</label>
-        {% endif %}
         {% if expert.hour_rate_from == 200 and expert.hour_rate_to == 5000 %}
+
         {% else %}
+          {% if expert.category_id == 3 %}
+            <label>{% trans 'NS' %}</label>
+          {% else %}
+            <label>{% trans 'Hour rate' %}</label>
+          {% endif %}
           <div class="value">{{ expert.hour_rate_from}} - {{ expert.hour_rate_to}} </div>
         {% endif %}
       </div>
