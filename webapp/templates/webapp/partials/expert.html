@@ -36,7 +36,10 @@
         {% else %}
           <label>{% trans 'Hour rate' %}</label>
         {% endif %}
-        <div class="value">{{ expert.hour_rate_from}} - {{ expert.hour_rate_to}} </div>
+        {% if expert.hour_rate_from == 200 and expert.hour_rate_to == 5000 %}
+        {% else %}
+          <div class="value">{{ expert.hour_rate_from}} - {{ expert.hour_rate_to}} </div>
+        {% endif %}
       </div>
       <div class="user-value">
         <label>{% trans 'Rating' %}</label>
