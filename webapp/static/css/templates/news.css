@@ -30,6 +30,11 @@
 .news.category-2 .article h1 a:hover { color: #ff4143;}
 .news.category-3 .article h1 a:hover { color: #f4be49;}
 
+.article h2 {
+  font-size: 21px;
+  font-weight: bold;
+}
+
 .article .source {
   font-size: 12px;
   text-transform: uppercase;

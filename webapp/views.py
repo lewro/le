@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import operator
 import datetime
+import pandas as pd
 
 from PIL import Image
 
@@ -19,6 +20,7 @@ from webapp.models import Expertise
 from webapp.models import Message
 from webapp.models import Rating
 from webapp.models import News
+from webapp.models import Interviews
 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
@@ -132,8 +134,8 @@ def messages(request):
 
 def news(request):
   category_id   = request.GET.get('category_id')
-  page          =  request.GET.get('page')
-  news_per_page = 5
+  page          = request.GET.get('page')
+  news_per_page = 10
 
   if category_id:
     news      = News.objects.filter(category_id=category_id).order_by('-created_date')
@@ -157,6 +159,26 @@ def news(request):
     'category_id' : category_id
   }
   return render(request, 'webapp/news.html', context)
+
+def interviews(request):
+  page                =  request.GET.get('page')
+  interviews_per_page = 10
+
+  interviews      = Interviews.objects.all().order_by('-created_date')
+  paginator       = Paginator(interviews, interviews_per_page)
+
+  try:
+    interviews = paginator.page(page)
+  except PageNotAnInteger:
+    interviews = paginator.page(1)
+  except EmptyPage:
+    interviews = paginator.page(paginator.num_pages)
+
+  context = {
+    'interviews' : interviews
+  }
+  return render(request, 'webapp/interviews.html', context)
+
 
 @login_required
 def create_message(request):

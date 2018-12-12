@@ -3,7 +3,7 @@
 from django.conf.urls import url
 from . import views
 from django.contrib.auth.views import login
-from webapp.views import terms, privacy, about, logout_user, search, messages, news, create_message, create_rating, register, register_expert, register_client
+from webapp.views import terms, privacy, about, logout_user, search, messages, news, interviews, create_message, create_rating, register, register_expert, register_client
 
 from django.conf.urls.static import static
 from django.conf import settings
@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^expert/$', views.expert, name = 'expert'),
     url(r'^messages/$', views.messages, name = 'messages'),
     url(r'^news/$', views.news, name = 'news'),
+    url(r'^interviews/$', views.interviews, name = 'interviews'),
     url(r'^update_profile/$', views.update_profile, name = 'update_profile'),
     url(r'^create_message/$', views.create_message, name = 'create_message'),
     url(r'^create_rating/$', views.create_rating, name = 'create_rating'),

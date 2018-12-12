@@ -52,16 +52,21 @@
               <i class="fas fa-star"></i>
             </div>
           </div>
-          <div class="expert-value-section">
-            <div class="expert-value-header">
-            {% if expert.category_id == 3 %}
-              {% trans 'Normo-page' %}
-            {% else %}
-              {% trans 'Hour Rate' %}
-            {% endif %}
+
+          {% if expert.hour_rate_from == 200 and expert.hour_rate_to == 5000 %}
+          {% else %}
+            <div class="expert-value-section">
+              <div class="expert-value-header">
+              {% if expert.category_id == 3 %}
+                {% trans 'Normo-page' %}
+              {% else %}
+                {% trans 'Hour Rate' %}
+              {% endif %}
+              </div>
+              <div class="expert-value-iteger">{{ expert.hour_rate_from }}-{{ expert.hour_rate_to }}</div>
             </div>
-            <div class="expert-value-iteger">{{ expert.hour_rate_from }}-{{ expert.hour_rate_to }}</div>
-          </div>
+          {% endif %}
+
           <div class="expert-value-section">
             <div class="expert-value-header">{% trans 'Years' %}</div>
             <div class="expert-value-iteger">{{ expert.experience }}</div>
@@ -81,8 +86,6 @@
             </a>
             </div>
 
-
-
             <div id="modal1" class="modal">
               <div class="modal-content">
                 <h4>{% trans 'You are about to remove your profile forever' %}</h4>
@@ -91,8 +94,6 @@
               <a href="#!" class="modal-close marketing-button secondary half-width">{% trans 'No, not now.' %}
               <a href="/remove_profile/" class="marketing-button half-width">{% trans 'Yes' %}</a>
             </div>
-
-
 
           {% else %}
             <div class="expert-value-section last">

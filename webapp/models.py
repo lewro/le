@@ -174,3 +174,13 @@ class News(models.Model):
 
   def __str__(self):
     return self.title
+
+class Interviews(models.Model):
+
+  title            = models.CharField(max_length=255, blank=True, null=True)
+  body             = models.TextField(max_length=5000, blank=True, null=True)
+  user_id          = models.ForeignKey(User, null=True, related_name='written_by')
+  created_date     = models.DateTimeField(default=datetime.now)
+
+  def __str__(self):
+    return self.title

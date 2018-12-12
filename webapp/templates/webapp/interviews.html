@@ -1,0 +1,64 @@
+{% extends "webapp/base.html" %}
+{% block content %}
+{% load i18n %}
+
+<div class="news category-2">
+
+  <div class="bg-top">
+    <div class="top-cover">
+      {% include 'webapp/partials/nav.html' %}
+      <div class="top-category-icon">
+        <i class="far fa-comments"></i>
+      </div>
+      <h1>
+        <span>{% trans 'Interviews' %}</span>
+      </h1>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="row">
+      <div class="col s12 l12 main-content">
+
+        {% for interview in interviews %}
+          <div class="article col s12 l6">
+            <span class="created-date">{{ interview.created_date }}</span>
+            <h1>
+              <a target="_blank" href="{{ news_element.link }}">
+                {{ interview.title }}
+              </a>
+            </h1>
+            <div class="body">
+              {{ interview.body|safe|linebreaks }}
+            </div>
+
+          </div>
+          <div class="article col s12 l3">
+          </div>
+          <div class="article col s12 l3">
+            {% include 'webapp/partials/expert.html' with expert=interview.user_id %}
+          </div>
+        {% endfor %}
+
+        <div class="pagination clearfix">
+          <span class="current">
+            {{ interviews.number }} / {{ interviews.paginator.num_pages }}
+          </span>
+
+          {% if interviews.has_next %}
+            <a class="pagination-button" href="?page={{ interviews.next_page_number }}"><i class="fas fa-arrow-right"></i></a>
+          {% endif %}
+
+          {% if interviews.has_previous %}
+            <a class="pagination-button" href="?page={{ interviews.previous_page_number }}"><i class="fas fa-arrow-left"></i></a>
+          {% endif %}
+
+        </div>
+      </div>
+    </div><!-- Row -->
+  </div><!-- Page -->
+</div><!-- News -->
+
+{% endblock %}
+
+

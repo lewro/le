@@ -10,6 +10,13 @@ $(document).ready(function(){
       }
     });
 
+    // No hour rate
+    $('#hour_rate_not_available').click(function(){
+      $('#id_hour_rate_from').val('200');
+      $('#id_hour_rate_to').val('5000');
+      $('#slider_content').hide();
+    });
+
     // Tags
     $('.tag').click(function(){
       if ($(this).hasClass('active')){
@@ -59,6 +66,7 @@ $(document).ready(function(){
       district = $('.dropdown-content .selected span').html();
       $('#id_district').val(district);
     });
+
 
     // Set Distric Value if already exist
     var district_value = $('#data-distric-value').attr('data-distric-value');
