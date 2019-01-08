@@ -2,7 +2,7 @@
 
 <form action="/webapp/search" method="get" id="search">
   <div class="row">
-    <div class="col s12 m4 l4">
+    <div class="col s12 m3 l3">
       <select
         type="number"
         id="id_category_id"
@@ -17,7 +17,7 @@
       </select>
     </div>
 
-    <div class="col s12 m4 l4" id="select-district-dd">
+    <div class="col s12 m3 l3" id="select-district-dd">
       <select
         id="id_district_id"
         name="district_id"
@@ -47,13 +47,6 @@
 
     <input
       type="hidden"
-      id="id_expertise"
-      name="expertise"
-      value=""
-      />
-
-    <input
-      type="hidden"
       id="id_hour_rate_maximal"
       name="hour_rate_maximal"
       value="1000000"
@@ -67,8 +60,10 @@
       value="1"
       />
 
-    <div class="col s12 m4 l4">
+    <div class="col s12 m3 l3 search-button">
       <input type="submit" class="btn" value="{% trans 'Search' %}" />
     </div>
   </div>
 </form>
+
+{% include 'includes/categories.html' %}

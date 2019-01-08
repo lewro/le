@@ -1,0 +1,52 @@
+{% load i18n %}
+
+
+<!-- Lawyer Categories -->
+<div class="col s12 m3 l3 lawyer-catogories search-categories hidden" id="select-category-dd">
+  <select
+    id="id_expertise"
+    name="expertise"
+    type="number"
+    >
+    <option data-category-id="" value="">{% trans 'All Expertises' %}</option>
+    {% for expertise_value in expertieses %}
+      {% if expertise_value.category_id == 1 %}
+        <option data-category-id="{{ expertise_value.category_id }}" value="{{ expertise_value.id }}">{{ expertise_value.title }}</option>
+      {% endif %}
+    {% endfor %}
+  </select>
+</div>
+
+<!-- Finance Categories -->
+<div class="col s12 m3 l3 finance-catogories search-categories hidden" id="select-category-dd">
+  <select
+    id="id_expertise"
+    name="expertise"
+    type="number"
+    >
+    <option data-category-id="" value="">{% trans 'All Expertises' %}</option>
+    {% for expertise_value in expertieses %}
+      {% if expertise_value.category_id == 2 %}
+        <option data-category-id="{{ expertise_value.category_id }}" value="{{ expertise_value.id }}">{{ expertise_value.title }}</option>
+      {% endif %}
+    {% endfor %}
+  </select>
+</div>
+
+<!-- Translator Categories -->
+<div class="col s12 m3 l3 translator-catogories search-categories hidden" id="select-category-dd">
+  <select
+    id="id_expertise"
+    name="expertise"
+    type="number"
+    >
+    <option data-category-id="" value="">{% trans 'All Expertises' %}</option>
+    {% for expertise_value in expertieses %}
+      {% if expertise_value.category_id == 3 %}
+        <option data-category-id="{{ expertise_value.category_id }}" value="{{ expertise_value.id }}">{{ expertise_value.title }}</option>
+      {% endif %}
+    {% endfor %}
+  </select>
+</div>
+
+

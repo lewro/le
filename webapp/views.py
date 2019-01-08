@@ -48,11 +48,13 @@ def index(request):
   just_registered = request.GET.get('just_registered')
   question_sent   = request.GET.get('question_sent')
   expert_removed  = request.GET.get('expert_removed')
+  expertieses     = Expertise.objects.all()
 
   context = {
     'just_registered'   : just_registered,
     'question_sent'     : question_sent,
-    'expert_removed'    : expert_removed
+    'expert_removed'    : expert_removed,
+    'expertieses'       : expertieses
   }
 
   #Redirect if coming from login with next param
@@ -247,11 +249,44 @@ def search(request):
   expertieses          = Expertise.objects.filter(category_id=category_id)
 
   if experience_minimal:
-    experts = experts.filter(category_id=category_id).filter(experience__gte=experience_minimal, hour_rate_to__lte=hour_rate_maximal, rating__gte=rating_minimal, district_id=district_id)
-    if expertise_ids != "":
-      experts = experts.filter(expertise__icontains=expertise_ids)
+
+    experts = experts.filter(category_id=category_id).filter(experience__gte=experience_minimal, hour_rate_to__lte=hour_rate_maximal, rating__gte=rating_minimal)
+
+    if district_id == '':
+      print "No Distiric ID"
+    else:
+      experts = experts.filter(district_id=district_id)
+
+    if expertise_ids == '':
+      print "No Expertise ID"
+    else:
+
+      eids = expertise_ids.split(",")
+
+      for expert in experts:
+        count = 0
+        match = 0
+
+        es =  expert.expertise.split(",")
+
+        #Loop experties from search
+        for eid in eids:
+          count = count + 1
+
+          #Loop experties from users
+          for e in es:
+            if eid == e:
+              match = match + 1
+            else:
+              match = match
+
+        if match != count:
+          experts = experts.exclude(id = expert.id)
+
+
   else:
     experts = experts.filter(category_id=category_id)
+
 
   context = {
     'experts'             : experts,

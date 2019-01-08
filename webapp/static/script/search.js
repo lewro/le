@@ -1,10 +1,41 @@
 $(document).ready(function(){
 
   // Slide on load
-  if ($("#filters").length > 0) {
+  if ($('#filters').length > 0) {
     $([document.documentElement, document.body]).animate({
-      scrollTop: $("#filters").offset().top
+      scrollTop: $('#filters').offset().top
     }, 1000);
+  }
+
+  // Home search
+  if ($('#search').length > 0) {
+    // On Load Show Lawyer expdertieses
+    $('.lawyer-catogories').insertBefore('.search-button')
+    $('.search-categories').hide();
+    $('.lawyer-catogories').show();
+
+    $('#id_category_id').change(function(){
+      if ($('#id_category_id').val() == 1){
+        $('.search-categories').hide();
+        $('.search-categories').insertAfter('#search');
+        $('.lawyer-catogories').insertBefore('.search-button');
+        $('.lawyer-catogories').show();
+      }
+      if ($('#id_category_id').val() == 2){
+        $('.search-categories').hide();
+        $('.search-categories').insertAfter('#search');
+        $('.finance-catogories').insertBefore('.search-button');
+        $('.finance-catogories').show();
+      }
+      if ($('#id_category_id').val() == 3){
+        $('.search-categories').hide();
+        $('.search-categories').insertAfter('#search');
+        $('.translator-catogories').insertBefore('.search-button');
+        $('.translator-catogories').show();
+      }
+
+    });
+
   }
 
   $('#search').submit(function() {
