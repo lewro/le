@@ -210,6 +210,13 @@
   cursor: pointer;
 }
 
+.expert #interviews h2 {
+  font-size: 15px;
+  text-transform: none;
+  color: #000;
+  margin: 20px 0;
+}
+
 #expert-contacts {background: #eee;}
 
 .category-1 .expert-category-icon .fas,

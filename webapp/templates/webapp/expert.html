@@ -148,6 +148,7 @@
           <li data-target="#expertise">{% trans '02 Expertise' %}</li>
           <li data-target="#location">{% trans '03 Location' %}</li>
           <li data-target="#reviews">{% trans '04 Reviews' %}</li>
+          <li data-target="#interviews">{% trans '05 Interview' %}</li>
         </ul>
       </div>
 
@@ -256,8 +257,18 @@
               </div>
             </div>
           {% endfor %}
-
         </div>
+
+        <div class="expert-section">
+          {% if interview %}
+            <h2>{% trans 'Interview' %}</h2>
+            <div id="interviews">
+              {{ interview.body|safe|linebreaks }}
+            {% endif %}
+          </div>
+        </div>
+
+
       </div>
     </div>
   </div>

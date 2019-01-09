@@ -308,6 +308,11 @@ def expert(request):
   rating_sent            = request.GET.get('rating_sent')
   expert                 = User.objects.get(id=expert_id)
 
+  try:
+    interview              = Interviews.objects.get(user_id=expert.id)
+  except Interviews.DoesNotExist:
+    interview = None
+
   #Convert Django List to string list
   expert_expertise       = expert.expertise
   expertieses            = ""
@@ -355,7 +360,8 @@ def expert(request):
     'rating_minimal'      : rating_minimal,
     'ratings'             : ratings,
     'message_sent'        : message_sent,
-    'rating_sent'         : rating_sent
+    'rating_sent'         : rating_sent,
+    'interview'           : interview
   }
 
 
