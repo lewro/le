@@ -134,8 +134,8 @@ $(document).ready(function(){
 
     $('.step').click(function(){
 
-      if ($('#step_1').hasClass('active')) {
-        // User needs to chose profession, this step can't be skipped
+      if ($('#step_1').hasClass('active') && $('.update_your_profile').length == 0) {
+        // User needs to chose profession, this step can't be skipped unless its edit profile view
       } else {
         // Boxes
         var box_id = $(this).attr('id');
@@ -146,7 +146,6 @@ $(document).ready(function(){
         // Steppers
         $('.step').removeClass('active');
         $(this).addClass('active');
-
       }
       return false;
     });
