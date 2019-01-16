@@ -37,8 +37,10 @@
           <h1>{{ expert.first_name }} {{ expert.last_name }}</h1>
           <div class="clearfix">
             <div class="expert-title-section">
-              <i class="fas fa-building"></i>
-              <span>{{ expert.company }}</span>
+              {% if expert.company != None %}
+                <i class="fas fa-building"></i>
+                <span>{{ expert.company }}</span>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -120,20 +122,28 @@
 
         <div class="clearfix" id="expert-contacts">
           <div class="expert-title-section">
-            <i class="fas fa-envelope"></i>
-            <span><a href="mailto:{{ expert.email }}">{{ expert.email }}</a></span>
+            {% if expert.email != None %}
+              <i class="fas fa-envelope"></i>
+              <span><a href="mailto:{{ expert.email }}">{{ expert.email }}</a></span>
+            {% endif %}
           </div>
           <div class="expert-title-section">
-            <i class="fas fa-home"></i>
-            <span><a target="_blank" href="{{expert.web}}">{{ expert.web }}</a></span>
+            {% if expert.web  != None %}
+              <i class="fas fa-home"></i>
+              <span><a target="_blank" href="{{expert.web}}">{{ expert.web }}</a></span>
+            {% endif %}
           </div>
           <div class="expert-title-section">
-            <i class="fas fa-phone"></i>
-            <span>{{ expert.phone }}</span>
+            {% if expert.phone  != None %}
+              <i class="fas fa-phone"></i>
+              <span>{{ expert.phone }}</span>
+            {% endif %}
           </div>
           <div class="expert-title-section">
-            <i class="fas fa-mobile-alt"></i>
-            <span>{{ expert.mobile }}</span>
+            {% if expert.mobile  != None %}
+              <i class="fas fa-mobile-alt"></i>
+              <span>{{ expert.mobile }}</span>
+            {% endif %}
           </div>
         </div>
       </div>
