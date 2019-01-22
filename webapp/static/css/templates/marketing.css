@@ -216,6 +216,10 @@
   margin: 0 0 5px 0;
 }
 
+.news-box a h2 {
+  font-size: 21px;
+}
+
 .news-box .category-1 {background: #50c5dc;}
 .news-box .category-2 {background: #ff4143;}
 .news-box .category-3 {background: #f4be49;}

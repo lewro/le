@@ -189,14 +189,16 @@
 #translator .big-button i {background: #f4be49;}
 
 .big-button .title {
-  font-size: 15px;
-  margin-top: 15px;
+  font-size: 10px;
+  text-transform: uppercase;
+  margin: 30px;
+  font-weight: bold;
   display: inline-block;
 }
 
 .tag {
   background: #ddd;
-  color: #000;
+  color: #999;
   border-radius: 100px;
   padding: 7px 25px;
   margin: 0 10px 20px 0;
@@ -211,7 +213,7 @@
 
 .tag:hover {
   background-color: #fff;
-  color: #000;
+  color: #333;
   box-shadow: 0px 10px 10px -3px rgb(0,0,0, 0.1);
 }
 

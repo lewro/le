@@ -1,6 +1,8 @@
 {% load i18n %}
 
-<option value="">{% trans 'Czech Republic' %}</option>
+{% if view != 'register' %}
+  <option value="">{% trans 'Czech Republic' %}</option>
+{% endif %}
 <option value="1">Praha 1</option>
 <option value="2">Praha 2</option>
 <option value="3">Praha 3</option>

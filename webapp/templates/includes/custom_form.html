@@ -226,7 +226,7 @@
                 value="{{ form.district_id.value }}"
               {% endif %}
               >
-              {% include 'includes/district.html' %}
+              {% include 'includes/district.html' with view='register' %}
             </select>
             <label for="id_district_id" id="data-distric-value" data-distric-value="{{ form.district_id.value }}">{% trans 'District' %}</label>
             <input

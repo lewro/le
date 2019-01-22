@@ -22,7 +22,7 @@
 }
 
 .expert .expert-category-icon span {
-  display: block;
+  display: none;
   color: #fff;
   font-weight: bold;
   text-transform: uppercase;
@@ -30,8 +30,6 @@
   opacity: .5;
   float: left;
   line-height: 50px;
-  height: 50px;
-  overflow: hidden;
   width: 300px;
   margin-left: 15px;
 }
