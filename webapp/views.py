@@ -287,6 +287,7 @@ def search(request):
   else:
     experts = experts.filter(category_id=category_id)
 
+  experts = experts.order_by('?')
 
   context = {
     'experts'             : experts,
