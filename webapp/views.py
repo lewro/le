@@ -87,7 +87,7 @@ def contact(request):
   question    = request.POST['message']
   email       = request.POST['email']
 
-  message     = email + " : " + "question"
+  message     = email + " : " + question
 
   from_email  = settings.EMAIL_HOST_USER
   password    = settings.EMAIL_HOST_PASSWORD
