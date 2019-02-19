@@ -10,9 +10,9 @@ $(document).ready(function(){
   // Home search
   if ($('#search').length > 0) {
     // On Load Show Lawyer expdertieses
-    $('.lawyer-catogories').insertBefore('.search-button')
+    $('.translator-catogories').insertBefore('.search-button')
     $('.search-categories').hide();
-    $('.lawyer-catogories').show();
+    $('.translator-catogories').show();
 
     $('#id_category_id').change(function(){
       if ($('#id_category_id').val() == 1){
