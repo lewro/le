@@ -5,7 +5,7 @@ django-appconf==1.0.2
 django-countries==5.3.2
 django-imagekit==4.0.2
 django-translation-manager==1.0.0
-djangorestframework==3.8.2
+djangorestframework==3.11.2
 idna==2.7
 pilkit==2.0
 Pillow==5.3.0
