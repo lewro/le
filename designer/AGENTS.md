@@ -8,7 +8,8 @@ live-reloads from disk.
 designer/
   le.js            CLI (node le.js help)
   designs/*.json   documents (one file per document; Figma-compatible node tree)
-  examples/*.dsl   example pages in the DSL
+  libraries/*.json design libraries: components, variants, colors, text styles (le-ui is included)
+  examples/*.dsl   example pages and the le-ui library in the DSL
   src/core/        pure JS: model, dsl, ops, style, figma, html  (usable from Node or the browser)
   server/api.js    HTTP API + SSE live reload   (vite dev server and server.js both mount it)
   figma-plugin/    Figma plugin to push/pull documents into/out of Figma
@@ -64,6 +65,47 @@ After a change, `node le.js dsl <doc> <selector>` is the cheapest way to verify.
 **Imports**: `node le.js import file.json --as name` (native or Figma REST JSON),
 `node le.js import-figma <fileKey|URL> --as name [--token figd_… | FIGMA_TOKEN env] [--nodes 12:34,56:78]`
 
+## Libraries: building pages from components (what a designer would do)
+
+A library is a document with `COMPONENT` / `COMPONENT_SET` nodes and tokens. Documents link libraries
+(`doc.libraries = ["le-ui"]`); the editor, CLI, exports and lint all resolve components through the linked libraries.
+
+```bash
+node le.js lib ls                                              # available libraries
+node le.js lib add https://www.figma.com/design/<key>/… --as acme --token figd_…   # from Figma (any file the token can open)
+node le.js lib add https://example.com/acme-ui.json --as acme  # from a JSON URL (native or Figma REST JSON)
+node le.js lib add ./acme.json --as acme                       # from a file
+node le.js lib new acme < acme.dsl                             # from DSL (set/component/token lines, see examples/le-ui.dsl)
+node le.js lib link landing acme                               # link to a document (or: node le.js new landing --libs acme)
+node le.js components landing                                  # what you can use: tokens + one line per component
+node le.js lib dsl acme Button                                 # inspect a component's structure
+node le.js lint landing                                        # strict mode: fails if anything is not from the libraries
+```
+
+`components` prints lines like `Button  {Type=Primary|Secondary|Ghost, Size=Medium|Large}  texts: Label  [le-ui]  — description`:
+the variant properties and values, and the text slots you can override. **Read this before building with a library.**
+
+Instances in the DSL:
+
+```
+instance Button Type=Primary Size=Large "Sign up"           # component name, variant props (Capitalized=Value), first text
+instance Card Title.text="Home & Repair" Link.text="312 experts" Icon.hidden   # overrides: <ChildName>.<key>=value
+instance Input Label.text="Where" Placeholder.text="Vienna" w=200          # size/position/sizing (w=fill, x=, y=) as usual
+instance Navbar w=fill name=TopBar                           # name= gives the layer a different name
+```
+
+Override keys: `.text=` (characters), `.hidden` / `.visible`, `.fill=#hex|$Token`, `.color=`, `.size=`, `.weight=`, `.style.<field>=`.
+A child is addressed by its name inside the component (nested instances by their component name, e.g. `Button.hidden`).
+Tokens: `bg=$Brand/500 color=$Ink/900 stroke=$Line/200` (colors), `ts=Heading/H2` (text style), `effect=Card` (effect style).
+
+**Strict library rule** (when the user asks for a page built with a library): use only `instance` nodes, plain layout
+frames (`row`/`col`, `bg=none` or `bg=$Token`), and text with `ts=` + `color=$Token`. Never draw rectangles, ellipses or
+ad-hoc colors. Verify with `node le.js lint <doc>`; fix every reported node. If a needed component does not exist, say so
+and either compose it from existing ones or (if asked) add it to the library with `lib new` / `make-component`.
+
+Other instance ops: `node le.js detach <doc> <sel>` (instance → frame), `node le.js make-component <doc> <sel> --name X`
+(frame → component), ops `swap` (`{ "op": "swap", "target": sel, "component": "Button", "variant": { "Type": "Ghost" } }`).
+
 ## DSL reference
 
 One node per line; indentation = nesting (2 spaces). `// comment` lines are ignored.
@@ -72,7 +114,10 @@ One node per line; indentation = nesting (2 spaces). `// comment` lines are igno
 <type> [Name | "Quoted Name"] ["text content" (text only)] [flags] [key=value ...] [#id]
 ```
 
-- **Types**: `page frame group rect ellipse text line component instance section`
+- **Types**: `page frame group rect ellipse text line component set instance section` (`set` = component set of variants,
+  its children are `component "Prop=Value, Prop2=Value"` lines; `desc="…"` documents a component)
+- **Token definitions** (library DSL, top level): `token Name #hex`, `textstyle Name size= weight= lh= ls= font=`,
+  `effectstyle Name shadow=x,y,blur,spread,#color`
 - **Name**: a bare word or quoted string. For `text`, the (last) quoted string is the content; a bare word
   before it or a first quoted string is the name (`text Title "Hello"`, `text "Hello"`). Name defaults to the content.
 - `#id` at the end pins the node id (use the ids you read from `dsl` output; new nodes get ids automatically).
@@ -88,6 +133,7 @@ One node per line; indentation = nesting (2 spaces). `// comment` lines are igno
 | Shape | `r=radius` or `r=tl,tr,br,bl`; `opacity=0..1`; `clip` / `noclip` |
 | Effects | `shadow=x,y,blur,spread,#color` ; `blur=px` ; `shadow=none` |
 | Text | `size=` `weight=100..900\|bold\|medium…` `font="Family"` `lh=px\|150%\|1.5` `ls=px` `align=left\|center\|right\|justify` `valign=top\|center\|bottom` `color=#hex` `decoration=underline\|strike` `case=upper\|lower\|title` `italic=true` |
+| Tokens | `bg=$Name` / `color=$Name` / `stroke=$Name` (color tokens), `ts=Name` (text style), `effect=Name` (effect style) |
 | Semantics | `tag=section` (any HTML tag; used by HTML export), `class="a b"`, `href= src= alt= title= target= rel= role= aria-label= placeholder=`, `attr:anything=` / `data-x=` |
 | State | flags `hidden` `locked` `abs` (absolute inside auto layout) `grow` |
 | Raw | any other `key=value` sets the raw node field; dotted paths work (`style.fontFamily=Roboto`, `layoutAlign=STRETCH`) |
@@ -126,7 +172,10 @@ Which matches are affected: `set`, `rename` and `text` apply to **every** match;
   { "op": "duplicate", "target": "Categories/Card" },
   { "op": "wrap",      "target": "Stats/*", "all": true, "dsl": "frame Row row gap=48" },
   { "op": "unwrap",    "target": "Row" },
-  { "op": "remove",    "target": "Hero/Badge" }
+  { "op": "remove",    "target": "Hero/Badge" },
+  { "op": "swap",      "target": "Hero/Button", "component": "Button", "variant": { "Type": "Ghost" } },
+  { "op": "detach",    "target": "Hero/Card" },
+  { "op": "component", "target": "Hero/Promo", "name": "PromoCard", "description": "…" }
 ]
 ```
 
@@ -143,7 +192,12 @@ Which matches are affected: `set`, `rename` and `text` apply to **every** match;
 | `GET /api/docs/:name/dsl?sel=Hero&depth=2&ids=1` | DSL text · `POST …/dsl?sel=Hero` (text body) replaces the subtree; without `sel` replaces the first page |
 | `GET /api/docs/:name/export?format=html\|figma\|dsl\|json` | |
 | `POST /api/figma/import` `{ "token", "fileKey", "nodeIds"?, "name"? }` | fetch from the Figma REST API (server side) |
-| `GET /api/events` | SSE: `{type:"changed", doc, writer}` when a file changes |
+| `GET /api/events` | SSE: `{type:"changed", doc, writer}` / `{type:"lib-changed", lib}` when a file changes |
+| `GET /api/libs` · `GET/PUT/DELETE /api/libs/:name` · `POST /api/libs/:name` (DSL text) | libraries |
+| `POST /api/libs/import` `{ "source": "<figma url|key|json url>", "token"?, "name"? }` or `{ "json": {...} }` | import a library |
+| `POST /api/docs/:name/link` `{ "libraries": [...] }` or `{ "add": "lib" }` / `{ "remove": "lib" }` | link libraries |
+| `GET /api/docs/:name/components[?format=json]` · `GET /api/docs/:name/lint` · `GET /api/libs/:name/components` | |
+| `GET /api/docs/:name/export?format=json&expanded=1` | instances expanded (input for the Figma plugin) |
 
 ## Document format
 
@@ -157,6 +211,13 @@ carries semantics. Default values are omitted. `src/core/figma.js` converts to/f
 install `figma-plugin/` (Plugins → Development → Import plugin from manifest) and paste the native JSON; the plugin
 also exports a selection back to the native format. The native JSON is also a good input for the Figma MCP
 `use_figma` tool if one is available.
+
+## Performance notes
+
+The canvas is plain DOM (auto layout = flexbox). Edits are copy-on-write (only the touched path is copied), renderers are
+memoized by node identity, pan/zoom is a direct transform on the world layer, and top-level frames outside the viewport are
+not mounted. A 60-page document (`node scripts/stress.mjs 60`) edits in ~30 ms and pans at 60 fps. Keep each page a
+top-level frame of the canvas (`page` → many `frame`s) so culling can work.
 
 ## Verifying visually (optional)
 

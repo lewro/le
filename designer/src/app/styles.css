@@ -71,18 +71,21 @@ code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 .canvas.tool-frame, .canvas.tool-rect, .canvas.tool-ellipse, .canvas.tool-text, .canvas.tool-line { cursor: crosshair; }
 .canvas.panning { cursor: grab; }
 .canvas.panning:active { cursor: grabbing; }
-.world { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+.world { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }
+.world .top { position: absolute; left: 0; top: 0; }
+.world .instance-missing { outline: 1px dashed #f59e0b; }
+.world-overlay { position: absolute; left: 0; top: 0; width: 0; height: 0; overflow: visible; transform-origin: 0 0; pointer-events: none; }
 .world .node { font-family: var(--font); }
 .world [contenteditable="true"] { outline: none; cursor: text; user-select: text; }
-.frame-label { position: absolute; transform: translateY(-100%); padding: 0 0 4px; font-size: 11px; color: var(--muted); white-space: nowrap; pointer-events: auto; cursor: default; }
+.frame-label { position: absolute; padding: 0 0 4px; font-size: 11px; color: var(--muted); white-space: nowrap; pointer-events: auto; cursor: default; }
 .frame-label.selected { color: var(--accent); }
 .overlay { position: absolute; inset: 0; pointer-events: none; }
 .sel-box { position: absolute; border: 1px solid var(--accent); pointer-events: none; }
 .hover-box { position: absolute; border: 1.5px solid var(--accent); pointer-events: none; opacity: 0.8; }
-.handle { position: absolute; width: 8px; height: 8px; background: #fff; border: 1px solid var(--accent); border-radius: 1px; pointer-events: auto; transform: translate(-50%, -50%); }
+.handle { position: absolute; width: 8px; height: 8px; background: #fff; border: 1px solid var(--accent); border-radius: 1px; pointer-events: auto; }
 .handle.nw, .handle.se { cursor: nwse-resize; } .handle.ne, .handle.sw { cursor: nesw-resize; }
 .handle.n, .handle.s { cursor: ns-resize; } .handle.e, .handle.w { cursor: ew-resize; }
-.size-label { position: absolute; transform: translate(-50%, 6px); background: var(--accent); color: #fff; font-size: 10px; padding: 1px 5px; border-radius: 3px; white-space: nowrap; }
+.size-label { position: absolute; background: var(--accent); color: #fff; font-size: 10px; padding: 1px 5px; border-radius: 3px; white-space: nowrap; }
 .marquee { position: absolute; border: 1px solid var(--accent); background: var(--accent-dim); pointer-events: none; }
 .drop-line { position: absolute; background: var(--accent); pointer-events: none; }
 .canvas-empty { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--muted); pointer-events: none; }
@@ -136,3 +139,18 @@ code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 .modal .hint { color: var(--muted); line-height: 1.5; margin: 6px 0 10px; }
 .modal input[type="text"], .modal input[type="password"] { width: 100%; }
 .kbd { display: inline-block; background: var(--input); border: 1px solid var(--border); border-radius: 3px; padding: 0 4px; font-size: 10px; }
+
+.assets { flex: 1; overflow: auto; }
+.assets .bar { display: flex; gap: 4px; padding: 8px; border-bottom: 1px solid var(--border); }
+.assets .bar input { flex: 1; }
+.asset-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 8px; }
+.asset { background: var(--panel-2); border: 1px solid var(--border); border-radius: 6px; padding: 6px; cursor: pointer; overflow: hidden; }
+.asset:hover { border-color: var(--accent); }
+.asset .thumb { height: 56px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #fff; border-radius: 4px; }
+.asset .thumb > div { pointer-events: none; }
+.asset-name { margin-top: 6px; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.asset-meta { font-size: 10px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lib-row { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+.lib-row .grow { flex: 1; }
+.lib-row .meta { color: var(--muted); font-size: 11px; }
+.token-chip { display: inline-block; width: 12px; height: 12px; border-radius: 3px; border: 1px solid var(--border); vertical-align: middle; margin-right: 4px; }

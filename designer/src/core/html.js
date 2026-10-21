@@ -3,6 +3,7 @@
 
 import { computeStyle, toCssText } from './style.js';
 import { hasAutoLayout } from './model.js';
+import { expandDocument } from './components.js';
 
 const DEFAULT_TAG = { FRAME: 'div', GROUP: 'div', RECTANGLE: 'div', ELLIPSE: 'div', TEXT: 'p', LINE: 'hr', COMPONENT: 'div', INSTANCE: 'div', SECTION: 'section', VECTOR: 'div', CANVAS: 'div' };
 const VOID = new Set(['img', 'hr', 'br', 'input']);
@@ -18,6 +19,7 @@ function cssClass(node) { return `le-${String(node.id).replace(/[^a-zA-Z0-9_-]/g
  * @param {{ nodes?: object[], page?: number, title?: string, fontLink?: boolean, bodyWidth?: boolean }} options
  */
 export function exportHtml(doc, options = {}) {
+  doc = expandDocument(doc, options.libs || []);
   const page = (doc.children || [])[options.page || 0];
   const roots = options.nodes || (page ? page.children : []);
   const rules = [];

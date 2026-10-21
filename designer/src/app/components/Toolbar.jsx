@@ -9,7 +9,7 @@ export default function Toolbar() {
   const tool = useStore((s) => s.tool);
   const docs = useStore((s) => s.docs);
   const docName = useStore((s) => s.docName);
-  const zoom = useStore((s) => s.zoom);
+  const zoom = useStore((s) => s.view.zoom);
   const canUndo = useStore((s) => s.history.length > 0);
   const canRedo = useStore((s) => s.future.length > 0);
   return (
@@ -32,6 +32,7 @@ export default function Toolbar() {
         <button onClick={() => setState({ dialog: 'new' })} title="New document">＋</button>
         <button onClick={() => setState({ dialog: 'import' })} title="Import (native / Figma JSON / Figma API)">Import</button>
         <button onClick={() => setState({ dialog: 'export' })} title="Export (JSON / Figma / HTML / DSL)" disabled={!docName}>Export</button>
+        <button onClick={() => setState({ dialog: 'libraries' })} title="Libraries: import, link, manage" disabled={!docName}>Libraries</button>
       </div>
       <div className="spacer" />
       <div className="group">

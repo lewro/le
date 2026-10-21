@@ -161,3 +161,115 @@ test('style and HTML export', () => {
   assert.ok(html.includes('Sign up'));
   assert.ok(html.includes('font-weight: 700'));
 });
+
+// --------------------------------------------------------------------------- components & libraries
+import { parseDslDocument, setTokenContext, serializeTokens } from '../src/core/dsl.js';
+import { buildIndex, expandInstance, lintStrict, describeComponents, expandDocument } from '../src/core/components.js';
+
+const LIB = `token Primary/500 #2563eb
+textstyle Body size=16 lh=24
+effectstyle Card shadow=0,4,12,0,#0f172a14
+set Button desc="CTA"
+  component "Type=Primary, Size=Medium" row p=12,24 r=8 bg=$Primary/500
+    text Label "Button" ts=Body color=#fff
+  component "Type=Secondary, Size=Medium" row p=12,24 r=8 bg=none stroke=$Primary/500
+    text Label "Button" ts=Body color=$Primary/500
+component Card col w=320 p=16 gap=8 r=12 bg=#fff effect=Card
+  text Title "Card title" ts=Body
+  instance Button Type=Primary "Open"`;
+
+function libDoc() {
+  const lib = createDocument('ui'); lib.kind = 'library';
+  const { roots, tokens } = parseDslDocument(LIB);
+  lib.tokens = tokens; lib.children[0].children.push(...roots); assignIds(lib);
+  return lib;
+}
+
+test('library DSL: tokens, sets, variants, nested instances', () => {
+  const lib = libDoc();
+  assert.equal(lib.tokens.colors['Primary/500'], '#2563eb');
+  assert.equal(lib.tokens.textStyles.Body.lineHeightPx, 24);
+  const idx = buildIndex(null, [lib]);
+  assert.deepEqual(idx.list.map((e) => e.name), ['Button', 'Card']);
+  assert.deepEqual(idx.byName.get('button').variants, { Type: ['Primary', 'Secondary'], Size: ['Medium'] });
+  assert.deepEqual(idx.byName.get('button').textSlots.map((t) => t.name), ['Label']);
+  const lines = describeComponents(idx);
+  assert.ok(lines[0].includes('Type=Primary|Secondary'));
+  const tokensDsl = serializeTokens(lib.tokens);
+  assert.ok(tokensDsl.includes('token Primary/500 #2563eb'));
+  assert.ok(tokensDsl.includes('textstyle Body font="Inter" size=16 weight=400 lh=24'));
+});
+
+test('instances: parse, expand with overrides, serialize, detach, lint', () => {
+  const lib = libDoc();
+  const doc = createDocument('page'); doc.libraries = ['ui'];
+  applyOps(doc, { op: 'add', parent: 'Page 1', dsl: `frame Page col w=800 p=32 gap=16 bg=$Primary/500
+  instance Button Type=Secondary "Sign up" w=fill
+  instance Card Title.text="Hello" Button.hidden name=Promo` }, doc, { libs: [lib] });
+  const idx = buildIndex(doc, [lib]);
+  const btn = resolve(doc, 'Page/Button')[0];
+  assert.equal(btn.type, 'INSTANCE');
+  assert.deepEqual(btn.variant, { Type: 'Secondary' });
+  assert.equal(btn.overrides['@TEXT'].characters, 'Sign up');
+  assert.equal(btn.layoutSizingHorizontal, 'FILL');
+  const page = resolve(doc, 'Page')[0];
+  assert.equal(page.fills[0].token, 'Primary/500');
+  assert.equal(page.fills[0].color, '#2563eb');
+  const ex = expandInstance(idx, btn);
+  assert.equal(ex.children[0].characters, 'Sign up');
+  assert.equal(ex.children[0].id, btn.id + '::' + ex.children[0].id.split('::')[1]);
+  assert.equal(ex.strokes[0].color, '#2563eb', 'secondary variant picked');
+  const card = resolve(doc, 'Promo')[0];
+  const exc = expandInstance(idx, card);
+  assert.equal(exc.children[0].characters, 'Hello');
+  assert.equal(exc.children[1].visible, false, 'nested instance hidden by override');
+  assert.equal(exc.children[1].children[0].characters, 'Open', 'nested instance text override from the component');
+  const out = serializeDsl(doc, { ids: false });
+  assert.ok(out.includes('instance Button Type=Secondary w=fill "Sign up"'));
+  assert.ok(out.includes('instance Card Title.text="Hello" Button.hidden name=Promo'));
+  assert.equal(lintStrict(doc, [lib]).length, 0);
+  applyOps(doc, { op: 'add', parent: 'Page', dsl: 'rect Oops w=10 h=10\ntext "loose" size=12' }, doc, { libs: [lib] });
+  const problems = lintStrict(doc, [lib]);
+  assert.equal(problems.length, 3, 'hand-drawn rect + text without style + text color not a token');
+  assert.ok(problems[0].reason.includes('library component'));
+  applyOps(doc, { op: 'detach', target: 'Page/Button' }, doc, { libs: [lib] });
+  const detached = resolve(doc, 'Page/Button')[0];
+  assert.equal(detached.type, 'FRAME');
+  assert.equal(detached.children[0].characters, 'Sign up');
+  const expanded = expandDocument(doc, [lib]);
+  assert.equal(resolve(expanded, 'Promo')[0].children[0].characters, 'Hello');
+});
+
+test('figma import keeps components, instance variants and tokens', () => {
+  const solid = (r, g, b) => [{ type: 'SOLID', color: { r, g, b, a: 1 } }];
+  const comp = (id, name) => ({ id, name, type: 'COMPONENT', absoluteBoundingBox: { x: 0, y: 0, width: 100, height: 40 }, fills: solid(0, 0, 1), layoutMode: 'HORIZONTAL', primaryAxisSizingMode: 'AUTO', counterAxisSizingMode: 'AUTO', styles: { fill: 'S:1' }, children: [
+    { id: id + ':t', name: 'Label', type: 'TEXT', characters: 'Button', absoluteBoundingBox: { x: 10, y: 10, width: 50, height: 20 }, fills: solid(1, 1, 1), style: { fontFamily: 'Inter', fontWeight: 600, fontSize: 14, lineHeightUnit: 'PIXELS', lineHeightPx: 20 }, styles: { text: 'S:2' }, textAutoResize: 'WIDTH_AND_HEIGHT' },
+  ] });
+  const file = {
+    name: 'Lib', components: { '1:1': { key: 'k1', name: 'Type=Primary', componentSetId: '1:0' }, '1:2': { key: 'k2', name: 'Type=Secondary', componentSetId: '1:0' } },
+    componentSets: { '1:0': { key: 'ks', name: 'Button' } }, styles: { 'S:1': { name: 'Brand/500', styleType: 'FILL' }, 'S:2': { name: 'Label', styleType: 'TEXT' } },
+    document: { id: '0:0', type: 'DOCUMENT', children: [{ id: '0:1', type: 'CANVAS', name: 'Page', children: [
+      { id: '1:0', name: 'Button', type: 'COMPONENT_SET', absoluteBoundingBox: { x: 0, y: 0, width: 300, height: 100 }, children: [comp('1:1', 'Type=Primary'), comp('1:2', 'Type=Secondary')] },
+      { id: '2:1', name: 'Button', type: 'INSTANCE', componentId: '1:2', absoluteBoundingBox: { x: 0, y: 200, width: 100, height: 40 }, children: [{ ...comp('1:2', 'x').children[0], id: '2:1:t', characters: 'Sign up' }] },
+    ] }] },
+  };
+  const doc = fromFigma(file);
+  const set = doc.children[0].children[0];
+  assert.equal(set.type, 'COMPONENT_SET');
+  assert.equal(set.children[0].key, 'k1');
+  const inst = doc.children[0].children[1];
+  assert.equal(inst.component, 'Button');
+  assert.deepEqual(inst.variant, { Type: 'Secondary' });
+  assert.equal(inst.children, undefined, 'expanded children replaced by overrides');
+  assert.deepEqual(inst.overrides, { Label: { characters: 'Sign up' } });
+  assert.equal(doc.tokens.colors['Brand/500'], '#0000ff');
+  assert.equal(doc.tokens.textStyles.Label.fontWeight, 600);
+  assert.equal(set.children[0].fills[0].token, 'Brand/500');
+  // export expands the instance again, with the override applied
+  const fig = toFigma(doc);
+  const exported = fig.document.children[0].children[1];
+  assert.equal(exported.type, 'INSTANCE');
+  assert.equal(exported.children[0].characters, 'Sign up');
+  assert.ok(fig.componentSets['1:0']);
+  setTokenContext({});
+});

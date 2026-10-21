@@ -5,12 +5,57 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { applyOps } from '../src/core/ops.js';
-import { parseDsl, serializeDsl } from '../src/core/dsl.js';
+import { parseDsl, parseDslDocument, serializeDsl, serializeTokens, setTokenContext } from '../src/core/dsl.js';
 import { createDocument, assignIds, resolve, findById, clone } from '../src/core/model.js';
-import { fromFigma, toFigma, fetchFromFigma } from '../src/core/figma.js';
+import { fromFigma, toFigma, fetchFromFigma, libraryFromFigma, isNativeDoc, parseFigmaUrl } from '../src/core/figma.js';
 import { exportHtml } from '../src/core/html.js';
+import { buildIndex, describeComponents, lintStrict, expandDocument } from '../src/core/components.js';
 
 const SAFE = /^[A-Za-z0-9._-]+$/;
+
+/** Libraries referenced by doc.libraries, loaded from the library store (missing ones are skipped). */
+export function loadLibs(libStore, doc) {
+  return (doc?.libraries || []).map((n) => { try { return libStore.load(n); } catch { return null; } }).filter(Boolean);
+}
+
+/** Parse DSL with the document's token context; merges tokens defined in the text into the document. */
+export function parseForDoc(doc, libs, text) {
+  setTokenContext(buildIndex(doc, libs).tokens);
+  const { roots, tokens } = parseDslDocument(text);
+  mergeTokens(doc, tokens);
+  return roots;
+}
+
+export function mergeTokens(doc, tokens) {
+  if (!tokens) return;
+  for (const k of ['colors', 'textStyles', 'effects']) {
+    if (!Object.keys(tokens[k] || {}).length) continue;
+    doc.tokens ||= {};
+    doc.tokens[k] = { ...(doc.tokens[k] || {}), ...tokens[k] };
+  }
+}
+
+/**
+ * Import a library from: a Figma file URL/key (token required), an http(s) URL of a JSON document, or parsed JSON.
+ */
+export async function importLibrary({ source, json, token, name }, fetchImpl = globalThis.fetch) {
+  let doc;
+  if (json) doc = isNativeDoc(json) ? json : libraryFromFigma(json, name);
+  else if (/^https?:\/\//.test(source) && !/figma\.com/.test(source)) {
+    const res = await fetchImpl(source);
+    if (!res.ok) throw new Error(`Fetch failed ${res.status}`);
+    const data = await res.json();
+    doc = isNativeDoc(data) ? data : libraryFromFigma(data, name);
+  } else {
+    parseFigmaUrl(source); // throws a helpful error for community URLs
+    const full = await fetchFromFigma({ token, fileKey: source, name }, fetchImpl);
+    doc = full; doc.kind = 'library';
+  }
+  doc.kind = 'library';
+  if (source) doc.source = source;
+  if (name) doc.name = name;
+  return doc;
+}
 
 export function createStore(designsDir) {
   fs.mkdirSync(designsDir, { recursive: true });
@@ -58,25 +103,32 @@ function send(res, status, body, type = 'application/json') {
   res.end(data);
 }
 
-export function createApiHandler({ designsDir }) {
+export function createApiHandler({ designsDir, librariesDir = path.join(path.dirname(designsDir), 'libraries') }) {
   const store = createStore(designsDir);
+  const libStore = createStore(librariesDir);
   const clients = new Set();
   const lastWriter = new Map();
 
-  // watch the directory for external changes (CLI, other editors)
+  // watch the directories for external changes (CLI, other editors)
   const timers = new Map();
-  try {
-    fs.watch(designsDir, { persistent: false }, (ev, filename) => {
-      if (!filename || !filename.endsWith('.json')) return;
-      const name = filename.slice(0, -5);
-      clearTimeout(timers.get(name));
-      timers.set(name, setTimeout(() => {
-        const writer = lastWriter.get(name) || null;
-        lastWriter.delete(name);
-        broadcast({ type: 'changed', doc: name, writer, exists: store.exists(name) });
-      }, 120));
-    });
-  } catch (e) { console.warn('fs.watch unavailable:', e.message); }
+  const watchDir = (dir, kind, st) => {
+    try {
+      fs.watch(dir, { persistent: false }, (ev, filename) => {
+        if (!filename || !filename.endsWith('.json')) return;
+        const name = filename.slice(0, -5);
+        const key = kind + ':' + name;
+        clearTimeout(timers.get(key));
+        timers.set(key, setTimeout(() => {
+          const writer = lastWriter.get(key) || null;
+          lastWriter.delete(key);
+          broadcast({ type: kind === 'lib' ? 'lib-changed' : 'changed', doc: name, lib: kind === 'lib' ? name : undefined, writer, exists: st.exists(name) });
+        }, 120));
+      });
+    } catch (e) { console.warn('fs.watch unavailable:', e.message); }
+  };
+  watchDir(designsDir, 'doc', store);
+  watchDir(librariesDir, 'lib', libStore);
+  const markWriter = (name, clientId, kind = 'doc') => lastWriter.set(kind + ':' + name, clientId);
 
   function broadcast(event) {
     const msg = `data: ${JSON.stringify(event)}\n\n`;
@@ -108,10 +160,37 @@ export function createApiHandler({ designsDir }) {
         const body = JSON.parse(await readBody(req) || '{}');
         const doc = await fetchFromFigma({ token: body.token || process.env.FIGMA_TOKEN, fileKey: body.fileKey, nodeIds: body.nodeIds, name: body.name });
         const name = body.name || slugify(doc.name) || 'figma-import';
-        lastWriter.set(name, clientId);
+        markWriter(name, clientId);
         store.save(name, doc);
         send(res, 200, { name, doc });
         return true;
+      }
+
+      if (parts[1] === 'libs') {
+        if (parts.length === 2 && req.method === 'GET') { send(res, 200, libStore.list().map((l) => { let d = null; try { d = libStore.load(l.name); } catch { /* ignore */ } return { ...l, source: d?.source, components: d ? buildIndex(null, [d]).list.length : 0 }; })); return true; }
+        if (parts[2] === 'import' && req.method === 'POST') {
+          const body = JSON.parse(await readBody(req) || '{}');
+          const doc = await importLibrary({ source: body.source, json: body.json, token: body.token || process.env.FIGMA_TOKEN, name: body.name });
+          const name = body.name || slugify(doc.name) || 'library';
+          doc.name = name;
+          markWriter(name, clientId, 'lib');
+          libStore.save(name, doc);
+          send(res, 200, { name, components: describeComponents(buildIndex(null, [doc])) });
+          return true;
+        }
+        const name = decodeURIComponent(parts[2] || '');
+        if (parts[3] === 'components' && req.method === 'GET') { const d = libStore.load(name); const idx = buildIndex(null, [d]); send(res, 200, url.searchParams.get('format') === 'json' ? componentsJson(idx) : describeComponents(idx).join('\n'), url.searchParams.get('format') === 'json' ? 'application/json' : 'text/plain'); return true; }
+        if (parts[3] === 'dsl' && req.method === 'GET') { const d = libStore.load(name); send(res, 200, serializeTokens(d.tokens) + '\n' + serializeDsl(d, { ids: url.searchParams.get('ids') !== '0' }), 'text/plain'); return true; }
+        if (req.method === 'GET') { send(res, 200, libStore.load(name)); return true; }
+        if (req.method === 'PUT') { let d = JSON.parse(await readBody(req)); d = isNativeDoc(d) ? d : libraryFromFigma(d, name); d.kind = 'library'; d.name ||= name; markWriter(name, clientId, 'lib'); libStore.save(name, d); send(res, 200, { ok: true }); return true; }
+        if (req.method === 'POST') { // create from DSL text
+          const d = createDocument(name); d.kind = 'library';
+          const text = await readBody(req);
+          if (text.trim()) { d.children[0].children.push(...parseForDoc(d, [], text)); assignIds(d); }
+          markWriter(name, clientId, 'lib'); libStore.save(name, d); send(res, 200, d); return true;
+        }
+        if (req.method === 'DELETE') { libStore.remove(name); send(res, 200, { ok: true }); return true; }
+        send(res, 404, { error: 'Not found' }); return true;
       }
 
       if (parts[1] !== 'docs') { send(res, 404, { error: 'Not found' }); return true; }
@@ -127,30 +206,60 @@ export function createApiHandler({ designsDir }) {
           let doc = JSON.parse(raw);
           doc = fromFigma(doc, name); // accepts native or Figma JSON
           if (!doc.name) doc.name = name;
-          lastWriter.set(name, clientId);
+          markWriter(name, clientId);
           store.save(name, doc);
           send(res, 200, { ok: true });
           return true;
         }
         if (req.method === 'DELETE') { store.remove(name); send(res, 200, { ok: true }); return true; }
-        if (req.method === 'POST') { // create
+        if (req.method === 'POST') { // create (?libs=a,b links libraries)
           if (store.exists(name)) { send(res, 409, { error: 'exists' }); return true; }
           const body = await readBody(req);
           const doc = createDocument(name);
-          if (body.trim()) { const roots = parseDsl(body); doc.children[0].children.push(...roots); assignIds(doc); }
-          lastWriter.set(name, clientId);
+          if (url.searchParams.get('libs')) doc.libraries = url.searchParams.get('libs').split(',').filter(Boolean);
+          if (body.trim()) { const roots = parseForDoc(doc, loadLibs(libStore, doc), body); doc.children[0].children.push(...roots); assignIds(doc); }
+          markWriter(name, clientId);
           store.save(name, doc);
           send(res, 200, doc);
           return true;
         }
       }
 
+      if (sub === 'link' && req.method === 'POST') {
+        const body = JSON.parse(await readBody(req) || '{}');
+        const doc = store.load(name);
+        let libs = doc.libraries || [];
+        if (body.libraries) libs = body.libraries;
+        if (body.add) libs = [...new Set([...libs, ...[].concat(body.add)])];
+        if (body.remove) libs = libs.filter((l) => ![].concat(body.remove).includes(l));
+        for (const l of libs) if (!libStore.exists(l)) { send(res, 404, { error: `Library "${l}" not found` }); return true; }
+        doc.libraries = libs;
+        markWriter(name, clientId);
+        store.save(name, doc);
+        send(res, 200, { ok: true, libraries: libs });
+        return true;
+      }
+
+      if (sub === 'components' && req.method === 'GET') {
+        const doc = store.load(name);
+        const idx = buildIndex(doc, loadLibs(libStore, doc));
+        if (url.searchParams.get('format') === 'json') send(res, 200, componentsJson(idx));
+        else send(res, 200, [serializeTokens(idx.tokens), ...describeComponents(idx)].filter(Boolean).join('\n'), 'text/plain');
+        return true;
+      }
+
+      if (sub === 'lint' && req.method === 'GET') {
+        const doc = store.load(name);
+        send(res, 200, lintStrict(doc, loadLibs(libStore, doc)));
+        return true;
+      }
+
       if (sub === 'ops' && req.method === 'POST') {
         const body = JSON.parse(await readBody(req));
         const doc = store.load(name);
         const scope = body.scope ? resolve(doc, body.scope)[0] : doc;
-        const result = applyOps(doc, body.ops || body, scope);
-        lastWriter.set(name, clientId);
+        const result = applyOps(doc, body.ops || body, scope, { libs: loadLibs(libStore, doc) });
+        markWriter(name, clientId);
         store.save(name, doc);
         send(res, 200, { ok: true, ...result, dsl: body.return === 'dsl' ? serializeDsl(doc) : undefined, doc: body.return === 'doc' ? doc : undefined });
         return true;
@@ -169,9 +278,10 @@ export function createApiHandler({ designsDir }) {
         if (req.method === 'POST') { // replace subtree (sel) or whole page content
           const text = await readBody(req);
           const sel = url.searchParams.get('sel');
-          if (sel) applyOps(doc, { op: 'replace', target: sel, dsl: text });
-          else { const page = doc.children[0]; page.children = parseDsl(text); assignIds(doc); }
-          lastWriter.set(name, clientId);
+          const libs = loadLibs(libStore, doc);
+          if (sel) { setTokenContext(buildIndex(doc, libs).tokens); applyOps(doc, { op: 'replace', target: sel, dsl: text }, doc, { libs }); }
+          else { const page = doc.children[parseInt(url.searchParams.get('page') || '0', 10)]; page.children = parseForDoc(doc, libs, text); assignIds(doc); }
+          markWriter(name, clientId);
           store.save(name, doc);
           send(res, 200, { ok: true });
           return true;
@@ -180,10 +290,12 @@ export function createApiHandler({ designsDir }) {
 
       if (sub === 'export' && req.method === 'GET') {
         const doc = store.load(name);
+        const libs = loadLibs(libStore, doc);
         const format = url.searchParams.get('format') || 'json';
-        if (format === 'html') { send(res, 200, exportHtml(doc, { page: parseInt(url.searchParams.get('page') || '0', 10) }), 'text/html'); return true; }
-        if (format === 'figma') { send(res, 200, toFigma(doc)); return true; }
-        if (format === 'dsl') { send(res, 200, serializeDsl(doc, { ids: false }), 'text/plain'); return true; }
+        if (format === 'html') { send(res, 200, exportHtml(doc, { page: parseInt(url.searchParams.get('page') || '0', 10), libs }), 'text/html'); return true; }
+        if (format === 'figma') { send(res, 200, toFigma(doc, libs)); return true; }
+        if (format === 'dsl') { send(res, 200, serializeTokens(doc.tokens) + '\n' + serializeDsl(doc, { ids: false }), 'text/plain'); return true; }
+        if (url.searchParams.get('expanded')) { send(res, 200, expandDocument(doc, libs)); return true; }
         send(res, 200, doc);
         return true;
       }
@@ -198,5 +310,12 @@ export function createApiHandler({ designsDir }) {
 }
 
 function slugify(s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+
+export function componentsJson(idx) {
+  return {
+    tokens: idx.tokens,
+    components: idx.list.map((e) => ({ id: e.id, name: e.name, type: e.type, lib: e.lib, variants: e.variants || {}, textSlots: (e.textSlots || []).map((t) => t.name), description: e.description })),
+  };
+}
 
 export { clone };

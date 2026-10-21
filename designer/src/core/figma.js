@@ -8,13 +8,14 @@
 
 import { FORMAT, createDocument, assignIds, walk, hasAutoLayout, sizingH, sizingV, pathTo } from './model.js';
 import { hexToRgba, rgbaToHex } from './style.js';
+import { parseVariantName, diffOverrides, expandDocument } from './components.js';
 
 const KEEP = new Set([
   'id', 'name', 'type', 'visible', 'locked', 'rotation', 'opacity', 'blendMode', 'clipsContent',
   'layoutMode', 'layoutWrap', 'primaryAxisSizingMode', 'counterAxisSizingMode', 'primaryAxisAlignItems', 'counterAxisAlignItems',
   'counterAxisAlignContent', 'paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom', 'itemSpacing', 'counterAxisSpacing',
   'layoutAlign', 'layoutGrow', 'layoutPositioning', 'layoutSizingHorizontal', 'layoutSizingVertical',
-  'cornerRadius', 'rectangleCornerRadii', 'strokeWeight', 'strokeAlign', 'characters', 'componentId', 'componentPropertyDefinitions',
+  'cornerRadius', 'rectangleCornerRadii', 'strokeWeight', 'strokeAlign', 'characters', 'componentId', 'componentPropertyDefinitions', 'description',
 ]);
 
 function figColorToHex(c, opacity) {
@@ -90,10 +91,30 @@ function textStyleFromFigma(s) {
 }
 
 /** Convert one Figma node (recursively). parentAbs = parent's absolute bbox or null. */
-function nodeFromFigma(f, parentAbs) {
+function nodeFromFigma(f, parentAbs, ctx = {}) {
   const n = {};
   for (const k of KEEP) if (f[k] !== undefined) n[k] = f[k];
-  if (f.type === 'CANVAS') { n.children = (f.children || []).map((c) => nodeFromFigma(c, null)); return n; }
+  if (f.styles && ctx.styles) {
+    // remember style usages so tokens can be extracted and paints tagged
+    const name = (id) => ctx.styles[id]?.name;
+    if (f.styles.fill && name(f.styles.fill)) ctx.usedStyles.push({ kind: 'fill', name: name(f.styles.fill), node: f, target: n });
+    if (f.styles.stroke && name(f.styles.stroke)) ctx.usedStyles.push({ kind: 'stroke', name: name(f.styles.stroke), node: f, target: n });
+    if (f.styles.text && name(f.styles.text)) ctx.usedStyles.push({ kind: 'text', name: name(f.styles.text), node: f, target: n });
+    if (f.styles.effect && name(f.styles.effect)) ctx.usedStyles.push({ kind: 'effect', name: name(f.styles.effect), node: f, target: n });
+  }
+  if (f.type === 'COMPONENT' && ctx.components?.[f.id]) { const c = ctx.components[f.id]; if (c.key) n.key = c.key; if (c.description) n.description = c.description; }
+  if (f.type === 'COMPONENT_SET' && ctx.componentSets?.[f.id]) { const c = ctx.componentSets[f.id]; if (c.key) n.key = c.key; if (c.description) n.description = c.description; }
+  if (f.type === 'INSTANCE' && f.componentId) {
+    const c = ctx.components?.[f.componentId];
+    if (c) {
+      n.componentKey = c.key;
+      const set = c.componentSetId ? ctx.componentSets?.[c.componentSetId] : null;
+      n.component = set ? set.name : c.name;
+      if (set) n.variant = parseVariantName(c.name);
+    }
+    ctx.instances?.push(n);
+  }
+  if (f.type === 'CANVAS') { n.children = (f.children || []).map((c) => nodeFromFigma(c, null, ctx)); return n; }
   const bb = f.absoluteBoundingBox || f.absoluteRenderBounds;
   if (bb) {
     n.x = Math.round(((bb.x || 0) - (parentAbs ? parentAbs.x : 0)) * 100) / 100;
@@ -121,9 +142,10 @@ function nodeFromFigma(f, parentAbs) {
   if (f.layoutMode === 'NONE') delete n.layoutMode;
   if (f.visible === true) delete n.visible;
   if (f.sharedPluginData?.le?.html) { try { n.html = JSON.parse(f.sharedPluginData.le.html); } catch { /* ignore */ } }
+  if (f.sharedPluginData?.le?.instance) { try { Object.assign(n, JSON.parse(f.sharedPluginData.le.instance)); } catch { /* ignore */ } }
   if (f.html) n.html = f.html;
   if (f.children) {
-    n.children = f.children.map((c) => nodeFromFigma(c, bb || null));
+    n.children = f.children.map((c) => nodeFromFigma(c, bb || null, ctx));
     // layoutGrow/layoutAlign -> FILL sizing on the parent's axes
     if (hasAutoLayout(n)) for (const c of n.children) {
       const row = n.layoutMode === 'HORIZONTAL';
@@ -149,11 +171,40 @@ export function fromFigma(json, name) {
   else if (Array.isArray(json)) root = { type: 'DOCUMENT', children: [{ type: 'CANVAS', name: 'Page 1', children: json }] };
   else throw new Error('Unrecognized Figma JSON');
   const doc = createDocument(name || json.name || 'Imported');
-  doc.children = root.children.map((page) => nodeFromFigma(page, null));
+  const ctx = { components: json.components || {}, componentSets: json.componentSets || {}, styles: json.styles || {}, usedStyles: [], instances: [] };
+  doc.children = root.children.map((page) => nodeFromFigma(page, null, ctx));
   // top-level frames of a page keep their absolute coordinates (page is the origin)
   assignIds(doc);
-  if (json.components) doc.components = json.components;
-  if (json.styles) doc.styles = json.styles;
+  // design tokens from used styles
+  const tokens = { colors: {}, textStyles: {}, effects: {} };
+  for (const u of ctx.usedStyles) {
+    const t = u.target;
+    if (u.kind === 'fill' && t.fills?.[0]) { if (t.fills[0].type === 'SOLID') tokens.colors[u.name] ??= t.fills[0].color; else tokens.colors[u.name] ??= t.fills[0]; t.fills[0].token = u.name; }
+    if (u.kind === 'stroke' && t.strokes?.[0]) { if (t.strokes[0].type === 'SOLID') tokens.colors[u.name] ??= t.strokes[0].color; t.strokes[0].token = u.name; }
+    if (u.kind === 'text' && t.style) { const { textAlignHorizontal, textAlignVertical, ...rest } = t.style; tokens.textStyles[u.name] ??= rest; t.style.token = u.name; }
+    if (u.kind === 'effect' && t.effects) { tokens.effects[u.name] ??= t.effects.map((e) => ({ ...e })); t.effects = t.effects.map((e) => ({ ...e, token: u.name })); }
+  }
+  if (Object.keys(tokens.colors).length || Object.keys(tokens.textStyles).length || Object.keys(tokens.effects).length) doc.tokens = tokens;
+  // instances whose component lives in this file: keep only overrides instead of the expanded children
+  const byId = new Map();
+  walk(doc, (n) => { if (n.type === 'COMPONENT') byId.set(n.id, n); });
+  for (const inst of ctx.instances) {
+    const comp = byId.get(inst.componentId);
+    if (comp && inst.children) {
+      const ov = diffOverrides(comp, inst);
+      if (Object.keys(ov).length) inst.overrides = ov;
+      delete inst.children;
+      for (const k of ['fills', 'strokes', 'effects', 'layoutMode', 'itemSpacing', 'paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom', 'primaryAxisAlignItems', 'counterAxisAlignItems', 'clipsContent', 'cornerRadius', 'strokeWeight', 'strokeAlign', 'layoutWrap']) delete inst[k];
+    }
+  }
+  return doc;
+}
+
+/** Figma file JSON -> a library document (components, sets and tokens; pages are kept for context). */
+export function libraryFromFigma(json, name) {
+  const doc = fromFigma(json, name);
+  doc.kind = 'library';
+  if (json.name) doc.sourceName = json.name;
   return doc;
 }
 
@@ -222,7 +273,8 @@ function nodeToFigma(n, parent, originX, originY) {
       f.textAutoResize = f.style.textAutoResize;
     }
     if (n.componentId) f.componentId = n.componentId;
-    if (n.html) f.sharedPluginData = { le: { html: JSON.stringify(n.html) } };
+    if (n.type === 'COMPONENT' || n.type === 'COMPONENT_SET') { if (n.key) f.key = n.key; if (n.description) f.description = n.description; }
+    if (n.html || n.type === 'INSTANCE') f.sharedPluginData = { le: { ...(n.html ? { html: JSON.stringify(n.html) } : {}), ...(n.type === 'INSTANCE' ? { instance: JSON.stringify({ component: n.component, variant: n.variant, overrides: n.overrides, componentKey: n.componentKey }) } : {}) } };
   }
   if (n.children) {
     const ox = n.type === 'CANVAS' ? 0 : absX, oy = n.type === 'CANVAS' ? 0 : absY;
@@ -232,18 +284,36 @@ function nodeToFigma(n, parent, originX, originY) {
   return f;
 }
 
-/** Convert a native document to a Figma REST "file" JSON. */
-export function toFigma(doc) {
-  const document = { id: '0:0', name: 'Document', type: 'DOCUMENT', scrollBehavior: 'SCROLLS', children: (doc.children || []).map((p) => nodeToFigma(p, doc, 0, 0)) };
+/** Convert a native document to a Figma REST "file" JSON. Instances are expanded (as the REST API does). */
+export function toFigma(doc, libs = []) {
+  const expanded = expandDocument(doc, libs);
+  const components = {}, componentSets = {};
+  walk(expanded, (n, parent) => {
+    if (n.type === 'COMPONENT') components[n.id] = { key: n.key || n.id, name: n.name, description: n.description || '', remote: false, componentSetId: parent?.type === 'COMPONENT_SET' ? parent.id : undefined, documentationLinks: [] };
+    if (n.type === 'COMPONENT_SET') componentSets[n.id] = { key: n.key || n.id, name: n.name, description: n.description || '', remote: false, documentationLinks: [] };
+  });
+  const document = { id: '0:0', name: 'Document', type: 'DOCUMENT', scrollBehavior: 'SCROLLS', children: (expanded.children || []).map((p) => nodeToFigma(p, expanded, 0, 0)) };
   return {
     name: doc.name, role: 'owner', lastModified: new Date().toISOString(), editorType: 'figma', version: '1',
-    thumbnailUrl: '', schemaVersion: 0, document, components: doc.components || {}, componentSets: {}, styles: doc.styles || {},
+    thumbnailUrl: '', schemaVersion: 0, document, components, componentSets, styles: doc.styles || {},
   };
 }
 
 /** Fetch a file (or specific nodes) from the Figma REST API and convert it. Works in Node 18+ and browsers. */
+export function parseFigmaUrl(input) {
+  const s = String(input || '').trim();
+  const m = /figma\.com\/(?:design|file|board|proto)\/([A-Za-z0-9]+)(?:\/branch\/([A-Za-z0-9]+))?[^?]*(?:\?[^#]*node-id=([0-9]+[-:][0-9]+))?/.exec(s);
+  if (m) return { fileKey: m[2] || m[1], nodeId: m[3] ? m[3].replace('-', ':') : undefined };
+  if (/figma\.com\/community\/file\//.test(s)) throw new Error('Community URLs cannot be fetched directly: open the file in Figma ("Open in Figma" duplicates it to your drafts) and use that file\'s URL or key.');
+  return { fileKey: s };
+}
+
 export async function fetchFromFigma({ token, fileKey, nodeIds, name }, fetchImpl = globalThis.fetch) {
-  if (!token || !fileKey) throw new Error('token and fileKey are required');
+  if (!token) throw new Error('A Figma personal access token is required (FIGMA_TOKEN env or --token)');
+  const parsed = parseFigmaUrl(fileKey);
+  fileKey = parsed.fileKey;
+  if (!nodeIds?.length && parsed.nodeId) nodeIds = [parsed.nodeId];
+  if (!fileKey) throw new Error('fileKey is required');
   const url = nodeIds && nodeIds.length
     ? `https://api.figma.com/v1/files/${encodeURIComponent(fileKey)}/nodes?ids=${encodeURIComponent(nodeIds.join(','))}&geometry=paths`
     : `https://api.figma.com/v1/files/${encodeURIComponent(fileKey)}`;

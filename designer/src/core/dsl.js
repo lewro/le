@@ -15,7 +15,7 @@
 // See AGENTS.md for the full property reference. parseProps/applyShorthand/toShorthand are also used by
 // the ops API ("dsl" strings) and by the inspector.
 
-import { createNode, normalizeType, SHORT_TYPES, DEFAULT_TEXT_STYLE, sizingH, sizingV, hasAutoLayout } from './model.js';
+import { createNode, normalizeType, SHORT_TYPES, DEFAULT_TEXT_STYLE, sizingH, sizingV, hasAutoLayout, clone } from './model.js';
 
 // ---------------------------------------------------------------------------
 // Tokenizer
@@ -57,6 +57,22 @@ function tokenize(line) {
 }
 
 // ---------------------------------------------------------------------------
+// Token context: $Name color references and ts=Name text styles resolve against this table.
+// Callers (store, CLI, API) set it from the document + linked libraries before parsing.
+// ---------------------------------------------------------------------------
+
+let TOKENS = { colors: {}, textStyles: {}, effects: {} };
+export function setTokenContext(tokens) { TOKENS = { colors: {}, textStyles: {}, effects: {}, ...(tokens || {}) }; return TOKENS; }
+export function getTokenContext() { return TOKENS; }
+function findToken(table, name) {
+  if (!table) return undefined;
+  if (table[name] !== undefined) return table[name];
+  const l = String(name).toLowerCase();
+  const k = Object.keys(table).find((x) => x.toLowerCase() === l);
+  return k !== undefined ? table[k] : undefined;
+}
+
+// ---------------------------------------------------------------------------
 // Values
 // ---------------------------------------------------------------------------
 
@@ -81,6 +97,12 @@ export function parsePaint(v) {
   v = String(v).trim();
   if (v === 'none' || v === 'transparent' || v === '') return null;
   let m;
+  if (v.startsWith('$')) {
+    const name = v.slice(1);
+    const val = findToken(TOKENS.colors, name);
+    if (val && typeof val === 'object') return { ...val, token: name };
+    return { type: 'SOLID', color: parseColor(val || '#ff00ff'), token: name, ...(val ? {} : { unresolved: true }) };
+  }
   if ((m = /^url\((.*)\)$/.exec(v))) return { type: 'IMAGE', scaleMode: 'FILL', src: m[1].replace(/^['"]|['"]$/g, '') };
   if ((m = /^linear\((.*)\)$/.exec(v))) {
     const parts = m[1].split(',').map((s) => s.trim());
@@ -93,6 +115,7 @@ export function parsePaint(v) {
 
 export function paintToShort(p) {
   if (!p) return 'none';
+  if (p.token) return '$' + p.token;
   if (p.type === 'SOLID') return p.color + (p.opacity !== undefined && p.opacity !== 1 ? `@${p.opacity}` : '');
   if (p.type === 'IMAGE') return `url(${p.src || p.imageRef || ''})`;
   if (p.type === 'GRADIENT_LINEAR') return `linear(${p.angle ?? 180},${(p.gradientStops || []).map((s) => s.color).join(',')})`;
@@ -135,7 +158,29 @@ function setSizing(node, axis, v) {
 export function applyShorthand(node, key, value) {
   const st = () => (node.style ||= { ...DEFAULT_TEXT_STYLE });
   const html = () => (node.html ||= {});
+  if (node.type === 'INSTANCE') {
+    // Child.key=value -> override on a child of the component; Prop=Value -> variant property
+    const dot = key.indexOf('.');
+    if (dot > 0 && !RAW_PREFIXES.has(key.slice(0, dot))) { setOverride(node, key.slice(0, dot), key.slice(dot + 1), value); return; }
+    if (/^[A-Z]/.test(key) && !INSTANCE_KEYS.has(key)) { (node.variant ||= {})[key] = String(value); return; }
+    if (key === 'component' || key === 'of') { node.component = String(value); return; }
+    if (key === 'text') { setOverride(node, '@TEXT', 'text', value); return; }
+  }
   switch (key) {
+    case 'ts': case 'textstyle': {
+      const tsv = findToken(TOKENS.textStyles, value);
+      if (tsv) Object.assign(st(), tsv);
+      st().token = String(value);
+      return;
+    }
+    case 'effect': {
+      if (value === 'none') { node.effects = []; return; }
+      const ev = findToken(TOKENS.effects, value);
+      node.effects = (ev ? clone(ev) : [{ type: 'DROP_SHADOW', offset: { x: 0, y: 4 }, radius: 12, spread: 0, color: '#00000026', visible: true }]).map((e) => ({ ...e, token: String(value) }));
+      return;
+    }
+    case 'desc': case 'description': node.description = String(value); return;
+    case 'key': node.key = String(value); return;
     // flags
     case 'row': node.layoutMode = 'HORIZONTAL'; return;
     case 'col': case 'column': node.layoutMode = 'VERTICAL'; return;
@@ -233,6 +278,26 @@ export function applyShorthand(node, key, value) {
   }
 }
 
+const RAW_PREFIXES = new Set(['style', 'html', 'meta', 'attr', 'data']);
+const INSTANCE_KEYS = new Set([]);
+
+/** Store an override for an instance child. selector is a name path or @TEXT; key is a DSL shorthand key. */
+function setOverride(node, selector, key, value) {
+  const ov = ((node.overrides ||= {})[selector] ||= {});
+  if (key === 'text' || key === 'chars' || key === 'characters') { ov.characters = String(value); return; }
+  if (key === 'hidden') { ov.visible = false; return; }
+  if (key === 'visible') { ov.visible = null; return; }
+  // translate other shorthand keys through a scratch node of the right kind
+  const scratch = { type: key === 'color' || key.startsWith('size') || key === 'weight' || key === 'font' || key === 'lh' || key === 'ls' || key === 'align' ? 'TEXT' : 'FRAME', style: {} };
+  applyShorthand(scratch, key, value);
+  delete scratch.type;
+  if (scratch.style && !Object.keys(scratch.style).length) delete scratch.style;
+  for (const [k, v] of Object.entries(scratch)) {
+    if (k === 'style') ov.style = { ...(ov.style || {}), ...v };
+    else ov[k] = v;
+  }
+}
+
 function coerce(v) {
   if (v === 'true') return true;
   if (v === 'false') return false;
@@ -267,17 +332,45 @@ export function applyShorthandString(node, str) {
  * Parse DSL text into an array of root nodes. Ids are only assigned when given with #id;
  * callers use model.assignIds() to fill in the rest.
  */
-export function parseDsl(text) {
+export function parseDsl(text) { return parseDslDocument(text).roots; }
+
+/**
+ * Parse DSL text. Besides nodes, the text may define tokens:
+ *   token Primary/500 #2563eb
+ *   textstyle Heading/H1 size=48 weight=800 lh=56
+ *   effectstyle Card shadow=0,4,12,0,#0f172a14
+ * Returns { roots, tokens }. Defined tokens are also added to the active token context.
+ */
+export function parseDslDocument(text) {
   const roots = [];
+  const tokens = { colors: {}, textStyles: {}, effects: {} };
   const stack = []; // { indent, node }
   const lines = String(text).replace(/\r\n?/g, '\n').split('\n');
   for (let ln = 0; ln < lines.length; ln++) {
     const raw = lines[ln];
     if (!raw.trim() || raw.trim().startsWith('//')) continue;
     const indent = raw.match(/^[ \t]*/)[0].replace(/\t/g, '  ').length;
-    const tokens = tokenize(raw.trim());
-    if (!tokens.length) continue;
-    const typeTok = tokens.shift();
+    const tokens_ = tokenize(raw.trim());
+    if (!tokens_.length) continue;
+    const typeTok = tokens_.shift();
+    const kw = typeTok.text.toLowerCase();
+    if (kw === 'token' || kw === 'color') {
+      const name = tokens_[0]?.text; const val = tokens_[1]?.text;
+      if (!name || !val) throw new Error(`Line ${ln + 1}: token needs a name and a value`);
+      const paint = parsePaint(val);
+      tokens.colors[name] = paint && paint.type === 'SOLID' ? paint.color : paint;
+      TOKENS.colors[name] = tokens.colors[name];
+      continue;
+    }
+    if (kw === 'textstyle' || kw === 'effectstyle') {
+      const name = tokens_.shift()?.text;
+      if (!name) throw new Error(`Line ${ln + 1}: ${kw} needs a name`);
+      const scratch = createNode('TEXT');
+      for (const t of tokens_) if (t.key !== null) applyShorthand(scratch, t.key, t.text);
+      if (kw === 'textstyle') { const { fontFamily, fontWeight, fontSize, textAlignHorizontal, textAlignVertical, ...rest } = scratch.style; tokens.textStyles[name] = { fontFamily, fontWeight, fontSize, ...rest }; TOKENS.textStyles[name] = tokens.textStyles[name]; }
+      else { tokens.effects[name] = scratch.effects || []; TOKENS.effects[name] = tokens.effects[name]; }
+      continue;
+    }
     const type = normalizeType(typeTok.text);
     if (!SHORT_TYPES[type]) throw new Error(`Line ${ln + 1}: unknown node type "${typeTok.text}"`);
     const node = createNode(type);
@@ -285,9 +378,10 @@ export function parseDsl(text) {
     let name = null;
     const strings = [];
     const explicit = new Set();
-    for (const t of tokens) {
+    for (const t of tokens_) {
       if (t.key !== null) { explicit.add(t.key); applyShorthand(node, t.key, t.text); }
       else if (!t.quoted && FLAGS.has(t.text)) { explicit.add(t.text); applyShorthand(node, t.text, true); }
+      else if (!t.quoted && type === 'INSTANCE' && t.text.includes('.') && !t.text.startsWith('#')) applyShorthand(node, t.text, true);
       else if (!t.quoted && t.text.startsWith('#') && t.text.length > 1) node.id = t.text.slice(1);
       else if (!t.quoted && name === null && !strings.length) name = t.text;
       else strings.push(t.text);
@@ -296,6 +390,13 @@ export function parseDsl(text) {
       if (strings.length >= 2) { name = strings[0]; node.characters = strings[1]; }
       else if (strings.length === 1) { if (name === null) name = null; node.characters = strings[0]; }
       if (name === null) name = node.characters.split('\n')[0].slice(0, 60) || 'Text';
+    } else if (type === 'INSTANCE') {
+      // instance <Component> ["text override"] ; name= sets a different layer name
+      if (name === null && strings.length) name = strings.shift();
+      if (name !== null && !node.component) node.component = name;
+      if (strings.length) setOverride(node, '@TEXT', 'text', strings[0]);
+      if (!explicit.has('name')) name = node.component;
+      else name = node.name;
     } else if (strings.length) {
       name = name === null ? strings[0] : name + ' ' + strings.join(' ');
     }
@@ -309,14 +410,14 @@ export function parseDsl(text) {
     } else roots.push(node);
     stack.push({ indent, node });
   }
-  return roots;
+  return { roots, tokens };
 }
 
 const LAYOUT_KEYS = new Set(['gap', 'rowgap', 'p', 'padding', 'px', 'py', 'pt', 'pr', 'pb', 'pl', 'justify', 'items', 'center']);
 
 /** Apply DSL defaults: layout props imply auto-layout; auto-layout frames hug unless sized explicitly. */
 export function finishNode(node, explicit) {
-  if (node.type === 'TEXT' || node.type === 'CANVAS') return;
+  if (node.type === 'TEXT' || node.type === 'CANVAS' || node.type === 'INSTANCE') return;
   if (!node.layoutMode || node.layoutMode === 'NONE') {
     for (const k of explicit) if (LAYOUT_KEYS.has(k)) { node.layoutMode = 'HORIZONTAL'; break; }
   }
@@ -332,7 +433,7 @@ export function finishNode(node, explicit) {
 
 function fmt(n) { return Number.isInteger(n) ? String(n) : String(Math.round(n * 100) / 100); }
 function q(s) { return JSON.stringify(String(s)); }
-function isWord(s) { return /^[A-Za-z0-9_.-]+$/.test(s) && !FLAGS.has(s) && !SHORT_TYPES[String(s).toUpperCase()] && !TYPE_ALIAS_WORDS.has(s.toLowerCase()); }
+function isWord(s) { return /^[A-Za-z0-9_.\/-]+$/.test(s) && !s.startsWith('//') && !FLAGS.has(s) && !SHORT_TYPES[String(s).toUpperCase()] && !TYPE_ALIAS_WORDS.has(s.toLowerCase()); }
 const TYPE_ALIAS_WORDS = new Set(['frame', 'group', 'rect', 'rectangle', 'ellipse', 'circle', 'text', 'line', 'component', 'instance', 'page', 'canvas', 'vector', 'section', 'image', 'img']);
 
 function paddingShort(n) {
@@ -349,16 +450,41 @@ export function toShorthand(node, parent) {
   const inAuto = parent && hasAutoLayout(parent) && node.layoutPositioning !== 'ABSOLUTE';
   if (node.layoutPositioning === 'ABSOLUTE') p.push('abs');
   if (!inAuto && node.type !== 'CANVAS' && (node.x || node.y)) p.push(`x=${fmt(node.x || 0)}`, `y=${fmt(node.y || 0)}`);
+  if (node.type === 'INSTANCE') {
+    for (const [k, v] of Object.entries(node.variant || {})) p.push(`${k}=${isWord(v) ? v : q(v)}`);
+    if (node.layoutSizingHorizontal) p.push(`w=${node.layoutSizingHorizontal === 'FIXED' ? fmt(node.width || 0) : node.layoutSizingHorizontal.toLowerCase()}`);
+    else if (node.width !== undefined) p.push(`w=${fmt(node.width)}`);
+    if (node.layoutSizingVertical) p.push(`h=${node.layoutSizingVertical === 'FIXED' ? fmt(node.height || 0) : node.layoutSizingVertical.toLowerCase()}`);
+    else if (node.height !== undefined) p.push(`h=${fmt(node.height)}`);
+    for (const [sel, ov] of Object.entries(node.overrides || {})) {
+      if (sel === '@TEXT' && Object.keys(ov).length === 1 && ov.characters !== undefined) { p.push(q(ov.characters)); continue; }
+      for (const [k, v] of Object.entries(ov)) {
+        if (k === 'characters') p.push(`${sel}.text=${q(v)}`);
+        else if (k === 'visible') p.push(`${sel}.${v === false ? 'hidden' : 'visible'}`);
+        else if (k === 'fills') p.push(`${sel}.fill=${v.length ? paintToShort(v[0]) : 'none'}`);
+        else if (k === 'style') for (const [sk, sv] of Object.entries(v)) p.push(`${sel}.style.${sk}=${isWord(String(sv)) ? sv : q(sv)}`);
+        else p.push(`${sel}.${k}=${typeof v === 'object' ? q(JSON.stringify(v)) : isWord(String(v)) ? v : q(v)}`);
+      }
+    }
+    if (node.name && node.name !== node.component) p.push(`name=${isWord(node.name) ? node.name : q(node.name)}`);
+    if (node.rotation) p.push(`rot=${fmt(node.rotation)}`);
+    if (node.opacity !== undefined && node.opacity !== 1) p.push(`opacity=${fmt(node.opacity)}`);
+    if (node.visible === false) p.push('hidden');
+    if (node.locked) p.push('locked');
+    if (node.html) { if (node.html.tag) p.push(`tag=${node.html.tag}`); if (node.html.className) p.push(`class=${q(node.html.className)}`); for (const [k, v] of Object.entries(node.html.attrs || {})) p.push(`${k}=${isWord(v) ? v : q(v)}`); }
+    return p;
+  }
   if (node.type !== 'CANVAS') {
     const sh = sizingH(node), sv = sizingV(node);
-    const hugDefault = node.type === 'TEXT' || hasAutoLayout(node);
+    const hugDefault = node.type === 'TEXT' || hasAutoLayout(node) || node.type === 'COMPONENT_SET';
     if (!(sh === 'HUG' && hugDefault)) p.push(`w=${sh === 'FIXED' ? fmt(node.width || 0) : sh.toLowerCase()}`);
     if (!(sv === 'HUG' && hugDefault)) p.push(`h=${sv === 'FIXED' ? fmt(node.height || 0) : sv.toLowerCase()}`);
   }
   if (node.rotation) p.push(`rot=${fmt(node.rotation)}`);
-  if (node.layoutMode === 'HORIZONTAL') p.push('row');
+  const setDefaults = node.type === 'COMPONENT_SET' && node.layoutMode === 'HORIZONTAL' && node.layoutWrap === 'WRAP' && node.itemSpacing === 24 && node.paddingTop === 24 && node.paddingLeft === 24;
+  if (node.layoutMode === 'HORIZONTAL' && !setDefaults) p.push('row');
   if (node.layoutMode === 'VERTICAL') p.push('col');
-  if (hasAutoLayout(node)) {
+  if (hasAutoLayout(node) && !setDefaults) {
     if (node.layoutWrap === 'WRAP') p.push('wrap');
     if (node.itemSpacing) p.push(`gap=${fmt(node.itemSpacing)}`);
     if (node.counterAxisSpacing) p.push(`rowgap=${fmt(node.counterAxisSpacing)}`);
@@ -366,7 +492,13 @@ export function toShorthand(node, parent) {
     if (node.primaryAxisAlignItems && node.primaryAxisAlignItems !== 'MIN') p.push(`justify=${JUSTIFY_BACK[node.primaryAxisAlignItems]}`);
     if (node.counterAxisAlignItems && node.counterAxisAlignItems !== 'MIN') p.push(`items=${ITEMS_BACK[node.counterAxisAlignItems]}`);
   }
-  if (node.type === 'TEXT') {
+  if (node.type === 'TEXT' && node.style?.token) {
+    p.push(`ts=${isWord(node.style.token) ? node.style.token : q(node.style.token)}`);
+    const fill = (node.fills || [])[0];
+    if (!fill) p.push('color=none');
+    else if (fill.token || fill.type !== 'SOLID' || fill.color !== '#000000') p.push(`color=${paintToShort(fill)}`);
+    if (node.style.textAlignHorizontal && node.style.textAlignHorizontal !== 'LEFT') p.push(`align=${TALIGN_BACK[node.style.textAlignHorizontal]}`);
+  } else if (node.type === 'TEXT') {
     const s = node.style || {};
     if (s.fontFamily && s.fontFamily !== 'Inter') p.push(`font=${q(s.fontFamily)}`);
     if (s.fontSize !== undefined && s.fontSize !== 16) p.push(`size=${fmt(s.fontSize)}`);
@@ -390,7 +522,7 @@ export function toShorthand(node, parent) {
     else p.push(`fills=${fills.map(paintToShort).join('|')}`);
   }
   const strokes = (node.strokes || []).filter((f) => f.visible !== false);
-  if (strokes.length) {
+  if (strokes.length && !(node.type === 'COMPONENT_SET' && strokes[0].color === '#9747ff')) {
     p.push(`stroke=${paintToShort(strokes[0])}`);
     if (node.strokeWeight !== undefined && node.strokeWeight !== 1) p.push(`sw=${fmt(node.strokeWeight)}`);
     if (node.strokeAlign && node.strokeAlign !== 'INSIDE') p.push(`salign=${node.strokeAlign.toLowerCase()}`);
@@ -398,7 +530,9 @@ export function toShorthand(node, parent) {
   if (node.rectangleCornerRadii) p.push(`r=${node.rectangleCornerRadii.map(fmt).join(',')}`);
   else if (node.cornerRadius) p.push(`r=${fmt(node.cornerRadius)}`);
   if (node.opacity !== undefined && node.opacity !== 1) p.push(`opacity=${fmt(node.opacity)}`);
-  for (const e of node.effects || []) {
+  const tokenEffect = (node.effects || []).find((e) => e.token);
+  if (tokenEffect) p.push(`effect=${isWord(tokenEffect.token) ? tokenEffect.token : q(tokenEffect.token)}`);
+  for (const e of tokenEffect ? [] : node.effects || []) {
     if (e.visible === false) continue;
     if (e.type === 'DROP_SHADOW') p.push(`shadow=${fmt(e.offset?.x || 0)},${fmt(e.offset?.y || 0)},${fmt(e.radius || 0)},${fmt(e.spread || 0)},${e.color}`);
     if (e.type === 'LAYER_BLUR') p.push(`blur=${fmt(e.radius || 0)}`);
@@ -406,7 +540,7 @@ export function toShorthand(node, parent) {
   if (node.type === 'FRAME' || node.type === 'COMPONENT' || node.type === 'INSTANCE') { if (node.clipsContent === false) p.push('noclip'); }
   if (node.visible === false) p.push('hidden');
   if (node.locked) p.push('locked');
-  if (node.componentId) p.push(`component=${node.componentId}`);
+  if (node.description) p.push(`desc=${q(node.description)}`);
   if (node.html) {
     if (node.html.tag) p.push(`tag=${node.html.tag}`);
     if (node.html.className) p.push(`class=${q(node.html.className)}`);
@@ -427,7 +561,8 @@ export function serializeDsl(nodes, options = {}, parent = null) {
     if (node.type === 'DOCUMENT') { (node.children || []).forEach((c) => rec(c, node, level)); return; }
     const parts = [SHORT_TYPES[node.type] || node.type.toLowerCase()];
     const defaultName = node.type === 'TEXT' ? (node.characters || '').split('\n')[0].slice(0, 60) : null;
-    const showName = node.name !== undefined && node.name !== defaultName && !(node.type === 'TEXT' && node.name === 'Text');
+    const showName = node.type !== 'INSTANCE' && node.name !== undefined && node.name !== defaultName && !(node.type === 'TEXT' && node.name === 'Text');
+    if (node.type === 'INSTANCE') { const c = node.component || node.componentId || 'Unknown'; parts.push(isWord(c) ? c : q(c)); }
     if (showName) parts.push(isWord(node.name) ? node.name : q(node.name));
     if (node.type === 'TEXT') parts.push(q(node.characters || ''));
     parts.push(...toShorthand(node, par));
@@ -439,5 +574,21 @@ export function serializeDsl(nodes, options = {}, parent = null) {
     }
   };
   list.forEach((n) => rec(n, parent, 0));
+  return lines.join('\n');
+}
+
+/** Serialize a tokens table as DSL definition lines. */
+export function serializeTokens(tokens) {
+  const lines = [];
+  for (const [k, v] of Object.entries(tokens?.colors || {})) lines.push(`token ${isWord(k) ? k : q(k)} ${typeof v === 'string' ? v : paintToShort(v)}`);
+  for (const [k, v] of Object.entries(tokens?.textStyles || {})) {
+    const t = { type: 'TEXT', style: { ...DEFAULT_TEXT_STYLE, ...v, fontSize: v.fontSize ?? 16, fontWeight: v.fontWeight ?? 400 }, fills: [{ type: 'SOLID', color: '#000000' }] };
+    const parts = toShorthand(t, null).filter((x) => !x.startsWith('size=') && !x.startsWith('weight=') && !x.startsWith('font='));
+    lines.push(`textstyle ${isWord(k) ? k : q(k)} font=${q(t.style.fontFamily)} size=${t.style.fontSize} weight=${t.style.fontWeight} ${parts.join(' ')}`.trim());
+  }
+  for (const [k, v] of Object.entries(tokens?.effects || {})) {
+    const t = { type: 'FRAME', effects: v.map((e) => ({ ...e, token: undefined })), fills: [{ type: 'SOLID', color: '#ffffff' }], width: 100, height: 100 };
+    lines.push(`effectstyle ${isWord(k) ? k : q(k)} ${toShorthand(t, null).filter((x) => x.startsWith('shadow=') || x.startsWith('blur=')).join(' ')}`);
+  }
   return lines.join('\n');
 }

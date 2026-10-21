@@ -78,9 +78,53 @@ async function loadFont(family, weight, italic) {
 
 const isAuto = (node) => 'layoutMode' in node && node.layoutMode !== 'NONE';
 
+/** Try to create a real Figma instance for an INSTANCE node (library component by key, or a component in this file). */
+async function tryInstance(n, parent) {
+  let component = null;
+  if (n.componentKey) { try { component = await figma.importComponentByKeyAsync(n.componentKey); } catch (e) { component = null; } }
+  if (!component && n.componentId) { try { const c = await figma.getNodeByIdAsync(n.componentId); if (c && c.type === 'COMPONENT') component = c; } catch (e) { component = null; } }
+  if (!component && n.component) {
+    const found = figma.root.findOne((x) => (x.type === 'COMPONENT' || x.type === 'COMPONENT_SET') && x.name === n.component);
+    if (found) component = found.type === 'COMPONENT_SET' ? found.defaultVariant : found;
+  }
+  if (!component) return null;
+  let inst = component.createInstance();
+  parent.appendChild(inst);
+  if (n.variant && inst.variantProperties) { try { inst.setProperties(n.variant); } catch (e) { /* unknown variant */ } }
+  // text overrides by child name (or first text for @TEXT)
+  const ov = n.overrides || {};
+  for (const sel in ov) {
+    const o = ov[sel];
+    const targets = sel === '@TEXT' ? [inst.findOne((x) => x.type === 'TEXT')] : inst.findAll((x) => x.name === sel.split('/').pop());
+    for (const t of targets) {
+      if (!t) continue;
+      if (o.characters !== undefined && t.type === 'TEXT') { try { await figma.loadFontAsync(t.fontName); t.characters = o.characters; } catch (e) { /* mixed fonts */ } }
+      if (o.visible === false) t.visible = false;
+      if (o.fills && 'fills' in t) t.fills = await paintsToFigma(o.fills);
+    }
+  }
+  return inst;
+}
+
 async function build(n, parent) {
   const type = n.type || 'FRAME';
   let node;
+  if (type === 'INSTANCE') {
+    node = await tryInstance(n, parent);
+    if (node) {
+      node.name = n.name || node.name;
+      const parentAuto = isAuto(parent);
+      if (!parentAuto || n.layoutPositioning === 'ABSOLUTE') { if (parentAuto) node.layoutPositioning = 'ABSOLUTE'; node.x = n.x || 0; node.y = n.y || 0; }
+      if (n.width && n.height && n.layoutSizingHorizontal === 'FIXED') node.resize(n.width, n.height);
+      try { if (n.layoutSizingHorizontal === 'FILL' && parentAuto) node.layoutSizingHorizontal = 'FILL'; } catch (e) { /* ignore */ }
+      try { if (n.layoutSizingVertical === 'FILL' && parentAuto) node.layoutSizingVertical = 'FILL'; } catch (e) { /* ignore */ }
+      if (n.opacity !== undefined) node.opacity = n.opacity;
+      if (n.visible === false) node.visible = false;
+      if (n.html) node.setSharedPluginData('le', 'html', JSON.stringify(n.html));
+      return node;
+    }
+    if (!n.children) { figma.ui.postMessage({ type: 'status', text: `Component "${n.component}" not found; export with "expanded" to keep its contents` }); }
+  }
   if (type === 'TEXT') node = figma.createText();
   else if (type === 'RECTANGLE') node = figma.createRectangle();
   else if (type === 'ELLIPSE') node = figma.createEllipse();
@@ -245,7 +289,15 @@ function serialize(node) {
     if (node.textCase !== figma.mixed && node.textCase !== 'ORIGINAL') s.textCase = node.textCase;
     n.style = s;
   }
-  if (node.type === 'INSTANCE' && node.mainComponent) n.componentId = node.mainComponent.id;
+  if (node.type === 'INSTANCE' && node.mainComponent) {
+    const mc = node.mainComponent;
+    n.componentId = mc.id;
+    if (mc.key) n.componentKey = mc.key;
+    const set = mc.parent && mc.parent.type === 'COMPONENT_SET' ? mc.parent : null;
+    n.component = set ? set.name : mc.name;
+    if (set) { const v = {}; mc.name.split(',').forEach((p) => { const i = p.indexOf('='); if (i > 0) v[p.slice(0, i).trim()] = p.slice(i + 1).trim(); }); n.variant = v; }
+  }
+  if (node.type === 'COMPONENT' || node.type === 'COMPONENT_SET') { if (node.key) n.key = node.key; if (node.description) n.description = node.description; }
   const html = node.getSharedPluginData('le', 'html');
   if (html) { try { n.html = JSON.parse(html); } catch (e) { /* ignore */ } }
   if ('children' in node) n.children = node.children.map(serialize);

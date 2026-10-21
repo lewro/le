@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { useStore, init, undo, redo, apply, select, setTool, zoomBy, zoomToFit, setState, getState, selectedNodes, currentPage, saveNow } from './store.js';
+import { useStore, init, undo, redo, apply, select, setTool, zoomBy, zoomToFit, setState, getState, selectedNodes, currentPage, saveNow, setView } from './store.js';
 import Toolbar from './components/Toolbar.jsx';
 import LayersPanel from './components/LayersPanel.jsx';
+import AssetsPanel from './components/AssetsPanel.jsx';
 import Canvas from './components/Canvas.jsx';
 import RightPanel from './components/RightPanel.jsx';
 import Dialogs from './components/Dialogs.jsx';
-import { findById, getParent, hasAutoLayout, cloneWithNewIds, clone } from '../core/model.js';
+import { findById, getParent, hasAutoLayout, cloneWithNewIds, clone, pathTo } from '../core/model.js';
 
 function isTyping(e) {
   const check = (el) => el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT' || el.isContentEditable);
@@ -14,13 +15,26 @@ function isTyping(e) {
 
 let clipboard = null;
 
+function LeftPanel() {
+  const tab = useStore((s) => s.leftTab);
+  return (
+    <>
+      <div className="tabs">
+        <button className={tab === 'layers' ? 'active' : ''} onClick={() => setState({ leftTab: 'layers' })}>Layers</button>
+        <button className={tab === 'assets' ? 'active' : ''} onClick={() => setState({ leftTab: 'assets' })}>Assets</button>
+      </div>
+      {tab === 'layers' ? <LayersPanel /> : <AssetsPanel />}
+    </>
+  );
+}
+
 export default function App() {
   const docName = useStore((s) => s.docName);
   const status = useStore((s) => s.status);
   const saving = useStore((s) => s.saving);
   const dirty = useStore((s) => s.dirty);
   const backend = useStore((s) => s.backend);
-  const zoom = useStore((s) => s.zoom);
+  const zoom = useStore((s) => s.view.zoom);
   const selection = useStore((s) => s.selection);
 
   useEffect(() => { init(); }, []);
@@ -48,8 +62,9 @@ export default function App() {
       if (mod && e.key.toLowerCase() === 'g') { e.preventDefault(); if (s.selection.length) { const r = apply({ op: 'wrap', target: s.selection.map((i) => '#' + i), dsl: 'frame Group col bg=none noclip', all: true }, { label: 'Group' }); if (r) select(r.created[0]); } return; }
       if (mod && (e.key === '=' || e.key === '+')) { e.preventDefault(); zoomBy(1.25); return; }
       if (mod && e.key === '-') { e.preventDefault(); zoomBy(0.8); return; }
-      if (mod && e.key === '0') { e.preventDefault(); setState({ zoom: 1 }); return; }
+      if (mod && e.key === '0') { e.preventDefault(); setView({ zoom: 1 }, { commit: 'now' }); return; }
       if (mod && e.key === '1') { e.preventDefault(); zoomToFit(); return; }
+      if (mod && e.key === '2') { e.preventDefault(); if (s.selection.length) zoomToFit(80, selectedNodes().map((n) => (findById(s.doc, n.id).parent?.type === 'CANVAS' ? n : pathTo(s.doc, n.id)[2]))); return; }
       if (mod && e.key === '\\') { e.preventDefault(); return; }
       if (mod) return;
       switch (e.key) {
@@ -96,7 +111,7 @@ export default function App() {
   return (
     <div className="app">
       <Toolbar />
-      <div className="left"><LayersPanel /></div>
+      <div className="left"><LeftPanel /></div>
       <Canvas />
       <div className="right"><RightPanel /></div>
       <div className="statusbar">

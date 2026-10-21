@@ -16,7 +16,8 @@
 // Returns { changed: [ids...], created: [ids...] }.
 
 import { findById, resolve, cloneWithNewIds, assignIds, nextId, walk, clone, hasAutoLayout, sizingH, sizingV } from './model.js';
-import { parseDsl, applyShorthandString, finishNode } from './dsl.js';
+import { parseDsl, applyShorthandString, finishNode, setTokenContext } from './dsl.js';
+import { buildIndex, detachInstance } from './components.js';
 
 function nodesFromOp(doc, op, keepId) {
   let nodes;
@@ -56,18 +57,56 @@ function insertAt(parent, node, index) {
   return i;
 }
 
-/** Apply one or more ops in place. Throws on the first error (callers clone first if they need atomicity). */
-export function applyOps(doc, ops, scope = doc) {
+/**
+ * Apply one or more ops in place. Throws on the first error (callers clone first if they need atomicity).
+ * ctx.libs: linked library documents (needed for 'detach' and $token resolution).
+ */
+export function applyOps(doc, ops, scope = doc, ctx = {}) {
   const result = { changed: [], created: [] };
   const list = Array.isArray(ops) ? ops : [ops];
-  for (const op of list) applyOp(doc, op, scope, result);
+  const libs = ctx.libs || [];
+  setTokenContext(ctx.tokens || buildIndex(doc, libs).tokens);
+  for (const op of list) applyOp(doc, op, scope, result, libs);
   return result;
 }
 
-function applyOp(doc, op, scope, result) {
+function applyOp(doc, op, scope, result, libs) {
   if (!op || !op.op) throw new Error('Operation missing "op"');
   switch (op.op) {
-    case 'batch': return (op.ops || []).forEach((o) => applyOp(doc, o, scope, result));
+    case 'batch': return (op.ops || []).forEach((o) => applyOp(doc, o, scope, result, libs));
+    case 'detach': {
+      const index = buildIndex(doc, libs);
+      for (const n of targets(doc, op, scope, false)) {
+        if (n.type !== 'INSTANCE') throw new Error(`"${n.name}" is not an instance`);
+        const f = findById(doc, n.id);
+        const frame = detachInstance(index, n, () => nextId(doc));
+        f.parent.children.splice(f.index, 1, frame);
+        result.changed.push(f.parent.id); result.created.push(frame.id);
+      }
+      return;
+    }
+    case 'component': {
+      // turn a frame into a COMPONENT (optionally named); keeps id and children
+      for (const n of targets(doc, op, scope, false)) {
+        if (!n.children) throw new Error(`"${n.name}" cannot become a component`);
+        n.type = 'COMPONENT';
+        if (op.name) n.name = op.name;
+        if (op.description) n.description = op.description;
+        result.changed.push(n.id);
+      }
+      return;
+    }
+    case 'swap': {
+      // swap the component of an instance (and optionally its variant)
+      for (const n of targets(doc, op, scope, true)) {
+        if (n.type !== 'INSTANCE') throw new Error(`"${n.name}" is not an instance`);
+        if (op.component) { n.component = op.component; delete n.componentId; delete n.componentKey; }
+        if (op.variant) n.variant = { ...(n.variant || {}), ...op.variant };
+        if (op.resetOverrides) delete n.overrides;
+        result.changed.push(n.id);
+      }
+      return;
+    }
     case 'set': {
       for (const n of targets(doc, op, scope, true)) {
         if (op.props) deepMerge(n, op.props);

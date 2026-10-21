@@ -1,6 +1,7 @@
 import React from 'react';
-import { useStore, setProps, setDsl, selectedNodes, apply } from '../store.js';
+import { useStore, setProps, setDsl, selectedNodes, apply, getIndex, select } from '../store.js';
 import { findById, hasAutoLayout, sizingH, sizingV } from '../../core/model.js';
+import { resolveComponent, textSlots } from '../../core/components.js';
 import { paintToShort, parsePaint } from '../../core/dsl.js';
 import { hexToRgba, rgbaToHex } from '../../core/style.js';
 import { Num, Txt, Sel, Seg, Check } from './fields.jsx';
@@ -23,7 +24,7 @@ function PaintList({ title, paints, onChange, addDefault = '#d9d9d9' }) {
         return (
           <div className="paint-row" key={i}>
             {p.type === 'SOLID' ? <input type="color" value={solidHex(p)} onChange={(e) => update(i, { ...p, color: e.target.value + (alpha < 1 ? p.color.slice(7) : '') })} /> : <span className="kbd">{p.type === 'IMAGE' ? 'img' : 'grad'}</span>}
-            <div className="hex"><Txt value={paintToShort({ ...p, opacity: undefined })} onCommit={(v) => { const np = parsePaint(v); if (np) update(i, { ...np, opacity: p.opacity, visible: p.visible }); else onChange(list.filter((_, j) => j !== i)); }} /></div>
+            <div className="hex"><Txt value={paintToShort({ ...p, opacity: undefined })} title={p.token ? `token ${p.token} = ${p.color}` : undefined} onCommit={(v) => { const np = parsePaint(v); if (np) update(i, { ...np, opacity: p.opacity, visible: p.visible }); else onChange(list.filter((_, j) => j !== i)); }} /></div>
             <div style={{ flex: '0 0 56px' }}><Num value={opacity} min={0} max={100} onCommit={(v) => { const { r, g, b } = hexToRgba(p.color || '#000000'); update(i, { ...p, color: p.type === 'SOLID' ? rgbaToHex({ r, g, b, a: v / 100 }) : p.color, opacity: p.type === 'SOLID' ? undefined : v / 100 }); }} /></div>
             <button title="Toggle" onClick={() => update(i, { ...p, visible: p.visible === false ? undefined : false })}>{p.visible === false ? '◌' : '◉'}</button>
             <button title="Remove" onClick={() => onChange(list.filter((_, j) => j !== i))}>−</button>
@@ -31,6 +32,90 @@ function PaintList({ title, paints, onChange, addDefault = '#d9d9d9' }) {
         );
       })}
       {!list.length && <div className="muted">None</div>}
+    </div>
+  );
+}
+
+function InstanceInspector({ n }) {
+  const doc = useStore((s) => s.doc);
+  const index = getIndex();
+  const r = resolveComponent(index, n);
+  const f = findById(doc, n.id);
+  const parent = f?.parent;
+  const inAuto = parent && hasAutoLayout(parent) && n.layoutPositioning !== 'ABSOLUTE';
+  const sizingOpts = [['', 'Default'], ['FIXED', 'Fixed'], ['HUG', 'Hug'], ['FILL', 'Fill']];
+  const slots = r ? textSlots(r.component) : [];
+  const ov = n.overrides || {};
+  const setOv = (sel, patch) => setProps({ overrides: { [sel]: patch } });
+  const textValue = (slot, i) => {
+    const direct = ov[slot.name]?.characters;
+    if (direct !== undefined) return direct;
+    if (i === 0 && ov['@TEXT']?.characters !== undefined) return ov['@TEXT'].characters;
+    return slot.characters;
+  };
+  return (
+    <div className="inspector">
+      <div className="section">
+        <h4><span>instance <span className="muted mono">#{n.id}</span></span>
+          <span className="actions">
+            <button title={n.visible === false ? 'Show' : 'Hide'} onClick={() => setProps({ visible: n.visible === false ? null : false })}>{n.visible === false ? '◌' : '◉'}</button>
+            <button title={n.locked ? 'Unlock' : 'Lock'} onClick={() => setProps({ locked: n.locked ? null : true })}>{n.locked ? '🔒' : '🔓'}</button>
+          </span>
+        </h4>
+        <div className="row"><Txt label="Name" value={n.name} onCommit={(v) => setProps({ name: v })} /></div>
+        <div className="row">
+          <Sel label="Component" value={r ? r.entry.name : n.component || ''} options={[...(r ? [] : [[n.component || '', `${n.component || n.componentId} (missing)`]]), ...index.list.map((e) => [e.name, e.name + (e.lib ? ` · ${e.lib}` : '')])]}
+            onCommit={(v) => apply({ op: 'swap', target: '#' + n.id, component: v, resetOverrides: false }, { label: 'Swap component' })} />
+        </div>
+        {r && r.entry.type === 'COMPONENT_SET' && Object.entries(r.entry.variants).map(([prop, values]) => (
+          <div className="row" key={prop}>
+            <Sel label={prop} value={(n.variant || {})[prop] ?? (r.component ? (Object.entries(r.component.name.split(',').map((p) => p.split('=').map((x) => x.trim()))).find(([, kv]) => kv[0] === prop) || [])[1]?.[1] : '')} options={values} onCommit={(v) => setProps({ variant: { [prop]: v } })} />
+          </div>
+        ))}
+        {r?.entry.description && <div className="muted" style={{ marginTop: 4 }}>{r.entry.description}</div>}
+        <div className="row" style={{ marginTop: 8 }}>
+          <button className="fixed" onClick={() => { const res = apply({ op: 'detach', target: '#' + n.id }, { label: 'Detach instance' }); if (res) select(res.created[0]); }} title="Turn into a plain frame">Detach</button>
+          {Object.keys(ov).length > 0 && <button className="fixed" onClick={() => setProps({ overrides: null })}>Reset overrides</button>}
+          {r && r.entry.lib === null && <button className="fixed" onClick={() => select(r.component.id)}>Go to main</button>}
+        </div>
+      </div>
+      {slots.length > 0 && (
+        <div className="section">
+          <h4>Text</h4>
+          {slots.map((slot, i) => (
+            <div className="row" key={slot.name + i}><Txt label={slot.name} value={textValue(slot, i)} onCommit={(v) => setOv(slot.name, { characters: v })} /></div>
+          ))}
+        </div>
+      )}
+      <div className="section">
+        <h4>Layout</h4>
+        <div className="row">
+          <Num label="X" value={n.x} disabled={inAuto} onCommit={(v) => setProps({ x: v })} />
+          <Num label="Y" value={n.y} disabled={inAuto} onCommit={(v) => setProps({ y: v })} />
+        </div>
+        <div className="row">
+          <Num label="W" value={n.width} placeholder="auto" onCommit={(v) => setProps({ width: v, layoutSizingHorizontal: 'FIXED' })} />
+          <Sel value={n.layoutSizingHorizontal || ''} options={sizingOpts} onCommit={(v) => setProps({ layoutSizingHorizontal: v || null })} />
+        </div>
+        <div className="row">
+          <Num label="H" value={n.height} placeholder="auto" onCommit={(v) => setProps({ height: v, layoutSizingVertical: 'FIXED' })} />
+          <Sel value={n.layoutSizingVertical || ''} options={sizingOpts} onCommit={(v) => setProps({ layoutSizingVertical: v || null })} />
+        </div>
+        <div className="row">
+          <Num label="Opacity" value={Math.round((n.opacity ?? 1) * 100)} min={0} max={100} onCommit={(v) => setProps({ opacity: v === 100 ? null : v / 100 })} />
+          {parent && hasAutoLayout(parent) && <Check label="Absolute" checked={n.layoutPositioning === 'ABSOLUTE'} onCommit={(c) => setProps({ layoutPositioning: c ? 'ABSOLUTE' : null })} />}
+        </div>
+        <div className="row">
+          <Sel label="Tag" value={n.html?.tag || ''} options={TAGS.map((t) => [t, t || 'auto'])} onCommit={(v) => setProps({ html: { tag: v || null } })} />
+          <Txt label="Class" value={n.html?.className || ''} onCommit={(v) => setProps({ html: { className: v || null } })} />
+        </div>
+      </div>
+      {Object.keys(ov).length > 0 && (
+        <div className="section">
+          <h4>Overrides</h4>
+          <pre className="mono muted" style={{ margin: 0, whiteSpace: 'pre-wrap', fontSize: 10.5 }}>{JSON.stringify(ov, null, 1)}</pre>
+        </div>
+      )}
     </div>
   );
 }
@@ -45,6 +130,7 @@ export default function Inspector() {
     return <div className="empty-state">Select a layer to inspect it.<br /><span className="muted">{page ? `${page.children.length} top-level frames` : ''}</span></div>;
   }
   const n = nodes[0];
+  if (n.type === 'INSTANCE' && nodes.length === 1) return <InstanceInspector n={n} />;
   const f = findById(doc, n.id);
   const parent = f?.parent;
   const inAuto = parent && hasAutoLayout(parent) && n.layoutPositioning !== 'ABSOLUTE';
@@ -72,6 +158,11 @@ export default function Inspector() {
           <Txt label="Class" value={n.html?.className || ''} placeholder="css classes" onCommit={(v) => setProps({ html: { className: v || null } })} />
         </div>
         {(n.html?.tag === 'a' || n.html?.attrs?.href) && <div className="row"><Txt label="href" value={n.html?.attrs?.href || ''} onCommit={(v) => setProps({ html: { attrs: { href: v || null } } })} /></div>}
+        {n.type === 'COMPONENT' || n.type === 'COMPONENT_SET' ? (
+          <div className="row"><Txt label="Description" value={n.description || ''} placeholder="what this component is for" onCommit={(v) => setProps({ description: v || null })} /></div>
+        ) : (n.children && !multi && parent?.type !== 'COMPONENT_SET' && (
+          <div className="row"><button className="fixed" onClick={() => apply({ op: 'component', target: '#' + n.id }, { label: 'Create component' })} title="Turn this frame into a reusable component">❖ Create component</button></div>
+        ))}
         {n.html?.tag === 'img' && <div className="row"><Txt label="alt" value={n.html?.attrs?.alt || ''} onCommit={(v) => setProps({ html: { attrs: { alt: v || null } } })} /></div>}
       </div>
 
@@ -129,6 +220,11 @@ export default function Inspector() {
         <div className="section">
           <h4>Text</h4>
           <textarea rows={3} style={{ width: '100%', marginBottom: 6, fontFamily: 'inherit' }} value={n.characters || ''} onChange={(e) => apply({ op: 'text', target: '#' + n.id, characters: e.target.value }, { transient: true })} onBlur={() => apply({ op: 'text', target: '#' + n.id, characters: n.characters || '' }, { label: 'Edit text' })} />
+          {Object.keys(getIndex().tokens.textStyles).length > 0 && (
+            <div className="row">
+              <Sel label="Style" value={st.token || ''} options={[['', '— none —'], ...Object.keys(getIndex().tokens.textStyles).map((k) => [k, k])]} onCommit={(v) => (v ? setDsl(`ts=${JSON.stringify(v)}`) : setStyle({ token: null }))} />
+            </div>
+          )}
           <div className="row">
             <Sel value={st.fontFamily || 'Inter'} options={[...new Set([st.fontFamily || 'Inter', ...FONTS])]} onCommit={(v) => setStyle({ fontFamily: v })} />
           </div>

@@ -1,0 +1,573 @@
+{
+ "format": "le-design/1",
+ "name": "landing-ui",
+ "meta": {
+  "seq": 27
+ },
+ "type": "DOCUMENT",
+ "id": "0:0",
+ "children": [
+  {
+   "id": "page1",
+   "type": "CANVAS",
+   "name": "Page 1",
+   "children": [
+    {
+     "name": "Landing",
+     "type": "FRAME",
+     "x": 0,
+     "y": 0,
+     "width": 1440,
+     "height": 100,
+     "fills": [
+      {
+       "type": "SOLID",
+       "color": "#ffffff",
+       "token": "Surface/0"
+      }
+     ],
+     "clipsContent": true,
+     "children": [
+      {
+       "name": "Navbar",
+       "type": "INSTANCE",
+       "x": 0,
+       "y": 0,
+       "layoutSizingHorizontal": "FILL",
+       "component": "Navbar",
+       "id": "n2"
+      },
+      {
+       "name": "Hero",
+       "type": "FRAME",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#f8fafc",
+         "token": "Surface/50"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Badge",
+         "type": "INSTANCE",
+         "x": 0,
+         "y": 0,
+         "variant": {
+          "Tone": "Brand"
+         },
+         "component": "Badge",
+         "overrides": {
+          "@TEXT": {
+           "characters": "Trusted by 2,400+ local professionals"
+          }
+         },
+         "id": "n4"
+        },
+        {
+         "name": "Title",
+         "type": "TEXT",
+         "characters": "Find the right local expert\nfor any job",
+         "style": {
+          "fontFamily": "Inter",
+          "fontWeight": 800,
+          "fontSize": 60,
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "TOP",
+          "lineHeightPx": 68,
+          "letterSpacing": -1.5,
+          "token": "Display"
+         },
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#0f172a",
+           "token": "Ink/900"
+          }
+         ],
+         "layoutSizingHorizontal": "FIXED",
+         "layoutSizingVertical": "HUG",
+         "x": 0,
+         "y": 0,
+         "width": 820,
+         "height": 20,
+         "html": {
+          "tag": "h1"
+         },
+         "id": "n5"
+        },
+        {
+         "name": "Subtitle",
+         "type": "TEXT",
+         "characters": "Plumbers, tutors, designers, accountants and more. Verified profiles, real reviews, no middlemen.",
+         "style": {
+          "fontFamily": "Inter",
+          "fontWeight": 400,
+          "fontSize": 18,
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "TOP",
+          "lineHeightPx": 28,
+          "token": "Body/Large"
+         },
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#475569",
+           "token": "Ink/600"
+          }
+         ],
+         "layoutSizingHorizontal": "FIXED",
+         "layoutSizingVertical": "HUG",
+         "x": 0,
+         "y": 0,
+         "width": 640,
+         "height": 20,
+         "id": "n6"
+        },
+        {
+         "name": "Search",
+         "type": "FRAME",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 100,
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#ffffff"
+          }
+         ],
+         "clipsContent": true,
+         "children": [
+          {
+           "name": "Input",
+           "type": "INSTANCE",
+           "x": 0,
+           "y": 0,
+           "overrides": {
+            "Label": {
+             "characters": "What do you need?"
+            },
+            "Placeholder": {
+             "characters": "e.g. plumber, tutor, photographer"
+            }
+           },
+           "width": 420,
+           "layoutSizingHorizontal": "FIXED",
+           "component": "Input",
+           "id": "n8"
+          },
+          {
+           "name": "Input",
+           "type": "INSTANCE",
+           "x": 0,
+           "y": 0,
+           "overrides": {
+            "Label": {
+             "characters": "Where"
+            },
+            "Placeholder": {
+             "characters": "Vienna"
+            }
+           },
+           "width": 200,
+           "layoutSizingHorizontal": "FIXED",
+           "component": "Input",
+           "id": "n9"
+          },
+          {
+           "name": "Button",
+           "type": "INSTANCE",
+           "x": 0,
+           "y": 0,
+           "variant": {
+            "Type": "Primary",
+            "Size": "Large"
+           },
+           "component": "Button",
+           "overrides": {
+            "@TEXT": {
+             "characters": "Search"
+            }
+           },
+           "id": "na"
+          }
+         ],
+         "layoutMode": "HORIZONTAL",
+         "itemSpacing": 12,
+         "counterAxisAlignItems": "MAX",
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "id": "n7"
+        },
+        {
+         "name": "Stats",
+         "type": "FRAME",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 100,
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#ffffff"
+          }
+         ],
+         "clipsContent": true,
+         "children": [
+          {
+           "name": "Stat",
+           "type": "INSTANCE",
+           "x": 0,
+           "y": 0,
+           "overrides": {
+            "Value": {
+             "characters": "2,400+"
+            },
+            "Caption": {
+             "characters": "experts"
+            }
+           },
+           "component": "Stat",
+           "id": "nc"
+          },
+          {
+           "name": "Stat",
+           "type": "INSTANCE",
+           "x": 0,
+           "y": 0,
+           "overrides": {
+            "Value": {
+             "characters": "18,000"
+            },
+            "Caption": {
+             "characters": "jobs completed"
+            }
+           },
+           "component": "Stat",
+           "id": "nd"
+          },
+          {
+           "name": "Stat",
+           "type": "INSTANCE",
+           "x": 0,
+           "y": 0,
+           "overrides": {
+            "Value": {
+             "characters": "4.9/5"
+            },
+            "Caption": {
+             "characters": "average rating"
+            }
+           },
+           "component": "Stat",
+           "id": "ne"
+          }
+         ],
+         "layoutMode": "HORIZONTAL",
+         "itemSpacing": 48,
+         "counterAxisAlignItems": "CENTER",
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "id": "nb"
+        }
+       ],
+       "layoutMode": "VERTICAL",
+       "layoutSizingHorizontal": "FILL",
+       "paddingTop": 96,
+       "paddingRight": 80,
+       "paddingBottom": 80,
+       "paddingLeft": 80,
+       "itemSpacing": 24,
+       "counterAxisAlignItems": "CENTER",
+       "html": {
+        "tag": "section"
+       },
+       "layoutSizingVertical": "HUG",
+       "id": "n3"
+      },
+      {
+       "name": "Categories",
+       "type": "FRAME",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#ffffff"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "SectionHeader",
+         "type": "INSTANCE",
+         "x": 0,
+         "y": 0,
+         "overrides": {
+          "Title": {
+           "characters": "Browse by category"
+          },
+          "Subtitle": {
+           "characters": "Hundreds of verified professionals across the most requested services."
+          }
+         },
+         "component": "SectionHeader",
+         "id": "ng"
+        },
+        {
+         "name": "Grid",
+         "type": "FRAME",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 100,
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#ffffff"
+          }
+         ],
+         "clipsContent": true,
+         "children": [
+          {
+           "name": "Card",
+           "type": "INSTANCE",
+           "x": 0,
+           "y": 0,
+           "overrides": {
+            "Title": {
+             "characters": "Home & Repair"
+            },
+            "Body": {
+             "characters": "Plumbing, electrics, painting, carpentry and moving."
+            },
+            "Link": {
+             "characters": "312 experts"
+            }
+           },
+           "component": "Card",
+           "id": "ni"
+          },
+          {
+           "name": "Card",
+           "type": "INSTANCE",
+           "x": 0,
+           "y": 0,
+           "overrides": {
+            "Title": {
+             "characters": "Education"
+            },
+            "Body": {
+             "characters": "Tutors, language teachers, music lessons and coaching."
+            },
+            "Link": {
+             "characters": "188 experts"
+            }
+           },
+           "component": "Card",
+           "id": "nj"
+          },
+          {
+           "name": "Card",
+           "type": "INSTANCE",
+           "x": 0,
+           "y": 0,
+           "overrides": {
+            "Title": {
+             "characters": "Business"
+            },
+            "Body": {
+             "characters": "Accountants, legal advice, marketing and consulting."
+            },
+            "Link": {
+             "characters": "256 experts"
+            }
+           },
+           "component": "Card",
+           "id": "nk"
+          },
+          {
+           "name": "Card",
+           "type": "INSTANCE",
+           "x": 0,
+           "y": 0,
+           "overrides": {
+            "Title": {
+             "characters": "Creative"
+            },
+            "Body": {
+             "characters": "Photographers, designers, video and event production."
+            },
+            "Link": {
+             "characters": "141 experts"
+            }
+           },
+           "component": "Card",
+           "id": "nl"
+          }
+         ],
+         "layoutMode": "HORIZONTAL",
+         "layoutWrap": "WRAP",
+         "layoutSizingHorizontal": "FILL",
+         "itemSpacing": 24,
+         "counterAxisSpacing": 24,
+         "primaryAxisAlignItems": "CENTER",
+         "layoutSizingVertical": "HUG",
+         "id": "nh"
+        }
+       ],
+       "layoutMode": "VERTICAL",
+       "layoutSizingHorizontal": "FILL",
+       "paddingTop": 80,
+       "paddingRight": 80,
+       "paddingBottom": 80,
+       "paddingLeft": 80,
+       "itemSpacing": 40,
+       "counterAxisAlignItems": "CENTER",
+       "html": {
+        "tag": "section"
+       },
+       "layoutSizingVertical": "HUG",
+       "id": "nf"
+      },
+      {
+       "name": "CTA",
+       "type": "FRAME",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#0f172a",
+         "token": "Ink/900"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Title",
+         "type": "TEXT",
+         "characters": "Are you a local expert?",
+         "style": {
+          "fontFamily": "Inter",
+          "fontWeight": 800,
+          "fontSize": 36,
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "TOP",
+          "lineHeightPx": 44,
+          "letterSpacing": -0.5,
+          "token": "Heading/H2"
+         },
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#ffffff",
+           "token": "Surface/0"
+          }
+         ],
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 20,
+         "html": {
+          "tag": "h2"
+         },
+         "id": "nn"
+        },
+        {
+         "name": "Body",
+         "type": "TEXT",
+         "characters": "Create a free profile and start receiving requests from people nearby.",
+         "style": {
+          "fontFamily": "Inter",
+          "fontWeight": 400,
+          "fontSize": 18,
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "TOP",
+          "lineHeightPx": 28,
+          "token": "Body/Large"
+         },
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#94a3b8",
+           "token": "Ink/400"
+          }
+         ],
+         "layoutSizingHorizontal": "FIXED",
+         "layoutSizingVertical": "HUG",
+         "x": 0,
+         "y": 0,
+         "width": 560,
+         "height": 20,
+         "id": "no"
+        },
+        {
+         "name": "Button",
+         "type": "INSTANCE",
+         "x": 0,
+         "y": 0,
+         "variant": {
+          "Type": "Primary",
+          "Size": "Large"
+         },
+         "component": "Button",
+         "overrides": {
+          "@TEXT": {
+           "characters": "Create your profile"
+          }
+         },
+         "id": "np"
+        }
+       ],
+       "layoutMode": "VERTICAL",
+       "layoutSizingHorizontal": "FILL",
+       "paddingTop": 80,
+       "paddingRight": 80,
+       "paddingBottom": 80,
+       "paddingLeft": 80,
+       "itemSpacing": 20,
+       "counterAxisAlignItems": "CENTER",
+       "html": {
+        "tag": "section"
+       },
+       "layoutSizingVertical": "HUG",
+       "id": "nm"
+      },
+      {
+       "name": "Footer",
+       "type": "INSTANCE",
+       "x": 0,
+       "y": 0,
+       "layoutSizingHorizontal": "FILL",
+       "component": "Footer",
+       "id": "nq"
+      }
+     ],
+     "layoutMode": "VERTICAL",
+     "layoutSizingHorizontal": "FIXED",
+     "html": {
+      "tag": "main"
+     },
+     "layoutSizingVertical": "HUG",
+     "id": "n1"
+    }
+   ]
+  }
+ ],
+ "libraries": [
+  "le-ui"
+ ]
+}

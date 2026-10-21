@@ -17,13 +17,14 @@ export const CONTAINER_TYPES = new Set([
 export const TYPE_ALIASES = {
   frame: 'FRAME', group: 'GROUP', rect: 'RECTANGLE', rectangle: 'RECTANGLE', ellipse: 'ELLIPSE', circle: 'ELLIPSE',
   text: 'TEXT', line: 'LINE', component: 'COMPONENT', instance: 'INSTANCE', page: 'CANVAS', canvas: 'CANVAS',
-  vector: 'VECTOR', section: 'SECTION', image: 'RECTANGLE', img: 'RECTANGLE',
+  vector: 'VECTOR', section: 'SECTION', image: 'RECTANGLE', img: 'RECTANGLE', set: 'COMPONENT_SET', componentset: 'COMPONENT_SET',
+  use: 'INSTANCE',
 };
 
 export const SHORT_TYPES = {
   FRAME: 'frame', GROUP: 'group', RECTANGLE: 'rect', ELLIPSE: 'ellipse', TEXT: 'text', LINE: 'line',
   COMPONENT: 'component', INSTANCE: 'instance', CANVAS: 'page', VECTOR: 'vector', SECTION: 'section',
-  COMPONENT_SET: 'component', BOOLEAN_OPERATION: 'group', DOCUMENT: 'document',
+  COMPONENT_SET: 'set', BOOLEAN_OPERATION: 'group', DOCUMENT: 'document',
 };
 
 export function normalizeType(t) {
@@ -103,6 +104,16 @@ export function createNode(type, props = {}) {
     case 'GROUP':
       node = { ...base, name: props.name || 'Group', x: 0, y: 0, width: 100, height: 100, children: [] };
       break;
+    case 'INSTANCE':
+      node = { ...base, name: props.name || props.component || 'Instance', component: props.component, x: 0, y: 0 };
+      break;
+    case 'COMPONENT_SET':
+      node = {
+        ...base, name: props.name || 'Component set', x: 0, y: 0, children: [],
+        layoutMode: 'HORIZONTAL', layoutWrap: 'WRAP', itemSpacing: 24, counterAxisSpacing: 24, paddingTop: 24, paddingRight: 24, paddingBottom: 24, paddingLeft: 24,
+        layoutSizingHorizontal: 'HUG', layoutSizingVertical: 'HUG', fills: [], strokes: [{ type: 'SOLID', color: '#9747ff' }], strokeWeight: 1, clipsContent: false,
+      };
+      break;
     default: // FRAME, COMPONENT, INSTANCE, SECTION ...
       node = {
         ...base, name: props.name || (type === 'FRAME' ? 'Frame' : type[0] + type.slice(1).toLowerCase()),
@@ -112,8 +123,9 @@ export function createNode(type, props = {}) {
   }
   const { id, name, ...rest } = props;
   Object.assign(node, rest);
+  if (type === 'INSTANCE' && node.component === undefined) delete node.component;
   if (rest.style && type === 'TEXT') node.style = { ...DEFAULT_TEXT_STYLE, ...rest.style };
-  if (node.children === undefined && isContainer(node)) node.children = [];
+  if (node.children === undefined && isContainer(node) && type !== 'INSTANCE') node.children = [];
   return node;
 }
 

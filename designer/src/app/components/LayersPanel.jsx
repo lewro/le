@@ -81,7 +81,7 @@ export default function LayersPanel() {
 
   return (
     <>
-      <div className="panel-title">
+      <div className="panel-title" style={{ borderTop: 0 }}>
         <span>Pages</span>
         <div className="actions">
           <button title="Add page" onClick={() => { const r = apply({ op: 'add', parent: '#' + doc.id, dsl: `page "Page ${doc.children.length + 1}"` }, { label: 'Add page' }); if (r) setPage(r.created[0]); }}>＋</button>
@@ -104,7 +104,7 @@ export default function LayersPanel() {
         {!rows.length && <div className="empty-state">Empty page.<br />Draw with <span className="kbd">F</span> <span className="kbd">R</span> <span className="kbd">T</span> or paste DSL in the Code tab.</div>}
         {rows.map(({ node, depth, parent }) => {
           const isSel = selection.includes(node.id);
-          const has = node.children && node.children.length > 0;
+          const has = node.type !== 'INSTANCE' && node.children && node.children.length > 0;
           const cls = ['layer', isSel ? 'selected' : '', hoverId === node.id ? 'hovered' : '', node.visible === false ? 'hidden-node' : '', drop?.id === node.id ? 'drop-' + drop.where : ''].filter(Boolean).join(' ');
           return (
             <div key={node.id} className={cls} style={{ paddingLeft: 8 + depth * 14 }}
@@ -118,6 +118,7 @@ export default function LayersPanel() {
               <span className="name">
                 {renaming === node.id ? <RenameInput value={node.name} onDone={(v) => { setRenaming(null); if (v && v !== node.name) apply({ op: 'rename', target: '#' + node.id, name: v }, { label: 'Rename' }); }} /> : node.name}
               </span>
+              {node.type === 'INSTANCE' && <span className="tagchip" title="Component">{node.component || '?'}{node.variant ? ' · ' + Object.values(node.variant).join('/') : ''}</span>}
               {node.html?.tag && <span className="tagchip">{node.html.tag}</span>}
               {hasAutoLayout(node) && <span className="tagchip" title="Auto layout">{node.layoutMode === 'HORIZONTAL' ? '→' : '↓'}</span>}
               <span className={'btns' + (node.visible === false || node.locked ? ' on' : '')}>

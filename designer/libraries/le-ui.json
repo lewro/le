@@ -1,0 +1,1544 @@
+{
+ "format": "le-design/1",
+ "name": "le-ui",
+ "meta": {
+  "seq": 54
+ },
+ "type": "DOCUMENT",
+ "id": "0:0",
+ "children": [
+  {
+   "id": "page1",
+   "type": "CANVAS",
+   "name": "Page 1",
+   "children": [
+    {
+     "name": "Button",
+     "type": "COMPONENT_SET",
+     "x": 0,
+     "y": 0,
+     "children": [
+      {
+       "name": "Type=Primary, Size=Medium",
+       "type": "COMPONENT",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#2563eb",
+         "token": "Brand/500"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Label",
+         "type": "TEXT",
+         "characters": "Button",
+         "style": {
+          "fontFamily": "Inter",
+          "fontWeight": 600,
+          "fontSize": 14,
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeightPx": 20,
+          "token": "Label"
+         },
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#ffffff",
+           "token": "Surface/0"
+          }
+         ],
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 20,
+         "id": "n3"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "paddingTop": 10,
+       "paddingRight": 18,
+       "paddingBottom": 10,
+       "paddingLeft": 18,
+       "itemSpacing": 8,
+       "cornerRadius": 8,
+       "counterAxisAlignItems": "CENTER",
+       "primaryAxisAlignItems": "CENTER",
+       "html": {
+        "tag": "button"
+       },
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "id": "n2"
+      },
+      {
+       "name": "Type=Primary, Size=Large",
+       "type": "COMPONENT",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#2563eb",
+         "token": "Brand/500"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Label",
+         "type": "TEXT",
+         "characters": "Button",
+         "style": {
+          "fontFamily": "Inter",
+          "fontWeight": 600,
+          "fontSize": 14,
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeightPx": 20,
+          "token": "Label"
+         },
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#ffffff",
+           "token": "Surface/0"
+          }
+         ],
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 20,
+         "id": "n5"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "paddingTop": 14,
+       "paddingRight": 28,
+       "paddingBottom": 14,
+       "paddingLeft": 28,
+       "itemSpacing": 8,
+       "cornerRadius": 10,
+       "counterAxisAlignItems": "CENTER",
+       "primaryAxisAlignItems": "CENTER",
+       "html": {
+        "tag": "button"
+       },
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "id": "n4"
+      },
+      {
+       "name": "Type=Secondary, Size=Medium",
+       "type": "COMPONENT",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#ffffff",
+         "token": "Surface/0"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Label",
+         "type": "TEXT",
+         "characters": "Button",
+         "style": {
+          "fontFamily": "Inter",
+          "fontWeight": 600,
+          "fontSize": 14,
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeightPx": 20,
+          "token": "Label"
+         },
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#0f172a",
+           "token": "Ink/900"
+          }
+         ],
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 20,
+         "id": "n7"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "paddingTop": 10,
+       "paddingRight": 18,
+       "paddingBottom": 10,
+       "paddingLeft": 18,
+       "itemSpacing": 8,
+       "cornerRadius": 8,
+       "counterAxisAlignItems": "CENTER",
+       "primaryAxisAlignItems": "CENTER",
+       "strokes": [
+        {
+         "type": "SOLID",
+         "color": "#e2e8f0",
+         "token": "Line/200"
+        }
+       ],
+       "strokeWeight": 1,
+       "html": {
+        "tag": "button"
+       },
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "id": "n6"
+      },
+      {
+       "name": "Type=Secondary, Size=Large",
+       "type": "COMPONENT",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#ffffff",
+         "token": "Surface/0"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Label",
+         "type": "TEXT",
+         "characters": "Button",
+         "style": {
+          "fontFamily": "Inter",
+          "fontWeight": 600,
+          "fontSize": 14,
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeightPx": 20,
+          "token": "Label"
+         },
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#0f172a",
+           "token": "Ink/900"
+          }
+         ],
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 20,
+         "id": "n9"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "paddingTop": 14,
+       "paddingRight": 28,
+       "paddingBottom": 14,
+       "paddingLeft": 28,
+       "itemSpacing": 8,
+       "cornerRadius": 10,
+       "counterAxisAlignItems": "CENTER",
+       "primaryAxisAlignItems": "CENTER",
+       "strokes": [
+        {
+         "type": "SOLID",
+         "color": "#e2e8f0",
+         "token": "Line/200"
+        }
+       ],
+       "strokeWeight": 1,
+       "html": {
+        "tag": "button"
+       },
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "id": "n8"
+      },
+      {
+       "name": "Type=Ghost, Size=Medium",
+       "type": "COMPONENT",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 100,
+       "fills": [],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Label",
+         "type": "TEXT",
+         "characters": "Button",
+         "style": {
+          "fontFamily": "Inter",
+          "fontWeight": 600,
+          "fontSize": 14,
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeightPx": 20,
+          "token": "Label"
+         },
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#1d4ed8",
+           "token": "Brand/600"
+          }
+         ],
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 20,
+         "id": "nb"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "paddingTop": 10,
+       "paddingRight": 18,
+       "paddingBottom": 10,
+       "paddingLeft": 18,
+       "itemSpacing": 8,
+       "cornerRadius": 8,
+       "counterAxisAlignItems": "CENTER",
+       "primaryAxisAlignItems": "CENTER",
+       "html": {
+        "tag": "button"
+       },
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "id": "na"
+      },
+      {
+       "name": "Type=Ghost, Size=Large",
+       "type": "COMPONENT",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 100,
+       "fills": [],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Label",
+         "type": "TEXT",
+         "characters": "Button",
+         "style": {
+          "fontFamily": "Inter",
+          "fontWeight": 600,
+          "fontSize": 14,
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeightPx": 20,
+          "token": "Label"
+         },
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#1d4ed8",
+           "token": "Brand/600"
+          }
+         ],
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 20,
+         "id": "nd"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "paddingTop": 14,
+       "paddingRight": 28,
+       "paddingBottom": 14,
+       "paddingLeft": 28,
+       "itemSpacing": 8,
+       "cornerRadius": 10,
+       "counterAxisAlignItems": "CENTER",
+       "primaryAxisAlignItems": "CENTER",
+       "html": {
+        "tag": "button"
+       },
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "id": "nc"
+      }
+     ],
+     "layoutMode": "HORIZONTAL",
+     "layoutWrap": "WRAP",
+     "itemSpacing": 24,
+     "counterAxisSpacing": 24,
+     "paddingTop": 24,
+     "paddingRight": 24,
+     "paddingBottom": 24,
+     "paddingLeft": 24,
+     "layoutSizingHorizontal": "HUG",
+     "layoutSizingVertical": "HUG",
+     "fills": [],
+     "strokes": [
+      {
+       "type": "SOLID",
+       "color": "#9747ff"
+      }
+     ],
+     "strokeWeight": 1,
+     "clipsContent": false,
+     "description": "Primary call to action. Type: Primary / Secondary / Ghost. Size: Medium / Large.",
+     "id": "n1"
+    },
+    {
+     "name": "Badge",
+     "type": "COMPONENT_SET",
+     "x": 0,
+     "y": 0,
+     "children": [
+      {
+       "name": "Tone=Brand",
+       "type": "COMPONENT",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#dbeafe",
+         "token": "Brand/100"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Label",
+         "type": "TEXT",
+         "characters": "Badge",
+         "style": {
+          "fontFamily": "Inter",
+          "fontWeight": 500,
+          "fontSize": 12,
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeightPx": 16,
+          "token": "Caption"
+         },
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#1d4ed8",
+           "token": "Brand/600"
+          }
+         ],
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 20,
+         "id": "ng"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "paddingTop": 6,
+       "paddingRight": 14,
+       "paddingBottom": 6,
+       "paddingLeft": 14,
+       "cornerRadius": 999,
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "id": "nf"
+      },
+      {
+       "name": "Tone=Success",
+       "type": "COMPONENT",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#dcfce7"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Label",
+         "type": "TEXT",
+         "characters": "Badge",
+         "style": {
+          "fontFamily": "Inter",
+          "fontWeight": 500,
+          "fontSize": 12,
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeightPx": 16,
+          "token": "Caption"
+         },
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#16a34a",
+           "token": "Success/500"
+          }
+         ],
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 20,
+         "id": "ni"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "paddingTop": 6,
+       "paddingRight": 14,
+       "paddingBottom": 6,
+       "paddingLeft": 14,
+       "cornerRadius": 999,
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "id": "nh"
+      },
+      {
+       "name": "Tone=Warning",
+       "type": "COMPONENT",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#fef3c7",
+         "token": "Warning/100"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Label",
+         "type": "TEXT",
+         "characters": "Badge",
+         "style": {
+          "fontFamily": "Inter",
+          "fontWeight": 500,
+          "fontSize": 12,
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeightPx": 16,
+          "token": "Caption"
+         },
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#b45309"
+          }
+         ],
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 20,
+         "id": "nk"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "paddingTop": 6,
+       "paddingRight": 14,
+       "paddingBottom": 6,
+       "paddingLeft": 14,
+       "cornerRadius": 999,
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "id": "nj"
+      }
+     ],
+     "layoutMode": "HORIZONTAL",
+     "layoutWrap": "WRAP",
+     "itemSpacing": 24,
+     "counterAxisSpacing": 24,
+     "paddingTop": 24,
+     "paddingRight": 24,
+     "paddingBottom": 24,
+     "paddingLeft": 24,
+     "layoutSizingHorizontal": "HUG",
+     "layoutSizingVertical": "HUG",
+     "fills": [],
+     "strokes": [
+      {
+       "type": "SOLID",
+       "color": "#9747ff"
+      }
+     ],
+     "strokeWeight": 1,
+     "clipsContent": false,
+     "description": "Small status pill. Tone: Brand / Success / Warning.",
+     "id": "ne"
+    },
+    {
+     "name": "Input",
+     "type": "COMPONENT",
+     "x": 0,
+     "y": 0,
+     "width": 320,
+     "height": 100,
+     "fills": [
+      {
+       "type": "SOLID",
+       "color": "#ffffff"
+      }
+     ],
+     "clipsContent": true,
+     "children": [
+      {
+       "name": "Label",
+       "type": "TEXT",
+       "characters": "Label",
+       "style": {
+        "fontFamily": "Inter",
+        "fontWeight": 600,
+        "fontSize": 14,
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP",
+        "lineHeightPx": 20,
+        "token": "Label"
+       },
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#0f172a",
+         "token": "Ink/900"
+        }
+       ],
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 20,
+       "id": "nm"
+      },
+      {
+       "name": "Field",
+       "type": "FRAME",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#ffffff",
+         "token": "Surface/0"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Placeholder",
+         "type": "TEXT",
+         "characters": "Placeholder",
+         "style": {
+          "fontFamily": "Inter",
+          "fontWeight": 400,
+          "fontSize": 15,
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeightPx": 24,
+          "token": "Body"
+         },
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#94a3b8",
+           "token": "Ink/400"
+          }
+         ],
+         "layoutSizingHorizontal": "FILL",
+         "layoutSizingVertical": "HUG",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 20,
+         "id": "no"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "layoutSizingHorizontal": "FILL",
+       "paddingTop": 12,
+       "paddingRight": 14,
+       "paddingBottom": 12,
+       "paddingLeft": 14,
+       "cornerRadius": 8,
+       "counterAxisAlignItems": "CENTER",
+       "strokes": [
+        {
+         "type": "SOLID",
+         "color": "#e2e8f0",
+         "token": "Line/200"
+        }
+       ],
+       "strokeWeight": 1,
+       "html": {
+        "tag": "div"
+       },
+       "layoutSizingVertical": "HUG",
+       "id": "nn"
+      }
+     ],
+     "description": "Text input with a label.",
+     "layoutMode": "VERTICAL",
+     "layoutSizingHorizontal": "FIXED",
+     "itemSpacing": 6,
+     "html": {
+      "tag": "label"
+     },
+     "layoutSizingVertical": "HUG",
+     "id": "nl"
+    },
+    {
+     "name": "NavLink",
+     "type": "COMPONENT",
+     "x": 0,
+     "y": 0,
+     "width": 100,
+     "height": 100,
+     "fills": [
+      {
+       "type": "SOLID",
+       "color": "#ffffff"
+      }
+     ],
+     "clipsContent": true,
+     "children": [
+      {
+       "name": "Label",
+       "type": "TEXT",
+       "characters": "Link",
+       "style": {
+        "fontFamily": "Inter",
+        "fontWeight": 600,
+        "fontSize": 14,
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP",
+        "lineHeightPx": 20,
+        "token": "Label"
+       },
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#475569",
+         "token": "Ink/600"
+        }
+       ],
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 20,
+       "id": "nq"
+      }
+     ],
+     "description": "Top navigation link.",
+     "layoutMode": "HORIZONTAL",
+     "paddingTop": 8,
+     "paddingRight": 4,
+     "paddingBottom": 8,
+     "paddingLeft": 4,
+     "html": {
+      "tag": "a"
+     },
+     "layoutSizingHorizontal": "HUG",
+     "layoutSizingVertical": "HUG",
+     "id": "np"
+    },
+    {
+     "name": "Navbar",
+     "type": "COMPONENT",
+     "x": 0,
+     "y": 0,
+     "width": 1440,
+     "height": 72,
+     "fills": [
+      {
+       "type": "SOLID",
+       "color": "#ffffff",
+       "token": "Surface/0"
+      }
+     ],
+     "clipsContent": true,
+     "children": [
+      {
+       "name": "Logo",
+       "type": "TEXT",
+       "characters": "LocalExperts",
+       "style": {
+        "fontFamily": "Inter",
+        "fontWeight": 700,
+        "fontSize": 20,
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP",
+        "lineHeightPx": 28,
+        "token": "Heading/H3"
+       },
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#0f172a",
+         "token": "Ink/900"
+        }
+       ],
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 20,
+       "id": "ns"
+      },
+      {
+       "name": "Links",
+       "type": "FRAME",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#ffffff"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "NavLink",
+         "type": "INSTANCE",
+         "x": 0,
+         "y": 0,
+         "component": "NavLink",
+         "overrides": {
+          "@TEXT": {
+           "characters": "Find experts"
+          }
+         },
+         "id": "nu"
+        },
+        {
+         "name": "NavLink",
+         "type": "INSTANCE",
+         "x": 0,
+         "y": 0,
+         "component": "NavLink",
+         "overrides": {
+          "@TEXT": {
+           "characters": "Categories"
+          }
+         },
+         "id": "nv"
+        },
+        {
+         "name": "NavLink",
+         "type": "INSTANCE",
+         "x": 0,
+         "y": 0,
+         "component": "NavLink",
+         "overrides": {
+          "@TEXT": {
+           "characters": "Interviews"
+          }
+         },
+         "id": "nw"
+        },
+        {
+         "name": "NavLink",
+         "type": "INSTANCE",
+         "x": 0,
+         "y": 0,
+         "component": "NavLink",
+         "overrides": {
+          "@TEXT": {
+           "characters": "Pricing"
+          }
+         },
+         "id": "nx"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "itemSpacing": 20,
+       "counterAxisAlignItems": "CENTER",
+       "html": {
+        "tag": "nav"
+       },
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "id": "nt"
+      },
+      {
+       "name": "Actions",
+       "type": "FRAME",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#ffffff"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Button",
+         "type": "INSTANCE",
+         "x": 0,
+         "y": 0,
+         "variant": {
+          "Type": "Ghost",
+          "Size": "Medium"
+         },
+         "component": "Button",
+         "overrides": {
+          "@TEXT": {
+           "characters": "Log in"
+          }
+         },
+         "id": "nz"
+        },
+        {
+         "name": "Button",
+         "type": "INSTANCE",
+         "x": 0,
+         "y": 0,
+         "variant": {
+          "Type": "Primary",
+          "Size": "Medium"
+         },
+         "component": "Button",
+         "overrides": {
+          "@TEXT": {
+           "characters": "Join as expert"
+          }
+         },
+         "id": "n10"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "itemSpacing": 12,
+       "counterAxisAlignItems": "CENTER",
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "id": "ny"
+      }
+     ],
+     "description": "Site header: logo, links, actions.",
+     "layoutMode": "HORIZONTAL",
+     "layoutSizingHorizontal": "FIXED",
+     "layoutSizingVertical": "FIXED",
+     "paddingTop": 0,
+     "paddingRight": 80,
+     "paddingBottom": 0,
+     "paddingLeft": 80,
+     "itemSpacing": 32,
+     "counterAxisAlignItems": "CENTER",
+     "primaryAxisAlignItems": "SPACE_BETWEEN",
+     "strokes": [
+      {
+       "type": "SOLID",
+       "color": "#e2e8f0",
+       "token": "Line/200"
+      }
+     ],
+     "strokeWeight": 1,
+     "html": {
+      "tag": "header"
+     },
+     "id": "nr"
+    },
+    {
+     "name": "SectionHeader",
+     "type": "COMPONENT",
+     "x": 0,
+     "y": 0,
+     "width": 100,
+     "height": 100,
+     "fills": [
+      {
+       "type": "SOLID",
+       "color": "#ffffff"
+      }
+     ],
+     "clipsContent": true,
+     "children": [
+      {
+       "name": "Title",
+       "type": "TEXT",
+       "characters": "Section title",
+       "style": {
+        "fontFamily": "Inter",
+        "fontWeight": 800,
+        "fontSize": 36,
+        "textAlignHorizontal": "CENTER",
+        "textAlignVertical": "TOP",
+        "lineHeightPx": 44,
+        "letterSpacing": -0.5,
+        "token": "Heading/H2"
+       },
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#0f172a",
+         "token": "Ink/900"
+        }
+       ],
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 20,
+       "html": {
+        "tag": "h2"
+       },
+       "id": "n12"
+      },
+      {
+       "name": "Subtitle",
+       "type": "TEXT",
+       "characters": "Section subtitle goes here.",
+       "style": {
+        "fontFamily": "Inter",
+        "fontWeight": 400,
+        "fontSize": 18,
+        "textAlignHorizontal": "CENTER",
+        "textAlignVertical": "TOP",
+        "lineHeightPx": 28,
+        "token": "Body/Large"
+       },
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#475569",
+         "token": "Ink/600"
+        }
+       ],
+       "layoutSizingHorizontal": "FIXED",
+       "layoutSizingVertical": "HUG",
+       "x": 0,
+       "y": 0,
+       "width": 640,
+       "height": 20,
+       "id": "n13"
+      }
+     ],
+     "description": "Centered section title + subtitle.",
+     "layoutMode": "VERTICAL",
+     "itemSpacing": 12,
+     "counterAxisAlignItems": "CENTER",
+     "layoutSizingHorizontal": "FILL",
+     "layoutSizingVertical": "HUG",
+     "id": "n11"
+    },
+    {
+     "name": "Card",
+     "type": "COMPONENT",
+     "x": 0,
+     "y": 0,
+     "width": 304,
+     "height": 100,
+     "fills": [
+      {
+       "type": "SOLID",
+       "color": "#ffffff",
+       "token": "Surface/0"
+      }
+     ],
+     "clipsContent": true,
+     "children": [
+      {
+       "name": "Icon",
+       "type": "FRAME",
+       "x": 0,
+       "y": 0,
+       "width": 48,
+       "height": 48,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#dbeafe",
+         "token": "Brand/100"
+        }
+       ],
+       "clipsContent": true,
+       "children": [],
+       "layoutSizingHorizontal": "FIXED",
+       "layoutSizingVertical": "FIXED",
+       "cornerRadius": 12,
+       "id": "n15"
+      },
+      {
+       "name": "Title",
+       "type": "TEXT",
+       "characters": "Card title",
+       "style": {
+        "fontFamily": "Inter",
+        "fontWeight": 700,
+        "fontSize": 20,
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP",
+        "lineHeightPx": 28,
+        "token": "Heading/H3"
+       },
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#0f172a",
+         "token": "Ink/900"
+        }
+       ],
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 20,
+       "html": {
+        "tag": "h3"
+       },
+       "id": "n16"
+      },
+      {
+       "name": "Body",
+       "type": "TEXT",
+       "characters": "Supporting copy for this card, two lines at most.",
+       "style": {
+        "fontFamily": "Inter",
+        "fontWeight": 400,
+        "fontSize": 13,
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP",
+        "lineHeightPx": 20,
+        "token": "Body/Small"
+       },
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#475569",
+         "token": "Ink/600"
+        }
+       ],
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 20,
+       "id": "n17"
+      },
+      {
+       "name": "Link",
+       "type": "TEXT",
+       "characters": "Learn more",
+       "style": {
+        "fontFamily": "Inter",
+        "fontWeight": 600,
+        "fontSize": 14,
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP",
+        "lineHeightPx": 20,
+        "token": "Label"
+       },
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#1d4ed8",
+         "token": "Brand/600"
+        }
+       ],
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 20,
+       "id": "n18"
+      }
+     ],
+     "description": "Content card with icon, title, body and link.",
+     "layoutMode": "VERTICAL",
+     "layoutSizingHorizontal": "FIXED",
+     "paddingTop": 24,
+     "paddingRight": 24,
+     "paddingBottom": 24,
+     "paddingLeft": 24,
+     "itemSpacing": 16,
+     "cornerRadius": 16,
+     "strokes": [
+      {
+       "type": "SOLID",
+       "color": "#e2e8f0",
+       "token": "Line/200"
+      }
+     ],
+     "strokeWeight": 1,
+     "effects": [
+      {
+       "type": "DROP_SHADOW",
+       "offset": {
+        "x": 0,
+        "y": 8
+       },
+       "radius": 24,
+       "spread": 0,
+       "color": "#0f172a14",
+       "visible": true,
+       "token": "Card"
+      }
+     ],
+     "html": {
+      "tag": "a"
+     },
+     "layoutSizingVertical": "HUG",
+     "id": "n14"
+    },
+    {
+     "name": "Stat",
+     "type": "COMPONENT",
+     "x": 0,
+     "y": 0,
+     "width": 100,
+     "height": 100,
+     "fills": [
+      {
+       "type": "SOLID",
+       "color": "#ffffff"
+      }
+     ],
+     "clipsContent": true,
+     "children": [
+      {
+       "name": "Value",
+       "type": "TEXT",
+       "characters": "2,400+",
+       "style": {
+        "fontFamily": "Inter",
+        "fontWeight": 800,
+        "fontSize": 36,
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP",
+        "lineHeightPx": 44,
+        "letterSpacing": -0.5,
+        "token": "Heading/H2"
+       },
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#0f172a",
+         "token": "Ink/900"
+        }
+       ],
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 20,
+       "id": "n1a"
+      },
+      {
+       "name": "Caption",
+       "type": "TEXT",
+       "characters": "experts",
+       "style": {
+        "fontFamily": "Inter",
+        "fontWeight": 400,
+        "fontSize": 13,
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP",
+        "lineHeightPx": 20,
+        "token": "Body/Small"
+       },
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#475569",
+         "token": "Ink/600"
+        }
+       ],
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 20,
+       "id": "n1b"
+      }
+     ],
+     "description": "Big number with a caption.",
+     "layoutMode": "VERTICAL",
+     "itemSpacing": 4,
+     "counterAxisAlignItems": "CENTER",
+     "layoutSizingHorizontal": "HUG",
+     "layoutSizingVertical": "HUG",
+     "id": "n19"
+    },
+    {
+     "name": "Footer",
+     "type": "COMPONENT",
+     "x": 0,
+     "y": 0,
+     "width": 1440,
+     "height": 100,
+     "fills": [
+      {
+       "type": "SOLID",
+       "color": "#ffffff",
+       "token": "Surface/0"
+      }
+     ],
+     "clipsContent": true,
+     "children": [
+      {
+       "name": "Copyright",
+       "type": "TEXT",
+       "characters": "© 2026 LocalExperts",
+       "style": {
+        "fontFamily": "Inter",
+        "fontWeight": 400,
+        "fontSize": 13,
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP",
+        "lineHeightPx": 20,
+        "token": "Body/Small"
+       },
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#475569",
+         "token": "Ink/600"
+        }
+       ],
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 20,
+       "id": "n1d"
+      },
+      {
+       "name": "Links",
+       "type": "FRAME",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#ffffff"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "NavLink",
+         "type": "INSTANCE",
+         "x": 0,
+         "y": 0,
+         "component": "NavLink",
+         "overrides": {
+          "@TEXT": {
+           "characters": "Privacy"
+          }
+         },
+         "id": "n1f"
+        },
+        {
+         "name": "NavLink",
+         "type": "INSTANCE",
+         "x": 0,
+         "y": 0,
+         "component": "NavLink",
+         "overrides": {
+          "@TEXT": {
+           "characters": "Terms"
+          }
+         },
+         "id": "n1g"
+        },
+        {
+         "name": "NavLink",
+         "type": "INSTANCE",
+         "x": 0,
+         "y": 0,
+         "component": "NavLink",
+         "overrides": {
+          "@TEXT": {
+           "characters": "Contact"
+          }
+         },
+         "id": "n1h"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "itemSpacing": 24,
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "id": "n1e"
+      }
+     ],
+     "description": "Site footer.",
+     "layoutMode": "HORIZONTAL",
+     "layoutSizingHorizontal": "FIXED",
+     "paddingTop": 40,
+     "paddingRight": 80,
+     "paddingBottom": 40,
+     "paddingLeft": 80,
+     "counterAxisAlignItems": "CENTER",
+     "primaryAxisAlignItems": "SPACE_BETWEEN",
+     "strokes": [
+      {
+       "type": "SOLID",
+       "color": "#e2e8f0",
+       "token": "Line/200"
+      }
+     ],
+     "strokeWeight": 1,
+     "html": {
+      "tag": "footer"
+     },
+     "layoutSizingVertical": "HUG",
+     "id": "n1c"
+    }
+   ]
+  }
+ ],
+ "kind": "library",
+ "tokens": {
+  "colors": {
+   "Brand/600": "#1d4ed8",
+   "Brand/500": "#2563eb",
+   "Brand/100": "#dbeafe",
+   "Ink/900": "#0f172a",
+   "Ink/600": "#475569",
+   "Ink/400": "#94a3b8",
+   "Line/200": "#e2e8f0",
+   "Surface/0": "#ffffff",
+   "Surface/50": "#f8fafc",
+   "Success/500": "#16a34a",
+   "Warning/100": "#fef3c7",
+   "Danger/500": "#dc2626"
+  },
+  "textStyles": {
+   "Display": {
+    "fontFamily": "Inter",
+    "fontWeight": 800,
+    "fontSize": 60,
+    "lineHeightPx": 68,
+    "letterSpacing": -1.5
+   },
+   "Heading/H2": {
+    "fontFamily": "Inter",
+    "fontWeight": 800,
+    "fontSize": 36,
+    "lineHeightPx": 44,
+    "letterSpacing": -0.5
+   },
+   "Heading/H3": {
+    "fontFamily": "Inter",
+    "fontWeight": 700,
+    "fontSize": 20,
+    "lineHeightPx": 28
+   },
+   "Body/Large": {
+    "fontFamily": "Inter",
+    "fontWeight": 400,
+    "fontSize": 18,
+    "lineHeightPx": 28
+   },
+   "Body": {
+    "fontFamily": "Inter",
+    "fontWeight": 400,
+    "fontSize": 15,
+    "lineHeightPx": 24
+   },
+   "Body/Small": {
+    "fontFamily": "Inter",
+    "fontWeight": 400,
+    "fontSize": 13,
+    "lineHeightPx": 20
+   },
+   "Label": {
+    "fontFamily": "Inter",
+    "fontWeight": 600,
+    "fontSize": 14,
+    "lineHeightPx": 20
+   },
+   "Caption": {
+    "fontFamily": "Inter",
+    "fontWeight": 500,
+    "fontSize": 12,
+    "lineHeightPx": 16
+   }
+  },
+  "effects": {
+   "Card": [
+    {
+     "type": "DROP_SHADOW",
+     "offset": {
+      "x": 0,
+      "y": 8
+     },
+     "radius": 24,
+     "spread": 0,
+     "color": "#0f172a14",
+     "visible": true
+    }
+   ],
+   "Floating": [
+    {
+     "type": "DROP_SHADOW",
+     "offset": {
+      "x": 0,
+      "y": 16
+     },
+     "radius": 48,
+     "spread": -8,
+     "color": "#0f172a33",
+     "visible": true
+    }
+   ]
+  }
+ }
+}
