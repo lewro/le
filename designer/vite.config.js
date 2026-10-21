@@ -7,6 +7,7 @@ import { createApiHandler } from './server/api.js';
 const here = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
+  base: './',
   plugins: [
     react(),
     {

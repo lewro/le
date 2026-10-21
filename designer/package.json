@@ -7,7 +7,7 @@
   "bin": { "le": "./le.js" },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/seed.mjs",
     "start": "node server.js",
     "test": "node --test test/*.test.js"
   },

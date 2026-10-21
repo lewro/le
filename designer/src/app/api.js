@@ -87,9 +87,21 @@ const LSL = 'le-designer:libs';
 function lsReadLibs() { try { return JSON.parse(localStorage.getItem(LSL) || '{}'); } catch { return {}; } }
 function lsWriteLibs(all) { localStorage.setItem(LSL, JSON.stringify(all)); }
 
+/** Static builds (no API server): load the bundled sample documents and libraries once. */
+async function seedLocal() {
+  if (Object.keys(lsRead()).length || Object.keys(lsReadLibs()).length) return;
+  try {
+    const manifest = await (await fetch('seed/manifest.json')).json();
+    for (const n of manifest.libs) await local.putLib(n, await (await fetch(`seed/libs-${n}.json`)).json());
+    for (const n of manifest.docs) await local.put(n, await (await fetch(`seed/docs-${n}.json`)).json());
+    if (manifest.open) localStorage.setItem('le-designer:last', manifest.open);
+  } catch { /* no seed available */ }
+}
+
 let backend = null;
 export async function getBackend() {
   if (backend) return backend;
-  try { await remote.list(); backend = remote; } catch { backend = local; }
+  try { const r = await fetch('api/docs'); if (!r.ok || !(r.headers.get('content-type') || '').includes('json')) throw new Error('no api'); backend = remote; }
+  catch { backend = local; await seedLocal(); }
   return backend;
 }
