@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStore, setTool, undo, redo, zoomBy, zoomToFit, setState, openDoc } from '../store.js';
+import { useStore, setTool, undo, redo, zoomBy, zoomToFit, setState, openDoc, goFiles, setTitle, tidy } from '../store.js';
 
 const TOOLS = [
   ['select', 'V', '↖'], ['frame', 'F', '▭'], ['rect', 'R', '■'], ['ellipse', 'O', '●'], ['text', 'T', 'T'], ['line', 'L', '╱'],
@@ -9,12 +9,13 @@ export default function Toolbar() {
   const tool = useStore((s) => s.tool);
   const docs = useStore((s) => s.docs);
   const docName = useStore((s) => s.docName);
+  const title = useStore((s) => s.doc?.meta?.title || s.docName || '');
   const zoom = useStore((s) => s.view.zoom);
   const canUndo = useStore((s) => s.history.length > 0);
   const canRedo = useStore((s) => s.future.length > 0);
   return (
     <div className="toolbar">
-      <div className="brand">LE<span>·</span>Designer</div>
+      <button className="brand" onClick={() => goFiles()} title="All files">← Files</button>
       <div className="group">
         {TOOLS.map(([id, key, glyph]) => (
           <button key={id} className={'tool' + (tool === id ? ' active' : '')} title={`${id} (${key})`} onClick={() => setTool(id)}>{glyph}</button>
@@ -25,14 +26,19 @@ export default function Toolbar() {
         <button onClick={redo} disabled={!canRedo} title="Redo (⇧⌘Z)">↷</button>
       </div>
       <div className="group">
-        <select value={docName || ''} onChange={(e) => e.target.value && openDoc(e.target.value)} title="Document">
+        <input className="title-input" value={title} title="File title (Files view)" onChange={(e) => setState((s) => ({ doc: { ...s.doc, meta: { ...(s.doc.meta || {}), title: e.target.value } } }))} onBlur={(e) => setTitle(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') e.target.blur(); }} />
+        <select value={docName || ''} onChange={(e) => e.target.value && openDoc(e.target.value)} title="Switch file">
           {!docName && <option value="">— select —</option>}
-          {docs.map((d) => <option key={d.name} value={d.name}>{d.name}</option>)}
+          {docs.map((d) => <option key={d.name} value={d.name}>{d.title || d.name}</option>)}
         </select>
         <button onClick={() => setState({ dialog: 'new' })} title="New document">＋</button>
         <button onClick={() => setState({ dialog: 'import' })} title="Import (native / Figma JSON / Figma API)">Import</button>
         <button onClick={() => setState({ dialog: 'export' })} title="Export (JSON / Figma / HTML / DSL)" disabled={!docName}>Export</button>
         <button onClick={() => setState({ dialog: 'libraries' })} title="Libraries: import, link, manage" disabled={!docName}>Libraries</button>
+        <button onClick={() => setState({ dialog: 'versions' })} title="Version history" disabled={!docName}>History</button>
+      </div>
+      <div className="group">
+        <button onClick={() => tidy()} title="Tidy up: arrange all frames of this page on the grid" disabled={!docName}>⊞ Tidy</button>
       </div>
       <div className="spacer" />
       <div className="group">

@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useLayoutEffect, useRef, useState, useCallback } from 'react';
-import { useStore, select, apply, commit, setState, getState, setTool, zoomBy, setView, viewRef, onViewChange, measured, boundsOf, ownId, getIndex } from '../store.js';
+import { useStore, select, apply, commit, setState, getState, setTool, zoomBy, setView, viewRef, onViewChange, measured, boundsOf, ownId, getIndex, snap } from '../store.js';
 import { computeStyle } from '../../core/style.js';
 import { findById, pathTo, hasAutoLayout, createNode, sizingH, sizingV, getParent } from '../../core/model.js';
 import { expandInstance } from '../../core/components.js';
@@ -135,10 +135,25 @@ export default function Canvas() {
 
   // live transform: applied directly to the DOM on every view change (no React render)
   useEffect(() => {
+    let lastTile = 0;
     const applyT = (v) => {
       const t = `translate3d(${v.pan.x}px, ${v.pan.y}px, 0) scale(${v.zoom})`;
       if (worldRef.current) worldRef.current.style.transform = t;
       if (overlayRef.current) { overlayRef.current.style.transform = t; overlayRef.current.style.setProperty('--inv', String(1 / v.zoom)); }
+      // "+" pattern background: a world-space grid that stays between 28 and 56 screen px
+      const el = ref.current;
+      if (!el) return;
+      let tile = 100 * v.zoom;
+      while (tile < 28) tile *= 2;
+      while (tile > 56) tile /= 2;
+      if (Math.abs(tile - lastTile) > 0.01) {
+        lastTile = tile;
+        const c = tile / 2, a = 3;
+        const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${tile}' height='${tile}'><path d='M${c} ${c - a}v${a * 2}M${c - a} ${c}h${a * 2}' stroke='%23404040' stroke-width='1' stroke-linecap='round'/></svg>`;
+        el.style.backgroundImage = `url("data:image/svg+xml,${svg}")`;
+        el.style.backgroundSize = `${tile}px ${tile}px`;
+      }
+      el.style.backgroundPosition = `${v.pan.x}px ${v.pan.y}px`;
     };
     applyT(viewRef);
     return onViewChange(applyT);
@@ -312,7 +327,9 @@ export default function Canvas() {
             continue;
           }
           const o = cur.origin.get(id);
-          ops.push({ op: 'set', target: '#' + id, props: { x: Math.round(o.x + dx), y: Math.round(o.y + dy) } });
+          const top = f.parent?.type === 'CANVAS';
+          const nx = top ? snap(o.x + dx) : Math.round(o.x + dx), ny = top ? snap(o.y + dy) : Math.round(o.y + dy);
+          ops.push({ op: 'set', target: '#' + id, props: { x: nx, y: ny } });
         }
         if (ops.length) apply(ops, { transient: true });
         if (reorder) { cur.reorder = reorder; setDropLine(reorder.line); } else setDropLine(null);

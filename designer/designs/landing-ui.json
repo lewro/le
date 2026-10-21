@@ -2,7 +2,12 @@
  "format": "le-design/1",
  "name": "landing-ui",
  "meta": {
-  "seq": 27
+  "seq": 27,
+  "title": "Local Experts — landing (library build)",
+  "createdAt": "2026-10-21T20:19:56.310Z",
+  "createdBy": "Claude",
+  "updatedAt": "2026-10-21T20:19:56.310Z",
+  "updatedBy": "Claude"
  },
  "type": "DOCUMENT",
  "id": "0:0",
@@ -15,8 +20,6 @@
     {
      "name": "Landing",
      "type": "FRAME",
-     "x": 0,
-     "y": 0,
      "width": 1440,
      "height": 100,
      "fills": [
@@ -31,8 +34,6 @@
       {
        "name": "Navbar",
        "type": "INSTANCE",
-       "x": 0,
-       "y": 0,
        "layoutSizingHorizontal": "FILL",
        "component": "Navbar",
        "id": "n2"
@@ -40,8 +41,6 @@
       {
        "name": "Hero",
        "type": "FRAME",
-       "x": 0,
-       "y": 0,
        "width": 100,
        "height": 100,
        "fills": [
@@ -56,8 +55,6 @@
         {
          "name": "Badge",
          "type": "INSTANCE",
-         "x": 0,
-         "y": 0,
          "variant": {
           "Tone": "Brand"
          },
@@ -92,8 +89,6 @@
          ],
          "layoutSizingHorizontal": "FIXED",
          "layoutSizingVertical": "HUG",
-         "x": 0,
-         "y": 0,
          "width": 820,
          "height": 20,
          "html": {
@@ -123,8 +118,6 @@
          ],
          "layoutSizingHorizontal": "FIXED",
          "layoutSizingVertical": "HUG",
-         "x": 0,
-         "y": 0,
          "width": 640,
          "height": 20,
          "id": "n6"
@@ -132,8 +125,6 @@
         {
          "name": "Search",
          "type": "FRAME",
-         "x": 0,
-         "y": 0,
          "width": 100,
          "height": 100,
          "fills": [
@@ -147,8 +138,6 @@
           {
            "name": "Input",
            "type": "INSTANCE",
-           "x": 0,
-           "y": 0,
            "overrides": {
             "Label": {
              "characters": "What do you need?"
@@ -165,8 +154,6 @@
           {
            "name": "Input",
            "type": "INSTANCE",
-           "x": 0,
-           "y": 0,
            "overrides": {
             "Label": {
              "characters": "Where"
@@ -183,8 +170,6 @@
           {
            "name": "Button",
            "type": "INSTANCE",
-           "x": 0,
-           "y": 0,
            "variant": {
             "Type": "Primary",
             "Size": "Large"
@@ -208,8 +193,6 @@
         {
          "name": "Stats",
          "type": "FRAME",
-         "x": 0,
-         "y": 0,
          "width": 100,
          "height": 100,
          "fills": [
@@ -223,8 +206,6 @@
           {
            "name": "Stat",
            "type": "INSTANCE",
-           "x": 0,
-           "y": 0,
            "overrides": {
             "Value": {
              "characters": "2,400+"
@@ -239,8 +220,6 @@
           {
            "name": "Stat",
            "type": "INSTANCE",
-           "x": 0,
-           "y": 0,
            "overrides": {
             "Value": {
              "characters": "18,000"
@@ -255,8 +234,6 @@
           {
            "name": "Stat",
            "type": "INSTANCE",
-           "x": 0,
-           "y": 0,
            "overrides": {
             "Value": {
              "characters": "4.9/5"
@@ -294,8 +271,6 @@
       {
        "name": "Categories",
        "type": "FRAME",
-       "x": 0,
-       "y": 0,
        "width": 100,
        "height": 100,
        "fills": [
@@ -309,8 +284,6 @@
         {
          "name": "SectionHeader",
          "type": "INSTANCE",
-         "x": 0,
-         "y": 0,
          "overrides": {
           "Title": {
            "characters": "Browse by category"
@@ -325,8 +298,6 @@
         {
          "name": "Grid",
          "type": "FRAME",
-         "x": 0,
-         "y": 0,
          "width": 100,
          "height": 100,
          "fills": [
@@ -340,8 +311,6 @@
           {
            "name": "Card",
            "type": "INSTANCE",
-           "x": 0,
-           "y": 0,
            "overrides": {
             "Title": {
              "characters": "Home & Repair"
@@ -359,8 +328,6 @@
           {
            "name": "Card",
            "type": "INSTANCE",
-           "x": 0,
-           "y": 0,
            "overrides": {
             "Title": {
              "characters": "Education"
@@ -378,8 +345,6 @@
           {
            "name": "Card",
            "type": "INSTANCE",
-           "x": 0,
-           "y": 0,
            "overrides": {
             "Title": {
              "characters": "Business"
@@ -397,8 +362,6 @@
           {
            "name": "Card",
            "type": "INSTANCE",
-           "x": 0,
-           "y": 0,
            "overrides": {
             "Title": {
              "characters": "Creative"
@@ -441,8 +404,6 @@
       {
        "name": "CTA",
        "type": "FRAME",
-       "x": 0,
-       "y": 0,
        "width": 100,
        "height": 100,
        "fills": [
@@ -477,8 +438,6 @@
          ],
          "layoutSizingHorizontal": "HUG",
          "layoutSizingVertical": "HUG",
-         "x": 0,
-         "y": 0,
          "width": 100,
          "height": 20,
          "html": {
@@ -508,8 +467,6 @@
          ],
          "layoutSizingHorizontal": "FIXED",
          "layoutSizingVertical": "HUG",
-         "x": 0,
-         "y": 0,
          "width": 560,
          "height": 20,
          "id": "no"
@@ -517,8 +474,6 @@
         {
          "name": "Button",
          "type": "INSTANCE",
-         "x": 0,
-         "y": 0,
          "variant": {
           "Type": "Primary",
           "Size": "Large"
@@ -549,8 +504,6 @@
       {
        "name": "Footer",
        "type": "INSTANCE",
-       "x": 0,
-       "y": 0,
        "layoutSizingHorizontal": "FILL",
        "component": "Footer",
        "id": "nq"

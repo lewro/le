@@ -23,6 +23,9 @@ DSL + CLI + HTTP API so an agent can build or change a page in seconds without t
 - **HTML export**: semantic HTML + CSS (auto layout → flexbox)
 - **Agent optimized**: everything is reachable from `node le.js …`, `POST /api/docs/:name/ops`, or
   `window.__le` in the browser. Open editors live-reload when a file changes on disk. See [AGENTS.md](AGENTS.md).
+- **Files home**: a grid of file cards with title, designer and last update; version history per file on the server;
+  the canvas has a "+" pattern background, top-level frames snap to a 100 px grid, new pages auto-place next to the
+  existing ones, and *Tidy* arranges all frames of a page into a clean grid.
 - **Built for big files**: copy-on-write edits, memoized rendering, direct-DOM pan/zoom and viewport culling keep a
   60-page canvas editing at ~30 ms per change and panning at 60 fps (`node scripts/stress.mjs` generates one).
 
@@ -41,6 +44,21 @@ Documents live in `designer/designs/*.json`, libraries in `designer/libraries/*.
 (hand-built), `le-ui` (library) and `landing-ui` (built only from `le-ui`). Regenerate with
 `node le.js new landing < examples/landing.dsl`, `node le.js lib new le-ui < examples/le-ui.dsl`,
 `node le.js new landing-ui --libs le-ui < examples/landing-ui.dsl`.
+
+## Deploy on a server
+
+The server is one Node process that serves the editor and the API and keeps every file (designs, libraries,
+version history) on disk, so the "memory" is the server's data directory.
+
+- **Plain Node + systemd**: `deploy/deploy.sh user@your-server` builds, rsyncs to `/opt/le-designer`, installs the
+  unit from `deploy/le-designer.service`, seeds the samples into `/var/lib/le-designer` and restarts. Later runs
+  just update and restart; data is kept.
+- **Docker**: `docker compose up -d --build` (data in the `le-designer-data` volume).
+- Put nginx in front for TLS and access control (`deploy/nginx.conf`, basic auth or your SSO); the app has no login
+  of its own. The designer name shown on file cards is whatever each person types in the Files view.
+
+Home screen: `/` lists all files as cards (title, designer, last update, frame count, linked libraries); a card opens
+the canvas. `?doc=<name>` deep-links a file.
 
 ## Agent quick start
 

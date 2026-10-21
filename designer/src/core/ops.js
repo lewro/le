@@ -47,6 +47,41 @@ function deepMerge(target, src) {
   }
 }
 
+export const DEFAULT_GRID = 100;   // top-level frames snap to this grid (world px)
+export const DEFAULT_GAP = 200;    // gap used by auto-place and arrange
+
+export function snap(v, grid) { return grid > 0 ? Math.round(v / grid) * grid : v; }
+
+/** Place a new top-level frame on a canvas: to the right of the rightmost frame in the top row. */
+export function autoPlace(page, node, grid = DEFAULT_GRID, gap = DEFAULT_GAP) {
+  const kids = (page.children || []).filter((c) => c !== node && c.visible !== false);
+  if (!kids.length) { node.x = 0; node.y = 0; return; }
+  const minY = Math.min(...kids.map((c) => c.y || 0));
+  const row = kids.filter((c) => Math.abs((c.y || 0) - minY) < gap);
+  const right = Math.max(...row.map((c) => (c.x || 0) + (c.width || 1440)));
+  node.x = snap(right + gap, grid);
+  node.y = snap(minY, grid);
+}
+
+/**
+ * Arrange top-level frames into rows (row-major by their current position), snapping to the grid.
+ * options: { gap, columns, grid, sort: 'position' | 'name' }
+ */
+export function arrange(page, { gap = DEFAULT_GAP, columns, grid = DEFAULT_GRID, sort = 'position', heights } = {}) {
+  const kids = (page.children || []).filter((c) => c.visible !== false);
+  const sorted = [...kids].sort((a, b) => sort === 'name' ? a.name.localeCompare(b.name) : (Math.round((a.y || 0) / 500) - Math.round((b.y || 0) / 500)) || ((a.x || 0) - (b.x || 0)));
+  const cols = columns || Math.max(1, Math.ceil(Math.sqrt(sorted.length)));
+  const h = (c) => heights?.[c.id] ?? c.height ?? 1000;
+  let x = 0, y = 0, rowH = 0;
+  sorted.forEach((c, i) => {
+    if (i && i % cols === 0) { x = 0; y = snap(y + rowH + gap, grid); rowH = 0; }
+    c.x = snap(x, grid); c.y = snap(y, grid);
+    x = snap(x + (c.width || 1440) + gap, grid);
+    rowH = Math.max(rowH, h(c));
+  });
+  return sorted.map((c) => c.id);
+}
+
 function insertAt(parent, node, index) {
   if (!parent.children) parent.children = [];
   const len = parent.children.length;
@@ -96,6 +131,15 @@ function applyOp(doc, op, scope, result, libs) {
       }
       return;
     }
+    case 'arrange': {
+      // tidy top-level frames of a page: { op: 'arrange', target: 'Page 1'?, gap?, columns?, sort? }
+      const pages = op.target ? targets(doc, op, scope, false) : [doc.children[0]];
+      for (const page of pages) {
+        if (page.type !== 'CANVAS') throw new Error('arrange works on pages');
+        result.changed.push(...arrange(page, { gap: op.gap, columns: op.columns, sort: op.sort, grid: op.grid ?? doc.meta?.grid ?? DEFAULT_GRID, heights: op.heights }));
+      }
+      return;
+    }
     case 'swap': {
       // swap the component of an instance (and optionally its variant)
       for (const n of targets(doc, op, scope, true)) {
@@ -135,6 +179,7 @@ function applyOp(doc, op, scope, result, libs) {
         let i = op.index;
         for (const n of nodes) {
           const copy = parents.length > 1 ? cloneWithNewIds(doc, n) : n;
+          if (parent.type === 'CANVAS' && op.place !== false && (copy.x === undefined || copy.x === null)) autoPlace(parent, copy, doc.meta?.grid ?? DEFAULT_GRID);
           const at = insertAt(parent, copy, i);
           if (i !== undefined && i !== null) i = at + 1;
           walk(copy, (x) => result.created.push(x.id));

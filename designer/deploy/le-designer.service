@@ -1,0 +1,21 @@
+# systemd unit for a plain Node deployment (no Docker). Install with deploy/deploy.sh or by hand:
+#   sudo cp deploy/le-designer.service /etc/systemd/system/ && sudo systemctl enable --now le-designer
+[Unit]
+Description=LE Designer (design editor + API)
+After=network.target
+
+[Service]
+Type=simple
+User=le
+WorkingDirectory=/opt/le-designer
+Environment=NODE_ENV=production
+Environment=PORT=4000
+Environment=LE_DESIGNS=/var/lib/le-designer/designs
+Environment=LE_LIBRARIES=/var/lib/le-designer/libraries
+# Environment=FIGMA_TOKEN=figd_…
+ExecStart=/usr/bin/node /opt/le-designer/server.js
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

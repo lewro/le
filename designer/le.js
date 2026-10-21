@@ -4,6 +4,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { execSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { createStore, loadLibs, parseForDoc, importLibrary, componentsJson } from './server/api.js';
 import { applyOps } from './src/core/ops.js';
@@ -19,7 +20,10 @@ process.stdout.on('error', (e) => { if (e.code === 'EPIPE') process.exit(0); });
 const HELP = `LE Designer CLI
 
   node le.js ls                                   list documents
-  node le.js new <doc> [< page.dsl]               create a document (optionally from DSL on stdin)
+  node le.js new <doc> [--title T] [--libs a,b] [< page.dsl]   create a document (optionally from DSL on stdin)
+  node le.js title <doc> "Title"                  set the display title (Files view)
+  node le.js arrange <doc> [--columns N] [--gap G] [--sort name]   tidy top-level frames into a snapped grid
+  node le.js versions <doc> | restore <doc> <id> | snapshot <doc>   version history (kept on the server)
   node le.js dsl <doc> [selector] [--depth N] [--no-ids]   print a document/subtree as DSL (the best way to read a page)
   node le.js outline <doc> [selector]             compact tree: id, type, name, size (no styling)
   node le.js get <doc> <selector>                 print node JSON
@@ -51,7 +55,8 @@ Libraries (components, variants, tokens — stored in ./libraries/<name>.json):
   node le.js make-component <doc> <selector> [--name N] [--desc D]
 
 Selectors: #id | Name/Path | Header/@TEXT | Card[1] | Header/* | /Page 1/Header   (see AGENTS.md)
-Options: --dir <designsDir> (default ./designs, or LE_DESIGNS env)
+Options: --dir <designsDir> (default ./designs, or LE_DESIGNS env); --who <name> (author; default LE_USER env or git user.name)
+New top-level frames added to a page without x/y are placed automatically to the right of the existing ones, on the grid.
 `;
 
 function parseArgs(argv) {
@@ -82,15 +87,22 @@ async function main() {
   const load = () => { const d = store.load(docName); libsCache = loadLibs(libStore, d); setTokenContext(buildIndex(d, libsCache).tokens); return d; };
   const libs = () => libsCache || [];
   const ctx = () => ({ libs: libs() });
-  const save = (doc) => store.save(docName, doc);
+  const who = opts.who || process.env.LE_USER || (() => { try { return execSync('git config user.name', { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim(); } catch { return process.env.USER || null; } })();
+  const save = (doc) => store.save(docName, doc, who);
   const propsFrom = (list) => list.join(' ');
 
   switch (cmd) {
     case undefined: case 'help': case '--help': case '-h': out(HELP); return;
-    case 'ls': for (const d of store.list()) out(`${d.name}\t${(d.size / 1024).toFixed(1)}kB`); return;
+    case 'ls': for (const d of store.list()) out(`${d.name}\t"${d.title}"\t${d.frames} frames\tby ${d.updatedBy || '?'}\t${d.updatedAt ? d.updatedAt.slice(0, 16).replace('T', ' ') : ''}`); return;
+    case 'title': { const doc = load(); (doc.meta ||= { seq: 1 }).title = rest[0]; save(doc); out(`title: ${rest[0]}`); return; }
+    case 'arrange': { const doc = load(); const r = applyOps(doc, { op: 'arrange', target: opts.page ? `#${opts.page}` : undefined, columns: opts.columns ? parseInt(opts.columns, 10) : undefined, gap: opts.gap ? parseInt(opts.gap, 10) : undefined, sort: opts.sort }, doc, ctx()); save(doc); out(`arranged ${r.changed.length} frames`); return; }
+    case 'versions': { for (const v of store.versions(docName)) out(`${v.id}\t${v.at.slice(0, 19).replace('T', ' ')}\t${v.by || '?'}\t${(v.size / 1024).toFixed(1)}kB`); return; }
+    case 'restore': { const v = store.loadVersion(docName, rest[0]); save(v); out(`restored ${rest[0]}`); return; }
+    case 'snapshot': { out(`snapshot ${store.snapshot(docName, who, true)}`); return; }
     case 'new': {
       if (store.exists(docName)) throw new Error(`"${docName}" already exists`);
       const doc = createDocument(docName);
+      if (opts.title) doc.meta.title = String(opts.title);
       if (opts.libs) doc.libraries = String(opts.libs).split(',').filter(Boolean);
       const text = process.stdin.isTTY ? '' : readStdin();
       if (text.trim()) { doc.children[0].children.push(...parseForDoc(doc, loadLibs(libStore, doc), text)); }

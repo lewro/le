@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useStore, setState, createDoc, getState, replaceDoc, openDoc, refreshDocs, deleteDoc, setLinkedLibraries, refreshLibraries, getIndex } from '../store.js';
+import React, { useEffect, useRef, useState } from 'react';
+import { useStore, setState, createDoc, getState, replaceDoc, openDoc, refreshDocs, deleteDoc, setLinkedLibraries, refreshLibraries, getIndex, saveNow } from '../store.js';
+import { relTime } from './FilesView.jsx';
 import { describeComponents, expandDocument } from '../../core/components.js';
 import { fromFigma, toFigma } from '../../core/figma.js';
 import { exportHtml } from '../../core/html.js';
@@ -13,9 +14,16 @@ function download(name, content, type = 'application/json') {
 }
 
 function Modal({ title, children, onClose }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    ref.current?.focus();
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey, true);
+    return () => document.removeEventListener('keydown', onKey, true);
+  }, [onClose]);
   return (
     <div className="modal-backdrop" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="modal" onKeyDown={(e) => { if (e.key === 'Escape') onClose(); e.stopPropagation(); }}>
+      <div className="modal" ref={ref} tabIndex={-1} onKeyDown={(e) => { if (e.key === 'Escape') onClose(); e.stopPropagation(); }}>
         <h3>{title}</h3>
         {children}
       </div>
@@ -25,18 +33,21 @@ function Modal({ title, children, onClose }) {
 
 function NewDialog({ close }) {
   const libraries = useStore((s) => s.libraries);
+  const [title, setTitleV] = useState('');
   const [name, setName] = useState('');
   const [dsl, setDsl] = useState('');
   const [libs, setLibs] = useState([]);
   const [err, setErr] = useState('');
+  const slug = (t) => t.trim().toLowerCase().replace(/[^a-z0-9._-]+/g, '-').replace(/^-|-$/g, '');
   const go = async () => {
-    const n = name.trim().replace(/[^A-Za-z0-9._-]+/g, '-');
-    if (!n) return setErr('Name required');
-    try { await createDoc(n, dsl, libs); close(); } catch (e) { setErr(e.message); }
+    const n = (name || slug(title)).trim().replace(/[^A-Za-z0-9._-]+/g, '-');
+    if (!n) return setErr('Title required');
+    try { await createDoc(n, dsl, libs, title.trim() || n); close(); } catch (e) { setErr(e.message); }
   };
   return (
-    <Modal title="New document" onClose={close}>
-      <div className="row"><input type="text" autoFocus placeholder="document name (file name)" value={name} onChange={(e) => setName(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && go()} /></div>
+    <Modal title="New file" onClose={close}>
+      <div className="row"><input type="text" autoFocus placeholder="Title, e.g. Onboarding flow" value={title} onChange={(e) => setTitleV(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && go()} /></div>
+      <div className="row"><input type="text" placeholder={`file name (${slug(title) || 'auto'})`} value={name} onChange={(e) => setName(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && go()} /></div>
       {libraries.length > 0 && (
         <div className="row" style={{ flexWrap: 'wrap', gap: 10 }}>
           <span className="muted fixed">Libraries:</span>
@@ -257,6 +268,31 @@ function LibrariesDialog({ close }) {
   );
 }
 
+function VersionsDialog({ close }) {
+  const backend = useStore((s) => s.backend);
+  const docName = useStore((s) => s.docName);
+  const [list, setList] = useState(null);
+  const [err, setErr] = useState('');
+  const load = async () => { try { setList(await backend.versions(docName)); } catch (e) { setErr(e.message); } };
+  useEffect(() => { load(); }, [docName]);
+  return (
+    <Modal title={`Version history · ${docName}`} onClose={close}>
+      <div className="hint">The server keeps a snapshot before each save (at most one per 5 minutes per designer, 40 per file). Restoring makes a snapshot of the current state first.</div>
+      <div className="row"><button className="primary" onClick={async () => { await saveNow(); await backend.snapshot(docName); load(); }}>Save a snapshot now</button></div>
+      {backend?.kind !== 'server' && <div className="muted">Version history is only available with the server.</div>}
+      {list && !list.length && <div className="muted">No versions yet.</div>}
+      {list && list.map((v) => (
+        <div className="version-row" key={v.id}>
+          <span className="grow"><b>{relTime(v.at)}</b> <span className="muted">{new Date(v.at).toLocaleString()} · {v.by || 'unknown'} · {(v.size / 1024).toFixed(0)} kB</span></span>
+          <button onClick={async () => { if (!confirm(`Restore the version from ${new Date(v.at).toLocaleString()}?`)) return; try { await backend.restore(docName, v.id); await openDoc(docName); close(); } catch (e) { setErr(e.message); } }}>Restore</button>
+        </div>
+      ))}
+      {err && <div style={{ color: 'var(--danger)' }}>{err}</div>}
+      <div className="footer"><button onClick={close}>Close</button></div>
+    </Modal>
+  );
+}
+
 export default function Dialogs() {
   const dialog = useStore((s) => s.dialog);
   const close = () => setState({ dialog: null });
@@ -266,6 +302,7 @@ export default function Dialogs() {
   if (dialog === 'export') return <ExportDialog close={close} />;
   if (dialog === 'help') return <HelpDialog close={close} />;
   if (dialog === 'libraries') return <LibrariesDialog close={close} />;
+  if (dialog === 'versions') return <VersionsDialog close={close} />;
   return null;
 }
 

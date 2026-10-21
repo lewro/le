@@ -7,7 +7,10 @@ import { fetchFromFigma, libraryFromFigma, isNativeDoc } from '../core/figma.js'
 
 export const clientId = Math.random().toString(36).slice(2, 10);
 
+export function userName() { try { return localStorage.getItem('le-designer:user') || ''; } catch { return ''; } }
+export function setUserName(n) { try { localStorage.setItem('le-designer:user', n || ''); } catch { /* ignore */ } }
 const headers = { 'Content-Type': 'application/json', 'X-Client-Id': clientId };
+Object.defineProperty(headers, 'X-Client-Name', { enumerable: true, get: () => encodeURIComponent(userName()) });
 
 async function j(res) {
   if (!res.ok) { let msg = res.statusText; try { msg = (await res.json()).error || msg; } catch { /* ignore */ } throw new Error(msg); }
@@ -20,7 +23,11 @@ const remote = {
   list: () => fetch('/api/docs').then(j),
   get: (name) => fetch(`/api/docs/${encodeURIComponent(name)}`).then(j),
   put: (name, doc) => fetch(`/api/docs/${encodeURIComponent(name)}`, { method: 'PUT', headers, body: JSON.stringify(doc) }).then(j),
-  create: (name, dsl = '') => fetch(`/api/docs/${encodeURIComponent(name)}`, { method: 'POST', headers: { ...headers, 'Content-Type': 'text/plain' }, body: dsl }).then(j),
+  create: (name, dsl = '', { title, libraries } = {}) => fetch(`/api/docs/${encodeURIComponent(name)}?${new URLSearchParams({ ...(title ? { title } : {}), ...(libraries?.length ? { libs: libraries.join(',') } : {}) })}`, { method: 'POST', headers: { ...headers, 'Content-Type': 'text/plain' }, body: dsl }).then(j),
+  meta: (name, body) => fetch(`/api/docs/${encodeURIComponent(name)}/meta`, { method: 'POST', headers, body: JSON.stringify(body) }).then(j),
+  versions: (name) => fetch(`/api/docs/${encodeURIComponent(name)}/versions`).then(j),
+  snapshot: (name) => fetch(`/api/docs/${encodeURIComponent(name)}/versions`, { method: 'POST', headers, body: '{}' }).then(j),
+  restore: (name, id) => fetch(`/api/docs/${encodeURIComponent(name)}/versions`, { method: 'POST', headers, body: JSON.stringify({ restore: id }) }).then(j),
   remove: (name) => fetch(`/api/docs/${encodeURIComponent(name)}`, { method: 'DELETE', headers }).then(j),
   figmaImport: (body) => fetch('/api/figma/import', { method: 'POST', headers, body: JSON.stringify(body) }).then(j),
   libs: () => fetch('/api/libs').then(j),
@@ -40,18 +47,38 @@ const LS = 'le-designer:docs';
 function lsRead() { try { return JSON.parse(localStorage.getItem(LS) || '{}'); } catch { return {}; } }
 function lsWrite(all) { localStorage.setItem(LS, JSON.stringify(all)); }
 
+function summary(name, doc) {
+  const m = doc.meta || {};
+  let frames = 0;
+  for (const p of doc.children || []) frames += (p.children || []).length;
+  return { name, title: m.title || doc.name || name, createdBy: m.createdBy || null, updatedBy: m.updatedBy || null, createdAt: m.createdAt || null, updatedAt: m.updatedAt || null, pages: (doc.children || []).length, frames, libraries: doc.libraries || [] };
+}
+
 const local = {
   kind: 'local',
-  async list() { return Object.keys(lsRead()).sort().map((name) => ({ name })); },
+  async list() { const all = lsRead(); return Object.keys(all).map((name) => summary(name, all[name])).sort((a, b) => (b.updatedAt || '').localeCompare(a.updatedAt || '')); },
   async get(name) { const d = lsRead()[name]; if (!d) throw new Error('not found'); return d; },
-  async put(name, doc) { const all = lsRead(); all[name] = doc; lsWrite(all); return { ok: true }; },
-  async create(name, dsl) {
+  async put(name, doc) {
+    const all = lsRead();
+    doc.meta ||= { seq: 1 };
+    const now = new Date().toISOString();
+    if (!doc.meta.createdAt) { doc.meta.createdAt = now; if (userName()) doc.meta.createdBy = userName(); }
+    doc.meta.updatedAt = now; if (userName()) doc.meta.updatedBy = userName();
+    all[name] = doc; lsWrite(all); return { ok: true };
+  },
+  async create(name, dsl, { title, libraries } = {}) {
     const doc = createDocument(name);
+    if (title) doc.meta.title = title;
+    if (libraries?.length) doc.libraries = libraries;
     if (dsl && dsl.trim()) doc.children[0].children.push(...parseDsl(dsl));
     assignIds(doc);
     await local.put(name, doc);
     return doc;
   },
+  async meta(name, body) { const doc = await local.get(name); doc.meta ||= { seq: 1 }; if (body.title !== undefined) doc.meta.title = body.title; if (body.grid !== undefined) doc.meta.grid = body.grid ?? undefined; await local.put(name, doc); return summary(name, doc); },
+  async versions() { return []; },
+  async snapshot() { return { ok: false }; },
+  async restore() { throw new Error('Version history needs the server'); },
   async remove(name) { const all = lsRead(); delete all[name]; lsWrite(all); return { ok: true }; },
   async figmaImport({ token, fileKey, nodeIds, name }) {
     const doc = await fetchFromFigma({ token, fileKey, nodeIds, name });

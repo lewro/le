@@ -1,0 +1,14 @@
+# docker compose up -d --build   →  http://<server>:4000  (put nginx with TLS + auth in front, see deploy/nginx.conf)
+services:
+  le-designer:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:4000:4000"
+    volumes:
+      - le-designer-data:/data
+    environment:
+      - PORT=4000
+      # - FIGMA_TOKEN=figd_…   # optional: lets the server fetch Figma files without a token in the UI
+volumes:
+  le-designer-data:

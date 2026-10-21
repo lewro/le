@@ -6,6 +6,7 @@ import AssetsPanel from './components/AssetsPanel.jsx';
 import Canvas from './components/Canvas.jsx';
 import RightPanel from './components/RightPanel.jsx';
 import Dialogs from './components/Dialogs.jsx';
+import FilesView from './components/FilesView.jsx';
 import { findById, getParent, hasAutoLayout, cloneWithNewIds, clone, pathTo } from '../core/model.js';
 
 function isTyping(e) {
@@ -29,6 +30,7 @@ function LeftPanel() {
 }
 
 export default function App() {
+  const route = useStore((s) => s.route);
   const docName = useStore((s) => s.docName);
   const status = useStore((s) => s.status);
   const saving = useStore((s) => s.saving);
@@ -45,6 +47,7 @@ export default function App() {
       if (mod && e.key.toLowerCase() === 's') { e.preventDefault(); saveNow(); return; }
       if (isTyping(e)) return;
       const s = getState();
+      if (s.route !== 'editor') return;
       if (mod && e.key.toLowerCase() === 'z') { e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
       if (mod && e.key.toLowerCase() === 'y') { e.preventDefault(); redo(); return; }
       if (mod && e.key.toLowerCase() === 'd') { e.preventDefault(); if (s.selection.length) { const r = apply({ op: 'duplicate', target: '#' + s.selection[0], dx: 10, dy: 10 }, { label: 'Duplicate' }); if (r) select(r.created[0]); } return; }
@@ -108,6 +111,7 @@ export default function App() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
+  if (route !== 'editor') return <><FilesView /><Dialogs /></>;
   return (
     <div className="app">
       <Toolbar />

@@ -12,8 +12,9 @@ import { createApiHandler } from './server/api.js';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const port = parseInt(process.env.PORT || process.argv[2] || '4000', 10);
 const designsDir = process.env.LE_DESIGNS || path.join(here, 'designs');
+const librariesDir = process.env.LE_LIBRARIES || path.join(path.dirname(designsDir), 'libraries');
 const dist = path.join(here, 'dist');
-const handle = createApiHandler({ designsDir });
+const handle = createApiHandler({ designsDir, librariesDir });
 
 const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.woff2': 'font/woff2', '.ico': 'image/x-icon' };
 
@@ -25,4 +26,4 @@ http.createServer(async (req, res) => {
   if (!file.startsWith(dist) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) file = path.join(dist, 'index.html');
   res.writeHead(200, { 'Content-Type': MIME[path.extname(file)] || 'application/octet-stream' });
   fs.createReadStream(file).pipe(res);
-}).listen(port, () => console.log(`LE Designer: http://localhost:${port}  (designs: ${designsDir})`));
+}).listen(port, () => console.log(`LE Designer: http://localhost:${port}  (designs: ${designsDir}, libraries: ${librariesDir})`));

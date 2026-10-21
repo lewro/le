@@ -417,6 +417,8 @@ const LAYOUT_KEYS = new Set(['gap', 'rowgap', 'p', 'padding', 'px', 'py', 'pt', 
 
 /** Apply DSL defaults: layout props imply auto-layout; auto-layout frames hug unless sized explicitly. */
 export function finishNode(node, explicit) {
+  // positions are only meaningful when given (or set later by the editor / auto-place)
+  if (!explicit.has('x') && !explicit.has('y') && node.type !== 'CANVAS') { delete node.x; delete node.y; }
   if (node.type === 'TEXT' || node.type === 'CANVAS' || node.type === 'INSTANCE') return;
   if (!node.layoutMode || node.layoutMode === 'NONE') {
     for (const k of explicit) if (LAYOUT_KEYS.has(k)) { node.layoutMode = 'HORIZONTAL'; break; }

@@ -212,6 +212,17 @@ install `figma-plugin/` (Plugins → Development → Import plugin from manifest
 also exports a selection back to the native format. The native JSON is also a good input for the Figma MCP
 `use_figma` tool if one is available.
 
+## Files, titles, placement
+
+- `node le.js ls` lists files with title, designer and last update (what the Files home screen shows).
+  `node le.js new <doc> --title "Onboarding flow" --libs le-ui < page.dsl` sets the title; `title <doc> "…"` changes it.
+  The author recorded on saves comes from `--who`, `LE_USER`, or `git config user.name`.
+- Each page of a document is one top-level `frame` on the canvas. Frames added to a page **without x/y are placed
+  automatically** to the right of the existing ones, snapped to the 100 px grid, so you never need coordinates:
+  `node le.js add landing 'Page 1' - < pricing.dsl` just works. `node le.js arrange <doc> [--columns 3]` tidies a page.
+- `node le.js versions <doc>` / `restore <doc> <id>` / `snapshot <doc>`: server-side history (before each save,
+  rate limited; 40 per file).
+
 ## Performance notes
 
 The canvas is plain DOM (auto layout = flexbox). Edits are copy-on-write (only the touched path is copied), renderers are

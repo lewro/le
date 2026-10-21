@@ -57,19 +57,40 @@ export async function importLibrary({ source, json, token, name }, fetchImpl = g
   return doc;
 }
 
+const VERSION_LIMIT = 40;          // snapshots kept per document
+const VERSION_INTERVAL = 5 * 60e3; // at most one snapshot per 5 minutes per author
+
+/** Summary used by the Files view: title, designer, dates, counts. */
+export function summarize(name, doc, st) {
+  const page = doc.children?.[0];
+  let frames = 0, nodes = 0;
+  for (const p of doc.children || []) { frames += (p.children || []).length; walkCount(p, (n) => { nodes++; }); }
+  const m = doc.meta || {};
+  return {
+    name, title: m.title || doc.name || name, createdBy: m.createdBy || null, updatedBy: m.updatedBy || null,
+    createdAt: m.createdAt || null, updatedAt: m.updatedAt || (st ? new Date(st.mtimeMs).toISOString() : null),
+    mtime: st?.mtimeMs, size: st?.size, pages: (doc.children || []).length, frames, nodes, libraries: doc.libraries || [],
+    kind: doc.kind || 'design', firstPage: page?.name || null,
+  };
+}
+function walkCount(n, fn) { fn(n); for (const c of n.children || []) walkCount(c, fn); }
+
 export function createStore(designsDir) {
   fs.mkdirSync(designsDir, { recursive: true });
   const file = (name) => {
     if (!SAFE.test(name)) throw Object.assign(new Error('Invalid document name'), { status: 400 });
     return path.join(designsDir, name + '.json');
   };
-  return {
+  const historyDir = (name) => path.join(designsDir, '.history', name);
+  const store = {
     dir: designsDir,
     list() {
       return fs.readdirSync(designsDir).filter((f) => f.endsWith('.json')).map((f) => {
         const st = fs.statSync(path.join(designsDir, f));
-        return { name: f.slice(0, -5), mtime: st.mtimeMs, size: st.size };
-      }).sort((a, b) => a.name.localeCompare(b.name));
+        let doc = {};
+        try { doc = JSON.parse(fs.readFileSync(path.join(designsDir, f), 'utf8')); } catch { /* corrupt file: list it anyway */ }
+        return summarize(f.slice(0, -5), doc, st);
+      }).sort((a, b) => (b.updatedAt || '').localeCompare(a.updatedAt || '') || a.name.localeCompare(b.name));
     },
     exists(name) { return fs.existsSync(file(name)); },
     load(name) {
@@ -77,15 +98,54 @@ export function createStore(designsDir) {
       if (!fs.existsSync(p)) throw Object.assign(new Error(`Document "${name}" not found`), { status: 404 });
       return JSON.parse(fs.readFileSync(p, 'utf8'));
     },
-    save(name, doc) {
+    /** Save with metadata; author (who) is recorded as updatedBy / createdBy. */
+    save(name, doc, who) {
       const p = file(name);
+      const now = new Date().toISOString();
+      doc.meta ||= { seq: 1 };
+      if (!doc.meta.createdAt) { doc.meta.createdAt = now; if (who) doc.meta.createdBy = who; }
+      doc.meta.updatedAt = now;
+      if (who) doc.meta.updatedBy = who;
+      if (fs.existsSync(p)) store.snapshot(name, who);
       const tmp = p + '.tmp';
       fs.writeFileSync(tmp, JSON.stringify(doc, null, 1));
       fs.renameSync(tmp, p);
       return doc;
     },
-    remove(name) { fs.rmSync(file(name), { force: true }); },
+    /** Keep a copy of the current file in .history/<name>/ (rate limited per author, bounded). */
+    snapshot(name, who, force = false) {
+      const p = file(name);
+      if (!fs.existsSync(p)) return null;
+      const dir = historyDir(name);
+      fs.mkdirSync(dir, { recursive: true });
+      const parse = (f) => { const [ts, author = ''] = f.slice(0, -5).split('__'); return { ts: Number(ts), author }; };
+      const existing = fs.readdirSync(dir).filter((f) => f.endsWith('.json')).sort();
+      const last = existing.length ? parse(existing[existing.length - 1]) : null;
+      if (!force && last && Date.now() - last.ts < VERSION_INTERVAL && last.author === (who || '')) return null;
+      const target = path.join(dir, `${Date.now()}__${(who || '').replace(/[^A-Za-z0-9_.-]/g, '_')}.json`);
+      fs.copyFileSync(p, target);
+      const all = fs.readdirSync(dir).filter((f) => f.endsWith('.json')).sort();
+      for (const f of all.slice(0, Math.max(0, all.length - VERSION_LIMIT))) fs.rmSync(path.join(dir, f), { force: true });
+      return path.basename(target, '.json');
+    },
+    versions(name) {
+      const dir = historyDir(name);
+      if (!fs.existsSync(dir)) return [];
+      return fs.readdirSync(dir).filter((f) => f.endsWith('.json')).sort().reverse().map((f) => {
+        const [ts, author = ''] = f.slice(0, -5).split('__');
+        const st = fs.statSync(path.join(dir, f));
+        return { id: f.slice(0, -5), at: new Date(Number(ts)).toISOString(), by: author || null, size: st.size };
+      });
+    },
+    loadVersion(name, id) {
+      if (!SAFE.test(id)) throw Object.assign(new Error('Invalid version'), { status: 400 });
+      const p = path.join(historyDir(name), id + '.json');
+      if (!fs.existsSync(p)) throw Object.assign(new Error('Version not found'), { status: 404 });
+      return JSON.parse(fs.readFileSync(p, 'utf8'));
+    },
+    remove(name) { fs.rmSync(file(name), { force: true }); fs.rmSync(historyDir(name), { recursive: true, force: true }); },
   };
+  return store;
 }
 
 function readBody(req) {
@@ -139,13 +199,14 @@ export function createApiHandler({ designsDir, librariesDir = path.join(path.dir
     const url = new URL(req.url, 'http://localhost');
     if (!url.pathname.startsWith('/api/')) return false;
     if (req.method === 'OPTIONS') {
-      res.writeHead(204, { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type, X-Client-Id' });
+      res.writeHead(204, { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type, X-Client-Id, X-Client-Name' });
       res.end();
       return true;
     }
     try {
       const parts = url.pathname.split('/').filter(Boolean); // ['api', ...]
       const clientId = req.headers['x-client-id'] || null;
+      const who = req.headers['x-client-name'] ? decodeURIComponent(String(req.headers['x-client-name'])).slice(0, 80) : (url.searchParams.get('who') || null);
 
       if (parts[1] === 'events') {
         res.writeHead(200, { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache', Connection: 'keep-alive', 'Access-Control-Allow-Origin': '*' });
@@ -161,7 +222,7 @@ export function createApiHandler({ designsDir, librariesDir = path.join(path.dir
         const doc = await fetchFromFigma({ token: body.token || process.env.FIGMA_TOKEN, fileKey: body.fileKey, nodeIds: body.nodeIds, name: body.name });
         const name = body.name || slugify(doc.name) || 'figma-import';
         markWriter(name, clientId);
-        store.save(name, doc);
+        store.save(name, doc, who);
         send(res, 200, { name, doc });
         return true;
       }
@@ -174,7 +235,7 @@ export function createApiHandler({ designsDir, librariesDir = path.join(path.dir
           const name = body.name || slugify(doc.name) || 'library';
           doc.name = name;
           markWriter(name, clientId, 'lib');
-          libStore.save(name, doc);
+          libStore.save(name, doc, who);
           send(res, 200, { name, components: describeComponents(buildIndex(null, [doc])) });
           return true;
         }
@@ -182,12 +243,12 @@ export function createApiHandler({ designsDir, librariesDir = path.join(path.dir
         if (parts[3] === 'components' && req.method === 'GET') { const d = libStore.load(name); const idx = buildIndex(null, [d]); send(res, 200, url.searchParams.get('format') === 'json' ? componentsJson(idx) : describeComponents(idx).join('\n'), url.searchParams.get('format') === 'json' ? 'application/json' : 'text/plain'); return true; }
         if (parts[3] === 'dsl' && req.method === 'GET') { const d = libStore.load(name); send(res, 200, serializeTokens(d.tokens) + '\n' + serializeDsl(d, { ids: url.searchParams.get('ids') !== '0' }), 'text/plain'); return true; }
         if (req.method === 'GET') { send(res, 200, libStore.load(name)); return true; }
-        if (req.method === 'PUT') { let d = JSON.parse(await readBody(req)); d = isNativeDoc(d) ? d : libraryFromFigma(d, name); d.kind = 'library'; d.name ||= name; markWriter(name, clientId, 'lib'); libStore.save(name, d); send(res, 200, { ok: true }); return true; }
+        if (req.method === 'PUT') { let d = JSON.parse(await readBody(req)); d = isNativeDoc(d) ? d : libraryFromFigma(d, name); d.kind = 'library'; d.name ||= name; markWriter(name, clientId, 'lib'); libStore.save(name, d, who); send(res, 200, { ok: true }); return true; }
         if (req.method === 'POST') { // create from DSL text
           const d = createDocument(name); d.kind = 'library';
           const text = await readBody(req);
           if (text.trim()) { d.children[0].children.push(...parseForDoc(d, [], text)); assignIds(d); }
-          markWriter(name, clientId, 'lib'); libStore.save(name, d); send(res, 200, d); return true;
+          markWriter(name, clientId, 'lib'); libStore.save(name, d, who); send(res, 200, d); return true;
         }
         if (req.method === 'DELETE') { libStore.remove(name); send(res, 200, { ok: true }); return true; }
         send(res, 404, { error: 'Not found' }); return true;
@@ -199,6 +260,27 @@ export function createApiHandler({ designsDir, librariesDir = path.join(path.dir
       const name = decodeURIComponent(parts[2] || '');
       const sub = parts[3];
 
+      if (sub === 'versions') {
+        if (req.method === 'GET') { send(res, 200, store.versions(name)); return true; }
+        if (req.method === 'POST') { // snapshot now, or restore a version: { restore: id }
+          const body = JSON.parse(await readBody(req) || '{}');
+          if (body.restore) { const v = store.loadVersion(name, body.restore); markWriter(name, clientId); store.save(name, v, who); send(res, 200, { ok: true, doc: v }); return true; }
+          send(res, 200, { ok: true, id: store.snapshot(name, who, true) });
+          return true;
+        }
+      }
+      if (sub === 'meta' && req.method === 'POST') { // { title, ... }
+        const body = JSON.parse(await readBody(req) || '{}');
+        const doc = store.load(name);
+        doc.meta ||= { seq: 1 };
+        if (body.title !== undefined) doc.meta.title = String(body.title).slice(0, 200);
+        if (body.grid !== undefined) doc.meta.grid = body.grid === null ? undefined : Number(body.grid) || 0;
+        markWriter(name, clientId);
+        store.save(name, doc, who);
+        send(res, 200, summarize(name, doc));
+        return true;
+      }
+
       if (!sub) {
         if (req.method === 'GET') { send(res, 200, store.load(name)); return true; }
         if (req.method === 'PUT') {
@@ -207,7 +289,7 @@ export function createApiHandler({ designsDir, librariesDir = path.join(path.dir
           doc = fromFigma(doc, name); // accepts native or Figma JSON
           if (!doc.name) doc.name = name;
           markWriter(name, clientId);
-          store.save(name, doc);
+          store.save(name, doc, who);
           send(res, 200, { ok: true });
           return true;
         }
@@ -216,10 +298,11 @@ export function createApiHandler({ designsDir, librariesDir = path.join(path.dir
           if (store.exists(name)) { send(res, 409, { error: 'exists' }); return true; }
           const body = await readBody(req);
           const doc = createDocument(name);
+          if (url.searchParams.get('title')) doc.meta.title = url.searchParams.get('title');
           if (url.searchParams.get('libs')) doc.libraries = url.searchParams.get('libs').split(',').filter(Boolean);
           if (body.trim()) { const roots = parseForDoc(doc, loadLibs(libStore, doc), body); doc.children[0].children.push(...roots); assignIds(doc); }
           markWriter(name, clientId);
-          store.save(name, doc);
+          store.save(name, doc, who);
           send(res, 200, doc);
           return true;
         }
@@ -235,7 +318,7 @@ export function createApiHandler({ designsDir, librariesDir = path.join(path.dir
         for (const l of libs) if (!libStore.exists(l)) { send(res, 404, { error: `Library "${l}" not found` }); return true; }
         doc.libraries = libs;
         markWriter(name, clientId);
-        store.save(name, doc);
+        store.save(name, doc, who);
         send(res, 200, { ok: true, libraries: libs });
         return true;
       }
@@ -260,7 +343,7 @@ export function createApiHandler({ designsDir, librariesDir = path.join(path.dir
         const scope = body.scope ? resolve(doc, body.scope)[0] : doc;
         const result = applyOps(doc, body.ops || body, scope, { libs: loadLibs(libStore, doc) });
         markWriter(name, clientId);
-        store.save(name, doc);
+        store.save(name, doc, who);
         send(res, 200, { ok: true, ...result, dsl: body.return === 'dsl' ? serializeDsl(doc) : undefined, doc: body.return === 'doc' ? doc : undefined });
         return true;
       }
@@ -282,7 +365,7 @@ export function createApiHandler({ designsDir, librariesDir = path.join(path.dir
           if (sel) { setTokenContext(buildIndex(doc, libs).tokens); applyOps(doc, { op: 'replace', target: sel, dsl: text }, doc, { libs }); }
           else { const page = doc.children[parseInt(url.searchParams.get('page') || '0', 10)]; page.children = parseForDoc(doc, libs, text); assignIds(doc); }
           markWriter(name, clientId);
-          store.save(name, doc);
+          store.save(name, doc, who);
           send(res, 200, { ok: true });
           return true;
         }

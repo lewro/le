@@ -10,11 +10,14 @@ import { useSyncExternalStore } from 'react';
 import { applyOps } from '../core/ops.js';
 import { clone, findById, pathTo, getParent, walk, hasAutoLayout, resolve } from '../core/model.js';
 import { buildIndex } from '../core/components.js';
-import { getBackend, clientId } from './api.js';
+import { getBackend, clientId, userName, setUserName } from './api.js';
+import { snap as snapTo, DEFAULT_GRID } from '../core/ops.js';
 
 const HISTORY_LIMIT = 200;
 
 let state = {
+  route: 'files',  // 'files' (home grid) | 'editor'
+  user: userName(),
   backend: null,
   docs: [],
   libraries: [],   // [{ name, components, source }] available libraries
@@ -118,12 +121,43 @@ export async function init() {
     }
   });
   const params = new URLSearchParams(location.search);
-  const name = params.get('doc') || localStorage.getItem('le-designer:last') || state.docs[0]?.name;
+  const name = params.get('doc');
   if (name && state.docs.some((d) => d.name === name)) await openDoc(name);
-  else if (!state.docs.length) {
-    const { SAMPLE_DSL } = await import('./sample.js');
-    await createDoc('untitled', SAMPLE_DSL);
-  }
+  else setState({ route: 'files' });
+  window.addEventListener('popstate', () => {
+    const n = new URLSearchParams(location.search).get('doc');
+    if (n && n !== state.docName) openDoc(n, { push: false });
+    else if (!n && state.route !== 'files') goFiles({ push: false });
+  });
+}
+
+export function setUser(name) { setUserName(name); setState({ user: name }); }
+
+export async function goFiles({ push = true } = {}) {
+  await saveNow();
+  if (push) history.pushState(null, '', location.pathname);
+  setState({ route: 'files', selection: [], editingId: null });
+  await refreshDocs();
+}
+
+export async function setTitle(title) {
+  const { backend, docName } = state;
+  await saveNow();
+  const sum = await backend.meta(docName, { title });
+  setState((s) => ({ doc: { ...s.doc, meta: { ...(s.doc.meta || {}), title } }, docs: s.docs.map((d) => (d.name === docName ? { ...d, ...sum } : d)) }));
+}
+
+export function gridSize() { return state.doc?.meta?.grid ?? DEFAULT_GRID; }
+export function snap(v) { return snapTo(v, gridSize()); }
+
+/** Tidy the current page: arrange top-level frames in a grid using their measured heights. */
+export function tidy(options = {}) {
+  const page = currentPage();
+  if (!page) return;
+  const heights = {};
+  for (const c of page.children) heights[c.id] = boundsOf(c).h;
+  apply({ op: 'arrange', target: '#' + page.id, heights, ...options }, { label: 'Tidy up' });
+  requestAnimationFrame(() => requestAnimationFrame(() => zoomToFit()));
 }
 
 export async function refreshDocs() {
@@ -141,19 +175,19 @@ async function loadLinkedLibs(doc) {
   setState({ libs });
 }
 
-export async function openDoc(name) {
+export async function openDoc(name, { push = true } = {}) {
   await saveNow();
   const doc = await state.backend.get(name);
   localStorage.setItem('le-designer:last', name);
-  history.replaceState(null, '', `?doc=${encodeURIComponent(name)}`);
-  setState({ doc, docName: name, pageId: doc.children?.[0]?.id || null, selection: [], hoverId: null, editingId: null, history: [], future: [], dirty: false, status: `Opened ${name}` });
+  const url = `?doc=${encodeURIComponent(name)}`;
+  if (push && new URLSearchParams(location.search).get('doc') !== name) history.pushState(null, '', url); else history.replaceState(null, '', url);
+  setState({ route: 'editor', doc, docName: name, pageId: doc.children?.[0]?.id || null, selection: [], hoverId: null, editingId: null, history: [], future: [], dirty: false, status: `Opened ${name}` });
   await loadLinkedLibs(doc);
   requestAnimationFrame(() => requestAnimationFrame(() => zoomToFit()));
 }
 
-export async function createDoc(name, dsl = '', libraries = []) {
-  const doc = await state.backend.create(name, dsl);
-  if (libraries.length) await state.backend.link(name, { libraries });
+export async function createDoc(name, dsl = '', libraries = [], title) {
+  const doc = await state.backend.create(name, dsl, { title, libraries });
   await refreshDocs();
   await openDoc(name);
   return doc;
@@ -161,8 +195,19 @@ export async function createDoc(name, dsl = '', libraries = []) {
 
 export async function deleteDoc(name) {
   await state.backend.remove(name);
-  if (state.docName === name) setState({ doc: null, docName: null, selection: [] });
+  if (state.docName === name) setState({ doc: null, docName: null, selection: [], route: 'files' });
   await refreshDocs();
+}
+
+export async function duplicateDoc(name) {
+  const doc = clone(await state.backend.get(name));
+  let n = name + '-copy', i = 2;
+  while (state.docs.some((d) => d.name === n)) n = `${name}-copy${i++}`;
+  doc.name = n;
+  doc.meta = { ...(doc.meta || { seq: 1 }), title: `${doc.meta?.title || name} (copy)`, createdAt: undefined, createdBy: undefined };
+  await state.backend.put(n, doc);
+  await refreshDocs();
+  return n;
 }
 
 /** Link/unlink libraries on the open document. */
@@ -201,9 +246,11 @@ function touchedIds(doc, ops) {
       for (const n of nodes) {
         ids.add(n.id);
         const p = getParent(doc, n.id); if (p) ids.add(p.id);
-        if (op.op === 'unwrap') for (const c of n.children || []) ids.add(c.id);
+        // ops that mutate the target's children directly
+        if (op.op === 'unwrap' || op.op === 'arrange') for (const c of n.children || []) ids.add(c.id);
       }
     }
+    if (op.op === 'arrange' && op.target === undefined) { const page = doc.children[0]; if (page) { ids.add(page.id); for (const c of page.children || []) ids.add(c.id); } }
   }
   return ids;
 }
