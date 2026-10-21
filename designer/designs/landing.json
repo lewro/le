@@ -1,0 +1,1966 @@
+{
+ "format": "le-design/1",
+ "name": "landing",
+ "meta": {
+  "seq": 71
+ },
+ "type": "DOCUMENT",
+ "id": "0:0",
+ "children": [
+  {
+   "id": "page1",
+   "type": "CANVAS",
+   "name": "Page 1",
+   "children": [
+    {
+     "name": "Landing",
+     "type": "FRAME",
+     "x": 0,
+     "y": 0,
+     "width": 1440,
+     "height": 100,
+     "fills": [
+      {
+       "type": "SOLID",
+       "color": "#ffffff"
+      }
+     ],
+     "clipsContent": true,
+     "children": [
+      {
+       "name": "Header",
+       "type": "FRAME",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 72,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#ffffff"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Logo",
+         "type": "TEXT",
+         "characters": "LocalExperts",
+         "style": {
+          "fontFamily": "Inter",
+          "fontWeight": 800,
+          "fontSize": 22,
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP"
+         },
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#0f172a"
+          }
+         ],
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 20,
+         "id": "n3"
+        },
+        {
+         "name": "Nav",
+         "type": "FRAME",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 100,
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#ffffff"
+          }
+         ],
+         "clipsContent": true,
+         "children": [
+          {
+           "name": "Find experts",
+           "type": "TEXT",
+           "characters": "Find experts",
+           "style": {
+            "fontFamily": "Inter",
+            "fontWeight": 500,
+            "fontSize": 15,
+            "textAlignHorizontal": "LEFT",
+            "textAlignVertical": "TOP"
+           },
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#334155"
+            }
+           ],
+           "layoutSizingHorizontal": "HUG",
+           "layoutSizingVertical": "HUG",
+           "x": 0,
+           "y": 0,
+           "width": 100,
+           "height": 20,
+           "html": {
+            "tag": "a",
+            "attrs": {
+             "href": "/search"
+            }
+           },
+           "id": "n5"
+          },
+          {
+           "name": "Categories",
+           "type": "TEXT",
+           "characters": "Categories",
+           "style": {
+            "fontFamily": "Inter",
+            "fontWeight": 500,
+            "fontSize": 15,
+            "textAlignHorizontal": "LEFT",
+            "textAlignVertical": "TOP"
+           },
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#334155"
+            }
+           ],
+           "layoutSizingHorizontal": "HUG",
+           "layoutSizingVertical": "HUG",
+           "x": 0,
+           "y": 0,
+           "width": 100,
+           "height": 20,
+           "html": {
+            "tag": "a",
+            "attrs": {
+             "href": "/categories"
+            }
+           },
+           "id": "n6"
+          },
+          {
+           "name": "Interviews",
+           "type": "TEXT",
+           "characters": "Interviews",
+           "style": {
+            "fontFamily": "Inter",
+            "fontWeight": 500,
+            "fontSize": 15,
+            "textAlignHorizontal": "LEFT",
+            "textAlignVertical": "TOP"
+           },
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#334155"
+            }
+           ],
+           "layoutSizingHorizontal": "HUG",
+           "layoutSizingVertical": "HUG",
+           "x": 0,
+           "y": 0,
+           "width": 100,
+           "height": 20,
+           "html": {
+            "tag": "a",
+            "attrs": {
+             "href": "/interviews"
+            }
+           },
+           "id": "n7"
+          },
+          {
+           "name": "Pricing",
+           "type": "TEXT",
+           "characters": "Pricing",
+           "style": {
+            "fontFamily": "Inter",
+            "fontWeight": 500,
+            "fontSize": 15,
+            "textAlignHorizontal": "LEFT",
+            "textAlignVertical": "TOP"
+           },
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#334155"
+            }
+           ],
+           "layoutSizingHorizontal": "HUG",
+           "layoutSizingVertical": "HUG",
+           "x": 0,
+           "y": 0,
+           "width": 100,
+           "height": 20,
+           "html": {
+            "tag": "a",
+            "attrs": {
+             "href": "/pricing"
+            }
+           },
+           "id": "n8"
+          }
+         ],
+         "layoutMode": "HORIZONTAL",
+         "itemSpacing": 28,
+         "counterAxisAlignItems": "CENTER",
+         "html": {
+          "tag": "nav"
+         },
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "id": "n4"
+        },
+        {
+         "name": "Actions",
+         "type": "FRAME",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 100,
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#ffffff"
+          }
+         ],
+         "clipsContent": true,
+         "children": [
+          {
+           "name": "LoginButton",
+           "type": "FRAME",
+           "x": 0,
+           "y": 0,
+           "width": 100,
+           "height": 100,
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#ffffff"
+            }
+           ],
+           "clipsContent": true,
+           "children": [
+            {
+             "name": "Log in",
+             "type": "TEXT",
+             "characters": "Log in",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 600,
+              "fontSize": 14,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP"
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#0f172a"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "id": "nb"
+            }
+           ],
+           "layoutMode": "HORIZONTAL",
+           "paddingTop": 10,
+           "paddingRight": 18,
+           "paddingBottom": 10,
+           "paddingLeft": 18,
+           "cornerRadius": 8,
+           "counterAxisAlignItems": "CENTER",
+           "primaryAxisAlignItems": "CENTER",
+           "strokes": [
+            {
+             "type": "SOLID",
+             "color": "#e2e8f0"
+            }
+           ],
+           "strokeWeight": 1,
+           "html": {
+            "tag": "a",
+            "attrs": {
+             "href": "/login"
+            }
+           },
+           "layoutSizingHorizontal": "HUG",
+           "layoutSizingVertical": "HUG",
+           "id": "na"
+          },
+          {
+           "name": "SignupButton",
+           "type": "FRAME",
+           "x": 0,
+           "y": 0,
+           "width": 100,
+           "height": 100,
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#2563eb"
+            }
+           ],
+           "clipsContent": true,
+           "children": [
+            {
+             "name": "Join as expert",
+             "type": "TEXT",
+             "characters": "Join as expert",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 600,
+              "fontSize": 14,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP"
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#ffffff"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "id": "nd"
+            }
+           ],
+           "layoutMode": "HORIZONTAL",
+           "paddingTop": 10,
+           "paddingRight": 18,
+           "paddingBottom": 10,
+           "paddingLeft": 18,
+           "cornerRadius": 8,
+           "counterAxisAlignItems": "CENTER",
+           "primaryAxisAlignItems": "CENTER",
+           "html": {
+            "tag": "a",
+            "attrs": {
+             "href": "/register"
+            }
+           },
+           "layoutSizingHorizontal": "HUG",
+           "layoutSizingVertical": "HUG",
+           "id": "nc"
+          }
+         ],
+         "layoutMode": "HORIZONTAL",
+         "itemSpacing": 12,
+         "counterAxisAlignItems": "CENTER",
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "id": "n9"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "layoutSizingHorizontal": "FILL",
+       "layoutSizingVertical": "FIXED",
+       "paddingTop": 0,
+       "paddingRight": 80,
+       "paddingBottom": 0,
+       "paddingLeft": 80,
+       "itemSpacing": 32,
+       "counterAxisAlignItems": "CENTER",
+       "primaryAxisAlignItems": "SPACE_BETWEEN",
+       "html": {
+        "tag": "header"
+       },
+       "id": "n2"
+      },
+      {
+       "name": "Hero",
+       "type": "FRAME",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#f8fafc"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Badge",
+         "type": "FRAME",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 100,
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#dbeafe"
+          }
+         ],
+         "clipsContent": true,
+         "children": [
+          {
+           "name": "Trusted by 2,400+ local professionals",
+           "type": "TEXT",
+           "characters": "Trusted by 2,400+ local professionals",
+           "style": {
+            "fontFamily": "Inter",
+            "fontWeight": 600,
+            "fontSize": 13,
+            "textAlignHorizontal": "LEFT",
+            "textAlignVertical": "TOP"
+           },
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#1d4ed8"
+            }
+           ],
+           "layoutSizingHorizontal": "HUG",
+           "layoutSizingVertical": "HUG",
+           "x": 0,
+           "y": 0,
+           "width": 100,
+           "height": 20,
+           "id": "ng"
+          }
+         ],
+         "layoutMode": "HORIZONTAL",
+         "paddingTop": 6,
+         "paddingRight": 14,
+         "paddingBottom": 6,
+         "paddingLeft": 14,
+         "cornerRadius": 999,
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "id": "nf"
+        },
+        {
+         "name": "Title",
+         "type": "TEXT",
+         "characters": "Find the right local expert\nfor any job",
+         "style": {
+          "fontFamily": "Inter",
+          "fontWeight": 800,
+          "fontSize": 60,
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "TOP",
+          "lineHeightPx": 68,
+          "letterSpacing": -1.5
+         },
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#0f172a"
+          }
+         ],
+         "layoutSizingHorizontal": "FIXED",
+         "layoutSizingVertical": "HUG",
+         "x": 0,
+         "y": 0,
+         "width": 820,
+         "height": 20,
+         "html": {
+          "tag": "h1"
+         },
+         "id": "nh"
+        },
+        {
+         "name": "Subtitle",
+         "type": "TEXT",
+         "characters": "Plumbers, tutors, designers, accountants and more. Verified profiles, real reviews, no middlemen.",
+         "style": {
+          "fontFamily": "Inter",
+          "fontWeight": 400,
+          "fontSize": 19,
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "TOP",
+          "lineHeightPx": 30
+         },
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#475569"
+          }
+         ],
+         "layoutSizingHorizontal": "FIXED",
+         "layoutSizingVertical": "HUG",
+         "x": 0,
+         "y": 0,
+         "width": 640,
+         "height": 20,
+         "html": {
+          "tag": "p"
+         },
+         "id": "ni"
+        },
+        {
+         "name": "SearchBar",
+         "type": "FRAME",
+         "x": 0,
+         "y": 0,
+         "width": 720,
+         "height": 100,
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#ffffff"
+          }
+         ],
+         "clipsContent": true,
+         "children": [
+          {
+           "name": "What do you need help with?",
+           "type": "TEXT",
+           "characters": "What do you need help with?",
+           "style": {
+            "fontFamily": "Inter",
+            "fontWeight": 400,
+            "fontSize": 16,
+            "textAlignHorizontal": "LEFT",
+            "textAlignVertical": "TOP"
+           },
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#94a3b8"
+            }
+           ],
+           "layoutSizingHorizontal": "FILL",
+           "layoutSizingVertical": "HUG",
+           "x": 0,
+           "y": 0,
+           "width": 100,
+           "height": 20,
+           "html": {
+            "tag": "span"
+           },
+           "id": "nk"
+          },
+          {
+           "name": "Divider",
+           "type": "LINE",
+           "x": 0,
+           "y": 0,
+           "width": 1,
+           "height": 28,
+           "strokes": [
+            {
+             "type": "SOLID",
+             "color": "#e2e8f0"
+            }
+           ],
+           "strokeWeight": 1,
+           "layoutSizingHorizontal": "FIXED",
+           "layoutSizingVertical": "FIXED",
+           "id": "nl"
+          },
+          {
+           "name": "Vienna",
+           "type": "TEXT",
+           "characters": "Vienna",
+           "style": {
+            "fontFamily": "Inter",
+            "fontWeight": 400,
+            "fontSize": 16,
+            "textAlignHorizontal": "LEFT",
+            "textAlignVertical": "TOP"
+           },
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#0f172a"
+            }
+           ],
+           "layoutSizingHorizontal": "FIXED",
+           "layoutSizingVertical": "HUG",
+           "x": 0,
+           "y": 0,
+           "width": 120,
+           "height": 20,
+           "html": {
+            "tag": "span"
+           },
+           "id": "nm"
+          },
+          {
+           "name": "SearchButton",
+           "type": "FRAME",
+           "x": 0,
+           "y": 0,
+           "width": 100,
+           "height": 100,
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#2563eb"
+            }
+           ],
+           "clipsContent": true,
+           "children": [
+            {
+             "name": "Search",
+             "type": "TEXT",
+             "characters": "Search",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 600,
+              "fontSize": 15,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP"
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#ffffff"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "id": "no"
+            }
+           ],
+           "layoutMode": "HORIZONTAL",
+           "paddingTop": 12,
+           "paddingRight": 22,
+           "paddingBottom": 12,
+           "paddingLeft": 22,
+           "cornerRadius": 10,
+           "counterAxisAlignItems": "CENTER",
+           "html": {
+            "tag": "button"
+           },
+           "layoutSizingHorizontal": "HUG",
+           "layoutSizingVertical": "HUG",
+           "id": "nn"
+          }
+         ],
+         "layoutMode": "HORIZONTAL",
+         "layoutSizingHorizontal": "FIXED",
+         "paddingTop": 8,
+         "paddingRight": 8,
+         "paddingBottom": 8,
+         "paddingLeft": 24,
+         "itemSpacing": 12,
+         "counterAxisAlignItems": "CENTER",
+         "cornerRadius": 14,
+         "strokes": [
+          {
+           "type": "SOLID",
+           "color": "#e2e8f0"
+          }
+         ],
+         "strokeWeight": 1,
+         "effects": [
+          {
+           "type": "DROP_SHADOW",
+           "offset": {
+            "x": 0,
+            "y": 8
+           },
+           "radius": 24,
+           "spread": 0,
+           "color": "#0f172a14",
+           "visible": true
+          }
+         ],
+         "html": {
+          "tag": "form"
+         },
+         "layoutSizingVertical": "HUG",
+         "id": "nj"
+        },
+        {
+         "name": "Stats",
+         "type": "FRAME",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 100,
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#ffffff"
+          }
+         ],
+         "clipsContent": true,
+         "children": [
+          {
+           "name": "Stat",
+           "type": "FRAME",
+           "x": 0,
+           "y": 0,
+           "width": 100,
+           "height": 100,
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#ffffff"
+            }
+           ],
+           "clipsContent": true,
+           "children": [
+            {
+             "name": "2,400+",
+             "type": "TEXT",
+             "characters": "2,400+",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 800,
+              "fontSize": 28,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP"
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#0f172a"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "id": "nr"
+            },
+            {
+             "name": "experts",
+             "type": "TEXT",
+             "characters": "experts",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 400,
+              "fontSize": 14,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP"
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#64748b"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "id": "ns"
+            }
+           ],
+           "layoutMode": "VERTICAL",
+           "itemSpacing": 4,
+           "counterAxisAlignItems": "CENTER",
+           "layoutSizingHorizontal": "HUG",
+           "layoutSizingVertical": "HUG",
+           "id": "nq"
+          },
+          {
+           "name": "Stat",
+           "type": "FRAME",
+           "x": 0,
+           "y": 0,
+           "width": 100,
+           "height": 100,
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#ffffff"
+            }
+           ],
+           "clipsContent": true,
+           "children": [
+            {
+             "name": "18,000",
+             "type": "TEXT",
+             "characters": "18,000",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 800,
+              "fontSize": 28,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP"
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#0f172a"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "id": "nu"
+            },
+            {
+             "name": "jobs completed",
+             "type": "TEXT",
+             "characters": "jobs completed",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 400,
+              "fontSize": 14,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP"
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#64748b"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "id": "nv"
+            }
+           ],
+           "layoutMode": "VERTICAL",
+           "itemSpacing": 4,
+           "counterAxisAlignItems": "CENTER",
+           "layoutSizingHorizontal": "HUG",
+           "layoutSizingVertical": "HUG",
+           "id": "nt"
+          },
+          {
+           "name": "Stat",
+           "type": "FRAME",
+           "x": 0,
+           "y": 0,
+           "width": 100,
+           "height": 100,
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#ffffff"
+            }
+           ],
+           "clipsContent": true,
+           "children": [
+            {
+             "name": "4.9/5",
+             "type": "TEXT",
+             "characters": "4.9/5",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 800,
+              "fontSize": 28,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP"
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#0f172a"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "id": "nx"
+            },
+            {
+             "name": "average rating",
+             "type": "TEXT",
+             "characters": "average rating",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 400,
+              "fontSize": 14,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP"
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#64748b"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "id": "ny"
+            }
+           ],
+           "layoutMode": "VERTICAL",
+           "itemSpacing": 4,
+           "counterAxisAlignItems": "CENTER",
+           "layoutSizingHorizontal": "HUG",
+           "layoutSizingVertical": "HUG",
+           "id": "nw"
+          }
+         ],
+         "layoutMode": "HORIZONTAL",
+         "itemSpacing": 48,
+         "counterAxisAlignItems": "CENTER",
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "id": "np"
+        }
+       ],
+       "layoutMode": "VERTICAL",
+       "layoutSizingHorizontal": "FILL",
+       "paddingTop": 96,
+       "paddingRight": 80,
+       "paddingBottom": 80,
+       "paddingLeft": 80,
+       "itemSpacing": 24,
+       "counterAxisAlignItems": "CENTER",
+       "html": {
+        "tag": "section"
+       },
+       "layoutSizingVertical": "HUG",
+       "id": "ne"
+      },
+      {
+       "name": "Categories",
+       "type": "FRAME",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#ffffff"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "SectionHeader",
+         "type": "FRAME",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 100,
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#ffffff"
+          }
+         ],
+         "clipsContent": true,
+         "children": [
+          {
+           "name": "Browse by category",
+           "type": "TEXT",
+           "characters": "Browse by category",
+           "style": {
+            "fontFamily": "Inter",
+            "fontWeight": 800,
+            "fontSize": 36,
+            "textAlignHorizontal": "LEFT",
+            "textAlignVertical": "TOP",
+            "letterSpacing": -0.5
+           },
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#0f172a"
+            }
+           ],
+           "layoutSizingHorizontal": "HUG",
+           "layoutSizingVertical": "HUG",
+           "x": 0,
+           "y": 0,
+           "width": 100,
+           "height": 20,
+           "html": {
+            "tag": "h2"
+           },
+           "id": "n11"
+          },
+          {
+           "name": "Hundreds of verified professionals across the most requested",
+           "type": "TEXT",
+           "characters": "Hundreds of verified professionals across the most requested services.",
+           "style": {
+            "fontFamily": "Inter",
+            "fontWeight": 400,
+            "fontSize": 17,
+            "textAlignHorizontal": "CENTER",
+            "textAlignVertical": "TOP"
+           },
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#64748b"
+            }
+           ],
+           "layoutSizingHorizontal": "HUG",
+           "layoutSizingVertical": "HUG",
+           "x": 0,
+           "y": 0,
+           "width": 100,
+           "height": 20,
+           "id": "n12"
+          }
+         ],
+         "layoutMode": "VERTICAL",
+         "itemSpacing": 12,
+         "counterAxisAlignItems": "CENTER",
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "id": "n10"
+        },
+        {
+         "name": "Grid",
+         "type": "FRAME",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 100,
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#ffffff"
+          }
+         ],
+         "clipsContent": true,
+         "children": [
+          {
+           "name": "Card",
+           "type": "FRAME",
+           "x": 0,
+           "y": 0,
+           "width": 304,
+           "height": 100,
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#ffffff"
+            }
+           ],
+           "clipsContent": true,
+           "children": [
+            {
+             "name": "Icon",
+             "type": "FRAME",
+             "x": 0,
+             "y": 0,
+             "width": 48,
+             "height": 48,
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#dbeafe"
+              }
+             ],
+             "clipsContent": true,
+             "children": [],
+             "layoutSizingHorizontal": "FIXED",
+             "layoutSizingVertical": "FIXED",
+             "cornerRadius": 12,
+             "id": "n15"
+            },
+            {
+             "name": "Home & Repair",
+             "type": "TEXT",
+             "characters": "Home & Repair",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 700,
+              "fontSize": 18,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP"
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#0f172a"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "html": {
+              "tag": "h3"
+             },
+             "id": "n16"
+            },
+            {
+             "name": "Plumbing, electrics, painting, carpentry and moving.",
+             "type": "TEXT",
+             "characters": "Plumbing, electrics, painting, carpentry and moving.",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 400,
+              "fontSize": 14,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "lineHeightPx": 22
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#64748b"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "id": "n17"
+            },
+            {
+             "name": "312 experts",
+             "type": "TEXT",
+             "characters": "312 experts",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 600,
+              "fontSize": 13,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP"
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#2563eb"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "id": "n18"
+            }
+           ],
+           "layoutMode": "VERTICAL",
+           "layoutSizingHorizontal": "FIXED",
+           "paddingTop": 24,
+           "paddingRight": 24,
+           "paddingBottom": 24,
+           "paddingLeft": 24,
+           "itemSpacing": 16,
+           "cornerRadius": 16,
+           "strokes": [
+            {
+             "type": "SOLID",
+             "color": "#e2e8f0"
+            }
+           ],
+           "strokeWeight": 1,
+           "html": {
+            "tag": "a",
+            "attrs": {
+             "href": "/c/home"
+            }
+           },
+           "layoutSizingVertical": "HUG",
+           "id": "n14"
+          },
+          {
+           "name": "Card",
+           "type": "FRAME",
+           "x": 0,
+           "y": 0,
+           "width": 304,
+           "height": 100,
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#ffffff"
+            }
+           ],
+           "clipsContent": true,
+           "children": [
+            {
+             "name": "Icon",
+             "type": "FRAME",
+             "x": 0,
+             "y": 0,
+             "width": 48,
+             "height": 48,
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#fce7f3"
+              }
+             ],
+             "clipsContent": true,
+             "children": [],
+             "layoutSizingHorizontal": "FIXED",
+             "layoutSizingVertical": "FIXED",
+             "cornerRadius": 12,
+             "id": "n1a"
+            },
+            {
+             "name": "Education",
+             "type": "TEXT",
+             "characters": "Education",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 700,
+              "fontSize": 18,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP"
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#0f172a"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "html": {
+              "tag": "h3"
+             },
+             "id": "n1b"
+            },
+            {
+             "name": "Tutors, language teachers, music lessons and coaching.",
+             "type": "TEXT",
+             "characters": "Tutors, language teachers, music lessons and coaching.",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 400,
+              "fontSize": 14,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "lineHeightPx": 22
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#64748b"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "id": "n1c"
+            },
+            {
+             "name": "188 experts",
+             "type": "TEXT",
+             "characters": "188 experts",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 600,
+              "fontSize": 13,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP"
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#2563eb"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "id": "n1d"
+            }
+           ],
+           "layoutMode": "VERTICAL",
+           "layoutSizingHorizontal": "FIXED",
+           "paddingTop": 24,
+           "paddingRight": 24,
+           "paddingBottom": 24,
+           "paddingLeft": 24,
+           "itemSpacing": 16,
+           "cornerRadius": 16,
+           "strokes": [
+            {
+             "type": "SOLID",
+             "color": "#e2e8f0"
+            }
+           ],
+           "strokeWeight": 1,
+           "html": {
+            "tag": "a",
+            "attrs": {
+             "href": "/c/education"
+            }
+           },
+           "layoutSizingVertical": "HUG",
+           "id": "n19"
+          },
+          {
+           "name": "Card",
+           "type": "FRAME",
+           "x": 0,
+           "y": 0,
+           "width": 304,
+           "height": 100,
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#ffffff"
+            }
+           ],
+           "clipsContent": true,
+           "children": [
+            {
+             "name": "Icon",
+             "type": "FRAME",
+             "x": 0,
+             "y": 0,
+             "width": 48,
+             "height": 48,
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#dcfce7"
+              }
+             ],
+             "clipsContent": true,
+             "children": [],
+             "layoutSizingHorizontal": "FIXED",
+             "layoutSizingVertical": "FIXED",
+             "cornerRadius": 12,
+             "id": "n1f"
+            },
+            {
+             "name": "Business",
+             "type": "TEXT",
+             "characters": "Business",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 700,
+              "fontSize": 18,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP"
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#0f172a"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "html": {
+              "tag": "h3"
+             },
+             "id": "n1g"
+            },
+            {
+             "name": "Accountants, legal advice, marketing and consulting.",
+             "type": "TEXT",
+             "characters": "Accountants, legal advice, marketing and consulting.",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 400,
+              "fontSize": 14,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "lineHeightPx": 22
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#64748b"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "id": "n1h"
+            },
+            {
+             "name": "256 experts",
+             "type": "TEXT",
+             "characters": "256 experts",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 600,
+              "fontSize": 13,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP"
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#2563eb"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "id": "n1i"
+            }
+           ],
+           "layoutMode": "VERTICAL",
+           "layoutSizingHorizontal": "FIXED",
+           "paddingTop": 24,
+           "paddingRight": 24,
+           "paddingBottom": 24,
+           "paddingLeft": 24,
+           "itemSpacing": 16,
+           "cornerRadius": 16,
+           "strokes": [
+            {
+             "type": "SOLID",
+             "color": "#e2e8f0"
+            }
+           ],
+           "strokeWeight": 1,
+           "html": {
+            "tag": "a",
+            "attrs": {
+             "href": "/c/business"
+            }
+           },
+           "layoutSizingVertical": "HUG",
+           "id": "n1e"
+          },
+          {
+           "name": "Card",
+           "type": "FRAME",
+           "x": 0,
+           "y": 0,
+           "width": 304,
+           "height": 100,
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#ffffff"
+            }
+           ],
+           "clipsContent": true,
+           "children": [
+            {
+             "name": "Icon",
+             "type": "FRAME",
+             "x": 0,
+             "y": 0,
+             "width": 48,
+             "height": 48,
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#fef3c7"
+              }
+             ],
+             "clipsContent": true,
+             "children": [],
+             "layoutSizingHorizontal": "FIXED",
+             "layoutSizingVertical": "FIXED",
+             "cornerRadius": 12,
+             "id": "n1k"
+            },
+            {
+             "name": "Creative",
+             "type": "TEXT",
+             "characters": "Creative",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 700,
+              "fontSize": 18,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP"
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#0f172a"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "html": {
+              "tag": "h3"
+             },
+             "id": "n1l"
+            },
+            {
+             "name": "Photographers, designers, video and event production.",
+             "type": "TEXT",
+             "characters": "Photographers, designers, video and event production.",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 400,
+              "fontSize": 14,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP",
+              "lineHeightPx": 22
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#64748b"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "id": "n1m"
+            },
+            {
+             "name": "141 experts",
+             "type": "TEXT",
+             "characters": "141 experts",
+             "style": {
+              "fontFamily": "Inter",
+              "fontWeight": 600,
+              "fontSize": 13,
+              "textAlignHorizontal": "LEFT",
+              "textAlignVertical": "TOP"
+             },
+             "fills": [
+              {
+               "type": "SOLID",
+               "color": "#2563eb"
+              }
+             ],
+             "layoutSizingHorizontal": "HUG",
+             "layoutSizingVertical": "HUG",
+             "x": 0,
+             "y": 0,
+             "width": 100,
+             "height": 20,
+             "id": "n1n"
+            }
+           ],
+           "layoutMode": "VERTICAL",
+           "layoutSizingHorizontal": "FIXED",
+           "paddingTop": 24,
+           "paddingRight": 24,
+           "paddingBottom": 24,
+           "paddingLeft": 24,
+           "itemSpacing": 16,
+           "cornerRadius": 16,
+           "strokes": [
+            {
+             "type": "SOLID",
+             "color": "#e2e8f0"
+            }
+           ],
+           "strokeWeight": 1,
+           "html": {
+            "tag": "a",
+            "attrs": {
+             "href": "/c/creative"
+            }
+           },
+           "layoutSizingVertical": "HUG",
+           "id": "n1j"
+          }
+         ],
+         "layoutMode": "HORIZONTAL",
+         "layoutWrap": "WRAP",
+         "layoutSizingHorizontal": "FILL",
+         "itemSpacing": 24,
+         "counterAxisSpacing": 24,
+         "primaryAxisAlignItems": "CENTER",
+         "layoutSizingVertical": "HUG",
+         "id": "n13"
+        }
+       ],
+       "layoutMode": "VERTICAL",
+       "layoutSizingHorizontal": "FILL",
+       "paddingTop": 80,
+       "paddingRight": 80,
+       "paddingBottom": 80,
+       "paddingLeft": 80,
+       "itemSpacing": 40,
+       "counterAxisAlignItems": "CENTER",
+       "html": {
+        "tag": "section"
+       },
+       "layoutSizingVertical": "HUG",
+       "id": "nz"
+      },
+      {
+       "name": "CTA",
+       "type": "FRAME",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#0f172a"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Are you a local expert?",
+         "type": "TEXT",
+         "characters": "Are you a local expert?",
+         "style": {
+          "fontFamily": "Inter",
+          "fontWeight": 800,
+          "fontSize": 36,
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "TOP",
+          "letterSpacing": -0.5
+         },
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#ffffff"
+          }
+         ],
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 20,
+         "html": {
+          "tag": "h2"
+         },
+         "id": "n1p"
+        },
+        {
+         "name": "Create a free profile and start receiving requests from peop",
+         "type": "TEXT",
+         "characters": "Create a free profile and start receiving requests from people nearby.",
+         "style": {
+          "fontFamily": "Inter",
+          "fontWeight": 400,
+          "fontSize": 17,
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "TOP",
+          "lineHeightPx": 26
+         },
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#cbd5e1"
+          }
+         ],
+         "layoutSizingHorizontal": "FIXED",
+         "layoutSizingVertical": "HUG",
+         "x": 0,
+         "y": 0,
+         "width": 560,
+         "height": 20,
+         "id": "n1q"
+        },
+        {
+         "name": "CTAButton",
+         "type": "FRAME",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 100,
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#2563eb"
+          }
+         ],
+         "clipsContent": true,
+         "children": [
+          {
+           "name": "Create your profile",
+           "type": "TEXT",
+           "characters": "Create your profile",
+           "style": {
+            "fontFamily": "Inter",
+            "fontWeight": 600,
+            "fontSize": 16,
+            "textAlignHorizontal": "LEFT",
+            "textAlignVertical": "TOP"
+           },
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#ffffff"
+            }
+           ],
+           "layoutSizingHorizontal": "HUG",
+           "layoutSizingVertical": "HUG",
+           "x": 0,
+           "y": 0,
+           "width": 100,
+           "height": 20,
+           "id": "n1s"
+          }
+         ],
+         "layoutMode": "HORIZONTAL",
+         "paddingTop": 14,
+         "paddingRight": 28,
+         "paddingBottom": 14,
+         "paddingLeft": 28,
+         "cornerRadius": 10,
+         "counterAxisAlignItems": "CENTER",
+         "html": {
+          "tag": "a",
+          "attrs": {
+           "href": "/register"
+          }
+         },
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "id": "n1r"
+        }
+       ],
+       "layoutMode": "VERTICAL",
+       "layoutSizingHorizontal": "FILL",
+       "paddingTop": 80,
+       "paddingRight": 80,
+       "paddingBottom": 80,
+       "paddingLeft": 80,
+       "itemSpacing": 20,
+       "counterAxisAlignItems": "CENTER",
+       "html": {
+        "tag": "section"
+       },
+       "layoutSizingVertical": "HUG",
+       "id": "n1o"
+      },
+      {
+       "name": "Footer",
+       "type": "FRAME",
+       "x": 0,
+       "y": 0,
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#ffffff"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "© 2026 LocalExperts",
+         "type": "TEXT",
+         "characters": "© 2026 LocalExperts",
+         "style": {
+          "fontFamily": "Inter",
+          "fontWeight": 400,
+          "fontSize": 14,
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP"
+         },
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#64748b"
+          }
+         ],
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 20,
+         "id": "n1u"
+        },
+        {
+         "name": "FooterLinks",
+         "type": "FRAME",
+         "x": 0,
+         "y": 0,
+         "width": 100,
+         "height": 100,
+         "fills": [
+          {
+           "type": "SOLID",
+           "color": "#ffffff"
+          }
+         ],
+         "clipsContent": true,
+         "children": [
+          {
+           "name": "Privacy",
+           "type": "TEXT",
+           "characters": "Privacy",
+           "style": {
+            "fontFamily": "Inter",
+            "fontWeight": 400,
+            "fontSize": 14,
+            "textAlignHorizontal": "LEFT",
+            "textAlignVertical": "TOP"
+           },
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#64748b"
+            }
+           ],
+           "layoutSizingHorizontal": "HUG",
+           "layoutSizingVertical": "HUG",
+           "x": 0,
+           "y": 0,
+           "width": 100,
+           "height": 20,
+           "html": {
+            "tag": "a",
+            "attrs": {
+             "href": "/privacy"
+            }
+           },
+           "id": "n1w"
+          },
+          {
+           "name": "Terms",
+           "type": "TEXT",
+           "characters": "Terms",
+           "style": {
+            "fontFamily": "Inter",
+            "fontWeight": 400,
+            "fontSize": 14,
+            "textAlignHorizontal": "LEFT",
+            "textAlignVertical": "TOP"
+           },
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#64748b"
+            }
+           ],
+           "layoutSizingHorizontal": "HUG",
+           "layoutSizingVertical": "HUG",
+           "x": 0,
+           "y": 0,
+           "width": 100,
+           "height": 20,
+           "html": {
+            "tag": "a",
+            "attrs": {
+             "href": "/terms"
+            }
+           },
+           "id": "n1x"
+          },
+          {
+           "name": "Contact",
+           "type": "TEXT",
+           "characters": "Contact",
+           "style": {
+            "fontFamily": "Inter",
+            "fontWeight": 400,
+            "fontSize": 14,
+            "textAlignHorizontal": "LEFT",
+            "textAlignVertical": "TOP"
+           },
+           "fills": [
+            {
+             "type": "SOLID",
+             "color": "#64748b"
+            }
+           ],
+           "layoutSizingHorizontal": "HUG",
+           "layoutSizingVertical": "HUG",
+           "x": 0,
+           "y": 0,
+           "width": 100,
+           "height": 20,
+           "html": {
+            "tag": "a",
+            "attrs": {
+             "href": "/contact"
+            }
+           },
+           "id": "n1y"
+          }
+         ],
+         "layoutMode": "HORIZONTAL",
+         "itemSpacing": 24,
+         "layoutSizingHorizontal": "HUG",
+         "layoutSizingVertical": "HUG",
+         "id": "n1v"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "layoutSizingHorizontal": "FILL",
+       "paddingTop": 40,
+       "paddingRight": 80,
+       "paddingBottom": 40,
+       "paddingLeft": 80,
+       "counterAxisAlignItems": "CENTER",
+       "primaryAxisAlignItems": "SPACE_BETWEEN",
+       "strokes": [
+        {
+         "type": "SOLID",
+         "color": "#e2e8f0"
+        }
+       ],
+       "strokeWeight": 1,
+       "html": {
+        "tag": "footer"
+       },
+       "layoutSizingVertical": "HUG",
+       "id": "n1t"
+      }
+     ],
+     "layoutMode": "VERTICAL",
+     "layoutSizingHorizontal": "FIXED",
+     "html": {
+      "tag": "main"
+     },
+     "layoutSizingVertical": "HUG",
+     "id": "n1"
+    }
+   ]
+  }
+ ]
+}

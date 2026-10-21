@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { font: 12px Inter, system-ui, sans-serif; margin: 0; padding: 12px; color: #222; display: flex; flex-direction: column; height: 100vh; box-sizing: border-box; gap: 8px; }
+  textarea { flex: 1; width: 100%; box-sizing: border-box; font: 11px ui-monospace, Menlo, monospace; border: 1px solid #ddd; border-radius: 6px; padding: 8px; resize: none; }
+  .row { display: flex; gap: 6px; flex-wrap: wrap; }
+  button { font: inherit; padding: 6px 10px; border-radius: 6px; border: 1px solid #ccc; background: #fff; cursor: pointer; }
+  button.primary { background: #0d99ff; border-color: #0d99ff; color: #fff; }
+  .hint { color: #666; line-height: 1.4; }
+  #status { color: #0a7; min-height: 16px; }
+</style>
+</head>
+<body>
+  <div class="hint">Paste a <b>native LE Designer JSON</b> document (Export → Native JSON, or <code>designs/*.json</code>) and import it into the current page, or export the current selection / page to the same format.</div>
+  <textarea id="json" placeholder='{"format":"le-design/1", ...}' spellcheck="false"></textarea>
+  <div class="row">
+    <button class="primary" id="import">Import into Figma</button>
+    <button id="exportSel">Export selection</button>
+    <button id="exportPage">Export page</button>
+    <button id="copy">Copy</button>
+    <button id="clear">Clear</button>
+  </div>
+  <div id="status"></div>
+<script>
+  const ta = document.getElementById('json');
+  const status = document.getElementById('status');
+  const send = (msg) => parent.postMessage({ pluginMessage: msg }, '*');
+  document.getElementById('import').onclick = () => {
+    try { const json = JSON.parse(ta.value); status.textContent = 'Importing…'; send({ type: 'import', json }); }
+    catch (e) { status.textContent = 'Invalid JSON: ' + e.message; }
+  };
+  document.getElementById('exportSel').onclick = () => send({ type: 'export', scope: 'selection' });
+  document.getElementById('exportPage').onclick = () => send({ type: 'export', scope: 'page' });
+  document.getElementById('copy').onclick = () => { ta.select(); document.execCommand('copy'); status.textContent = 'Copied'; };
+  document.getElementById('clear').onclick = () => { ta.value = ''; status.textContent = ''; };
+  window.onmessage = (e) => {
+    const m = e.data.pluginMessage;
+    if (!m) return;
+    if (m.type === 'exported') { ta.value = JSON.stringify(m.json, null, 1); status.textContent = `Exported ${m.count} node(s)`; }
+    if (m.type === 'status') status.textContent = m.text;
+    if (m.type === 'error') { status.textContent = 'Error: ' + m.text; status.style.color = '#c00'; setTimeout(() => (status.style.color = '#0a7'), 3000); }
+  };
+</script>
+</body>
+</html>
