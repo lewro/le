@@ -17,6 +17,7 @@ const HISTORY_LIMIT = 200;
 
 let state = {
   route: 'files',  // 'files' (home grid) | 'editor'
+  devMode: false,
   user: userName(),
   backend: null,
   docs: [],
@@ -145,6 +146,13 @@ export async function setTitle(title) {
   await saveNow();
   const sum = await backend.meta(docName, { title });
   setState((s) => ({ doc: { ...s.doc, meta: { ...(s.doc.meta || {}), title } }, docs: s.docs.map((d) => (d.name === docName ? { ...d, ...sum } : d)) }));
+}
+
+export async function setBrief(brief) {
+  const { backend, docName } = state;
+  await saveNow();
+  await backend.meta(docName, { brief });
+  setState((s) => ({ doc: { ...s.doc, meta: { ...(s.doc.meta || {}), brief } } }));
 }
 
 export function gridSize() { return state.doc?.meta?.grid ?? DEFAULT_GRID; }
@@ -388,6 +396,14 @@ export function boundsOf(node) {
   const m = measured.get(node.id);
   return { x: node.x || 0, y: node.y || 0, w: m?.w ?? node.width ?? 100, h: m?.h ?? node.height ?? 100 };
 }
+/** World-space rect of any rendered node (from the DOM), falling back to boundsOf for top-level frames. */
+export function worldRectOf(node) {
+  const canvas = document.querySelector('.canvas');
+  const el = canvas?.querySelector(`.world [data-id="${CSS.escape(node.id)}"]`);
+  if (!el || el.dataset.placeholder) return boundsOf(node);
+  const cr = canvas.getBoundingClientRect(), r = el.getBoundingClientRect();
+  return { x: (r.left - cr.left - viewRef.pan.x) / viewRef.zoom, y: (r.top - cr.top - viewRef.pan.y) / viewRef.zoom, w: r.width / viewRef.zoom, h: r.height / viewRef.zoom };
+}
 
 export function zoomToFit(padding = 60, nodes) {
   const page = currentPage();
@@ -398,7 +414,7 @@ export function zoomToFit(padding = 60, nodes) {
   if (!kids.length) { setView({ zoom: 1, pan: { x: padding, y: padding } }, { commit: 'now' }); return; }
   let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
   for (const k of kids) {
-    const b = boundsOf(k);
+    const b = nodes ? worldRectOf(k) : boundsOf(k);
     minX = Math.min(minX, b.x); minY = Math.min(minY, b.y); maxX = Math.max(maxX, b.x + b.w); maxY = Math.max(maxY, b.y + b.h);
   }
   const w = maxX - minX || 1, h = maxY - minY || 1;

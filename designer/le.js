@@ -40,6 +40,8 @@ const HELP = `LE Designer CLI
   node le.js export <doc> --html out.html | --figma out.json | --json out.json | --dsl out.dsl
   node le.js import <file.json> --as <doc>        import native or Figma REST JSON
   node le.js import-figma <fileKey> --as <doc> [--token T] [--nodes 1:2,3:4]   fetch via Figma API (or FIGMA_TOKEN env)
+  node le.js import-html <file|url> --as <doc> [--state "Menu open" --click ".menu"|--script js] [--root sel]   HTML -> screen (needs Playwright)
+  node le.js spec <doc> <selector>                developer spec of a node (values + tokens)
   node le.js serve [port]                         start the production server (needs npm run build)
 
 Libraries (components, variants, tokens — stored in ./libraries/<name>.json):
@@ -49,6 +51,8 @@ Libraries (components, variants, tokens — stored in ./libraries/<name>.json):
   node le.js lib rm <name>
   node le.js lib link <doc> <lib> [<lib>…]        link libraries to a document (unlink: --remove)
   node le.js lib dsl <lib> [selector]             read a library as DSL
+  node le.js lib export <lib> --html gallery.html export every component/variant as HTML+CSS (base for prototypes)
+  node le.js brief <doc> ["text"|-]               read/set the product brief stored with the file
   node le.js components <doc>                     list usable components + tokens (doc + linked libraries)
   node le.js lint <doc>                           strict check: everything must come from the libraries
   node le.js detach <doc> <selector>              turn an instance into a plain frame
@@ -94,6 +98,13 @@ async function main() {
   switch (cmd) {
     case undefined: case 'help': case '--help': case '-h': out(HELP); return;
     case 'ls': for (const d of store.list()) out(`${d.name}\t"${d.title}"\t${d.frames} frames\tby ${d.updatedBy || '?'}\t${d.updatedAt ? d.updatedAt.slice(0, 16).replace('T', ' ') : ''}`); return;
+    case 'brief': {
+      // node le.js brief <doc> ["text" | -]   read or set the product brief / spec stored with the file
+      const doc = load();
+      if (rest[0] === undefined) { out(doc.meta?.brief || '(no brief)'); return; }
+      (doc.meta ||= { seq: 1 }).brief = rest[0] === '-' ? readStdin() : rest[0];
+      save(doc); out('brief saved'); return;
+    }
     case 'title': { const doc = load(); (doc.meta ||= { seq: 1 }).title = rest[0]; save(doc); out(`title: ${rest[0]}`); return; }
     case 'arrange': { const doc = load(); const r = applyOps(doc, { op: 'arrange', target: opts.page ? `#${opts.page}` : undefined, columns: opts.columns ? parseInt(opts.columns, 10) : undefined, gap: opts.gap ? parseInt(opts.gap, 10) : undefined, sort: opts.sort }, doc, ctx()); save(doc); out(`arranged ${r.changed.length} frames`); return; }
     case 'versions': { for (const v of store.versions(docName)) out(`${v.id}\t${v.at.slice(0, 19).replace('T', ' ')}\t${v.by || '?'}\t${(v.size / 1024).toFixed(1)}kB`); return; }
@@ -228,7 +239,31 @@ async function main() {
           return;
         }
         case 'components': { const d = libStore.load(arg); out(describeComponents(buildIndex(null, [d])).join('\n')); return; }
-        default: throw new Error('lib: ls | add | new | rm | link | dsl | components');
+        case 'export': {
+          // node le.js lib export <lib> --html gallery.html   component gallery (every variant) as HTML+CSS for prototypes
+          const d = libStore.load(arg);
+          const idx = buildIndex(null, [d]);
+          const g = createDocument(arg + '-gallery'); g.libraries = [arg];
+          setTokenContext(idx.tokens);
+          const lines = [`frame Gallery col w=1200 p=40 gap=40 bg=$Surface/0`];
+          lines.push(`  text "${arg} — components" size=28 weight=800`);
+          for (const e of idx.list) {
+            lines.push(`  frame ${JSON.stringify(e.name)} col gap=12 w=fill`);
+            lines.push(`    text ${JSON.stringify(e.name)} size=16 weight=700`);
+            if (e.description) lines.push(`    text ${JSON.stringify(e.description)} size=13 color=#64748b`);
+            lines.push(`    frame Variants row wrap gap=16 rowgap=16 w=fill items=start`);
+            const variants = e.type === 'COMPONENT_SET' ? e.node.children.map((c) => c.name) : [null];
+            for (const v of variants) lines.push(`      instance ${JSON.stringify(e.name)}${v ? ' ' + v.split(',').map((p) => p.trim()).join(' ') : ''}`);
+          }
+          const roots = parseDsl(lines.join('\n'));
+          g.children[0].children.push(...roots); assignIds(g);
+          const html = exportHtml(g, { libs: [d] });
+          const file = opts.html || `${arg}-gallery.html`;
+          fs.writeFileSync(file, html);
+          out(`wrote ${file} (${idx.list.length} components; elements carry data-component / data-variant attributes)`);
+          return;
+        }
+        default: throw new Error('lib: ls | add | new | rm | link | dsl | components | export');
       }
     }
     case 'export': {
@@ -255,6 +290,42 @@ async function main() {
       store.save(name, doc);
       out(`imported as "${name}"`);
       out(serializeDsl(doc, { depth: 3 }));
+      return;
+    }
+    case 'import-html': {
+      // node le.js import-html <file.html|url> --as <doc> [--name "Screen"] [--state "Dropdown open" --script "..."] [--append] [--width 1440]
+      let chromium;
+      try { ({ chromium } = await import('playwright')); }
+      catch {
+        try { const root = execSync('npm root -g', { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim(); ({ chromium } = await import(path.join(root, 'playwright/index.mjs'))); }
+        catch { throw new Error('import-html needs Playwright: npm i -D playwright (or use Prototype in the app)'); }
+      }
+      const source = docName;
+      const target = opts.as || path.basename(source).replace(/\.html?$/i, '');
+      const captureSrc = fs.readFileSync(path.join(here, 'src/core/capture.js'), 'utf8').replace(/export function/g, 'function');
+      const browser = await chromium.launch();
+      const pg = await browser.newPage({ viewport: { width: parseInt(opts.width || '1440', 10), height: parseInt(opts.height || '900', 10) } });
+      await pg.goto(/^https?:/.test(source) ? source : 'file://' + path.resolve(source));
+      await pg.waitForTimeout(parseInt(opts.wait || '300', 10));
+      if (opts.script) await pg.evaluate(opts.script);
+      if (opts.click) { await pg.click(opts.click); await pg.waitForTimeout(200); }
+      const node = await pg.evaluate(`(() => { ${captureSrc}; return captureDocument(document, { name: ${JSON.stringify(opts.state || opts.name || '')}, root: ${JSON.stringify(opts.root || '')} }); })()`);
+      await browser.close();
+      let doc = store.exists(target) ? store.load(target) : createDocument(target);
+      if (!store.exists(target) && opts.libs) doc.libraries = String(opts.libs).split(',').filter(Boolean);
+      const r = applyOps(doc, { op: 'add', parent: '#' + doc.children[0].id, node }, doc, { libs: loadLibs(libStore, doc) });
+      store.save(target, doc, who);
+      out(`captured "${node.name}" into ${target} as #${r.created[0]} (${r.created.length} nodes)`);
+      return;
+    }
+    case 'spec': {
+      const { specText } = await import('./src/core/devspec.js');
+      const { expandInstance, buildIndex: bi } = await import('./src/core/components.js');
+      const doc = load();
+      const nodes = resolve(doc, rest[0]);
+      if (!nodes.length) throw new Error('not found');
+      const idx = bi(doc, libs());
+      for (const n of nodes) { const f = findById(doc, n.id); out(`# ${n.name} (#${n.id})`); out(specText(n, f.parent, n.type === 'INSTANCE' ? expandInstance(idx, n) : null)); }
       return;
     }
     case 'serve': { process.env.PORT = docName || process.env.PORT || '4000'; await import('./server.js'); return; }

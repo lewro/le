@@ -75,7 +75,7 @@ const local = {
     await local.put(name, doc);
     return doc;
   },
-  async meta(name, body) { const doc = await local.get(name); doc.meta ||= { seq: 1 }; if (body.title !== undefined) doc.meta.title = body.title; if (body.grid !== undefined) doc.meta.grid = body.grid ?? undefined; await local.put(name, doc); return summary(name, doc); },
+  async meta(name, body) { const doc = await local.get(name); doc.meta ||= { seq: 1 }; if (body.title !== undefined) doc.meta.title = body.title; if (body.brief !== undefined) doc.meta.brief = body.brief; if (body.grid !== undefined) doc.meta.grid = body.grid ?? undefined; await local.put(name, doc); return summary(name, doc); },
   async versions() { return []; },
   async snapshot() { return { ok: false }; },
   async restore() { throw new Error('Version history needs the server'); },

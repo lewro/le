@@ -3,6 +3,7 @@ import { useStore, select, apply, commit, setState, getState, setTool, zoomBy, s
 import { computeStyle } from '../../core/style.js';
 import { findById, pathTo, hasAutoLayout, createNode, sizingH, sizingV, getParent } from '../../core/model.js';
 import { expandInstance } from '../../core/components.js';
+import DevOverlay from './DevOverlay.jsx';
 
 const HANDLES = ['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'];
 const CULL_MARGIN = 0.5; // viewport fractions rendered beyond the visible area
@@ -120,6 +121,7 @@ export default function Canvas() {
   const editingId = useStore((s) => s.editingId);
   const tool = useStore((s) => s.tool);
   const view = useStore((s) => s.view);
+  const devMode = useStore((s) => s.devMode);
   const ref = useRef(null);
   const worldRef = useRef(null);
   const overlayRef = useRef(null);
@@ -477,6 +479,7 @@ export default function Canvas() {
             </div>
           </>
         )}
+        {devMode && <DevOverlay selRect={single} selNode={singleNode} hoverRect={rects.hover} hoverNode={hoverId ? findById(doc, hoverId)?.node : null} rectOf={rectOf} inv={inv} />}
         {marquee && <div className="marquee" style={{ left: marquee.x, top: marquee.y, width: marquee.w, height: marquee.h, borderWidth: `calc(1px * ${inv})` }} />}
         {dropLine && <div className="drop-line" style={dropLine} />}
       </div>

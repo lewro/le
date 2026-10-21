@@ -67,9 +67,10 @@ export default function App() {
       if (mod && e.key === '-') { e.preventDefault(); zoomBy(0.8); return; }
       if (mod && e.key === '0') { e.preventDefault(); setView({ zoom: 1 }, { commit: 'now' }); return; }
       if (mod && e.key === '1') { e.preventDefault(); zoomToFit(); return; }
-      if (mod && e.key === '2') { e.preventDefault(); if (s.selection.length) zoomToFit(80, selectedNodes().map((n) => (findById(s.doc, n.id).parent?.type === 'CANVAS' ? n : pathTo(s.doc, n.id)[2]))); return; }
+      if (mod && e.key === '2') { e.preventDefault(); if (s.selection.length) zoomToFit(80, selectedNodes()); return; }
       if (mod && e.key === '\\') { e.preventDefault(); return; }
       if (mod) return;
+      if (e.shiftKey && e.key === 'D') { setState((st) => ({ devMode: !st.devMode })); return; }
       switch (e.key) {
         case 'v': case 'V': setTool('select'); break;
         case 'f': case 'F': setTool('frame'); break;

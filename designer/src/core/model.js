@@ -213,8 +213,9 @@ function parseSegment(seg) {
   let pattern = m[1];
   const nth = m[2] !== undefined ? parseInt(m[2], 10) : null;
   let type = null;
+  const star = pattern === '*'; // a literal "*" after a slash means direct children; "@TYPE" matches any descendant
   if (pattern.startsWith('@')) { type = normalizeType(pattern.slice(1)); pattern = '*'; }
-  return { name: pattern, type, nth };
+  return { name: pattern, type, nth, star };
 }
 
 function segmentMatches(node, seg) {
@@ -259,7 +260,7 @@ export function resolve(root, selector, scope = root) {
   let current = [start];
   for (let i = 0; i < segments.length; i++) {
     const seg = segments[i];
-    const direct = i > 0 && seg.name === '*';
+    const direct = i > 0 && seg.star;
     let next = [];
     for (const n of current) next.push(...descendantsMatching(n, seg, direct));
     // dedupe while keeping order

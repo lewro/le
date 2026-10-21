@@ -30,6 +30,7 @@ function Card({ d, onOpen }) {
           <span className="dot">·</span>
           <span title={d.updatedAt || ''}>{relTime(d.updatedAt)}</span>
         </div>
+        {d.brief && <div className="file-brief muted">{d.brief}</div>}
         {d.libraries?.length > 0 && <div className="file-libs">{d.libraries.map((l) => <span key={l} className="tagchip">{l}</span>)}</div>}
       </div>
       <button className="file-menu-btn" onClick={(e) => { e.stopPropagation(); setMenu(!menu); }} title="More">⋯</button>

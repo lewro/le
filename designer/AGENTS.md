@@ -198,6 +198,8 @@ Which matches are affected: `set`, `rename` and `text` apply to **every** match;
 | `POST /api/docs/:name/link` `{ "libraries": [...] }` or `{ "add": "lib" }` / `{ "remove": "lib" }` | link libraries |
 | `GET /api/docs/:name/components[?format=json]` · `GET /api/docs/:name/lint` · `GET /api/libs/:name/components` | |
 | `GET /api/docs/:name/export?format=json&expanded=1` | instances expanded (input for the Figma plugin) |
+| `POST /api/docs/:name/meta` `{ "title"?, "brief"?, "grid"? }` · `GET /api/docs/:name/versions` · `POST …/versions` `{}` or `{ "restore": id }` | metadata, history |
+| `GET /api/proxy?url=…` | fetch an HTML prototype server-side (for the in-app prototype viewer) |
 
 ## Document format
 
@@ -211,6 +213,31 @@ carries semantics. Default values are omitted. `src/core/figma.js` converts to/f
 install `figma-plugin/` (Plugins → Development → Import plugin from manifest) and paste the native JSON; the plugin
 also exports a selection back to the native format. The native JSON is also a good input for the Figma MCP
 `use_figma` tool if one is available.
+
+## From brief to code: the workflow this tool is built around
+
+1. **Brief** — the product manager's description lives with the file: `node le.js brief <doc>` (read) /
+   `node le.js brief <doc> - < brief.md` (set). Read it first; it says which states and components matter.
+2. **Prototype (HTML)** — build an interactive HTML prototype with plain HTML/CSS/JS, **using the library's components**:
+   `node le.js lib export le-ui --html gallery.html` gives you every component and variant as HTML+CSS (with
+   `data-component="Button" data-variant="Type=Primary, Size=Medium"` on each element and tokens as CSS variables
+   `var(--Brand-500)`). Copy those snippets; keep the `data-component`/`data-variant` attributes and put `data-name`
+   on text slots. Interactions (dropdowns, panels, tabs) are ordinary JS in the prototype.
+3. **States → screens** — every state the developers must see becomes its own screen on the canvas:
+   `node le.js import-html proto.html --as <doc> --libs le-ui --state "Default"` then
+   `--state "Dropdown open" --click "#dd button"` (or `--script "…"`). Elements with `data-component` come back as
+   library instances, everything else as frames/text with the real computed styles. In the app: Prototype → load →
+   interact → "Capture this state as a screen". Screens auto-place on the grid; `lint` checks library compliance.
+4. **Design review** — designers adjust screens in the editor (or you do via `set`/`replace`). Dev mode shows
+   paddings, gaps, distances, colors, fonts and tokens; `node le.js spec <doc> <selector>` prints the same spec.
+5. **Back to code** — `node le.js export <doc> --html` regenerates HTML+CSS from the screens (tokens as CSS
+   variables, components as `data-component` elements), `--figma` for Figma, and the DSL (`dsl <doc> <screen>`) is
+   the compact source for writing the real implementation in any framework: read a screen's DSL, map instances to
+   the code components of the target stack, map tokens to the theme.
+
+The same identifiers travel in every direction: component names + variant props, token names, layer names and
+`data-le-id`s, so a change made in the editor can be re-exported, and a changed prototype can be re-captured into the
+same file (capture again, then `rm` the old screen or `replace` it).
 
 ## Files, titles, placement
 

@@ -23,6 +23,15 @@ DSL + CLI + HTTP API so an agent can build or change a page in seconds without t
 - **HTML export**: semantic HTML + CSS (auto layout → flexbox)
 - **Agent optimized**: everything is reachable from `node le.js …`, `POST /api/docs/:name/ops`, or
   `window.__le` in the browser. Open editors live-reload when a file changes on disk. See [AGENTS.md](AGENTS.md).
+- **Dev mode**: a switch in the right panel (⇧D) turns the canvas into a spec view: padding and gap badges, distance
+  lines to the hovered element, and a callout per element with background, border, radius, shadow, font, line height
+  and color, token names included. The Inspect panel lists every value with copy buttons plus CSS, HTML and DSL.
+- **Prototype → screens**: load an interactive HTML prototype (file, paste or URL), click through it, and capture each
+  state as a screen on the canvas; elements marked `data-component` become library instances. Also from the CLI with
+  Playwright (`import-html … --state "Menu open" --click ".menu"`). The round trip back is `export --html`, with tokens
+  as CSS variables and components as `data-component` elements, and `lib export` produces a component gallery to build
+  prototypes from.
+- **Brief**: the product brief lives with each file (Brief button / `node le.js brief`), shown on the file card.
 - **Files home**: a grid of file cards with title, designer and last update; version history per file on the server;
   the canvas has a "+" pattern background, top-level frames snap to a 100 px grid, new pages auto-place next to the
   existing ones, and *Tidy* arranges all frames of a page into a clean grid.

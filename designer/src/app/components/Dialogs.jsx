@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useStore, setState, createDoc, getState, replaceDoc, openDoc, refreshDocs, deleteDoc, setLinkedLibraries, refreshLibraries, getIndex, saveNow } from '../store.js';
+import { useStore, setState, createDoc, getState, replaceDoc, openDoc, refreshDocs, deleteDoc, setLinkedLibraries, refreshLibraries, getIndex, saveNow, setBrief } from '../store.js';
 import { relTime } from './FilesView.jsx';
+import PrototypeDialog from './PrototypeDialog.jsx';
 import { describeComponents, expandDocument } from '../../core/components.js';
 import { fromFigma, toFigma } from '../../core/figma.js';
 import { exportHtml } from '../../core/html.js';
@@ -106,6 +107,8 @@ function ImportDialog({ close }) {
   return (
     <Modal title="Import" onClose={close}>
       <div className="row"><input type="text" placeholder="document name (optional)" value={name} onChange={(e) => setName(e.target.value)} /></div>
+      <h4 style={{ margin: '8px 0 4px' }}>From an HTML prototype</h4>
+      <div className="hint">Load a prototype, interact with it and capture each state as a screen in the current file. <button className="primary" onClick={() => setState({ dialog: 'prototype' })} disabled={!getState().docName}>Open prototype viewer</button></div>
       <h4 style={{ margin: '8px 0 4px' }}>From a JSON file</h4>
       <div className="hint">Native LE JSON, a Figma REST API response (<code>GET /v1/files/:key</code>), or the output of the bundled Figma plugin.</div>
       <div className="row"><input type="file" accept="application/json,.json" onChange={onFile} /></div>
@@ -156,6 +159,8 @@ function HelpDialog({ close }) {
           <span className="kbd">⌘C</span>/<span className="kbd">⌘V</span> copy/paste · <span className="kbd">⌫</span> delete · arrows nudge (⇧ ×10, reorders in auto layout)<br />
           <span className="kbd">Enter</span> edit text / enter frame · double-click drills into a layer · <span className="kbd">⌘</span>+click selects the deepest layer<br />
           Drag a layer inside an auto-layout frame to reorder it; drag in the Layers panel to re-parent.<br />
+          <b>Dev mode</b> (switch in the right panel, <span className="kbd">⇧D</span>): paddings, gaps, distances to the hovered element and a callout with colors, borders, radius, fonts and tokens; the Inspect panel has copyable values and CSS/HTML/DSL.<br />
+          <b>Prototype</b>: load an HTML prototype, interact, capture each state as a screen.<br />
           <b>Libraries</b>: Libraries → import (Figma URL/key, JSON URL, file, or DSL) and tick to link. Assets tab → click a component to insert an instance. Inspector → variants, text overrides, Detach.
         </div>
       </div>
@@ -293,6 +298,18 @@ function VersionsDialog({ close }) {
   );
 }
 
+function BriefDialog({ close }) {
+  const brief = useStore((s) => s.doc?.meta?.brief || '');
+  const [text, setText] = useState(brief);
+  return (
+    <Modal title="Brief / spec" onClose={close}>
+      <div className="hint">The product brief lives with the file: what the feature or page must do, states to cover, acceptance notes. Agents read it with <code>node le.js brief &lt;doc&gt;</code> before building the prototype or screens.</div>
+      <textarea value={text} onChange={(e) => setText(e.target.value)} style={{ minHeight: 260 }} placeholder={'Goal\n…\n\nScreens / states\n- Default\n- Dropdown open\n\nComponents to use\n- Button, Input, Card'} />
+      <div className="footer"><button onClick={close}>Cancel</button><button className="primary" onClick={async () => { await setBrief(text); close(); }}>Save</button></div>
+    </Modal>
+  );
+}
+
 export default function Dialogs() {
   const dialog = useStore((s) => s.dialog);
   const close = () => setState({ dialog: null });
@@ -303,6 +320,8 @@ export default function Dialogs() {
   if (dialog === 'help') return <HelpDialog close={close} />;
   if (dialog === 'libraries') return <LibrariesDialog close={close} />;
   if (dialog === 'versions') return <VersionsDialog close={close} />;
+  if (dialog === 'prototype') return <PrototypeDialog close={close} />;
+  if (dialog === 'brief') return <BriefDialog close={close} />;
   return null;
 }
 

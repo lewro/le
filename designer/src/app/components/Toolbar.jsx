@@ -33,9 +33,11 @@ export default function Toolbar() {
         </select>
         <button onClick={() => setState({ dialog: 'new' })} title="New document">＋</button>
         <button onClick={() => setState({ dialog: 'import' })} title="Import (native / Figma JSON / Figma API)">Import</button>
+        <button onClick={() => setState({ dialog: 'prototype' })} title="Load an HTML prototype and capture its states as screens" disabled={!docName}>Prototype</button>
         <button onClick={() => setState({ dialog: 'export' })} title="Export (JSON / Figma / HTML / DSL)" disabled={!docName}>Export</button>
         <button onClick={() => setState({ dialog: 'libraries' })} title="Libraries: import, link, manage" disabled={!docName}>Libraries</button>
         <button onClick={() => setState({ dialog: 'versions' })} title="Version history" disabled={!docName}>History</button>
+        <button onClick={() => setState({ dialog: 'brief' })} title="Product brief / spec stored with this file" disabled={!docName}>Brief</button>
       </div>
       <div className="group">
         <button onClick={() => tidy()} title="Tidy up: arrange all frames of this page on the grid" disabled={!docName}>⊞ Tidy</button>

@@ -4,10 +4,11 @@
  "meta": {
   "seq": 27,
   "title": "Local Experts — landing (library build)",
-  "createdAt": "2026-10-21T20:19:56.310Z",
+  "createdAt": "2026-10-21T20:31:05.195Z",
   "createdBy": "Claude",
-  "updatedAt": "2026-10-21T20:19:56.310Z",
-  "updatedBy": "Claude"
+  "updatedAt": "2026-10-21T20:31:05.264Z",
+  "updatedBy": "Claude",
+  "brief": "Marketing landing page for LocalExperts built only from the le-ui library: hero with search, category grid, CTA, footer."
  },
  "type": "DOCUMENT",
  "id": "0:0",

@@ -70,6 +70,7 @@ test('selectors', () => {
   assert.equal(resolve(doc, 'Nav/@TEXT').length, 2);
   assert.equal(resolve(doc, 'Nav/@TEXT[1]')[0].characters, 'Pricing');
   assert.equal(resolve(doc, 'Header/*').length, 3);
+  assert.equal(resolve(doc, 'Header/@TEXT').length, 4, '@TYPE matches any descendant');
   assert.equal(resolve(doc, '/Page 1/Header').length, 1);
   const id = resolve(doc, 'Button')[0].id;
   assert.equal(resolve(doc, '#' + id)[0].name, 'Button');

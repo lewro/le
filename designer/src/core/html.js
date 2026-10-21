@@ -3,7 +3,9 @@
 
 import { computeStyle, toCssText } from './style.js';
 import { hasAutoLayout } from './model.js';
-import { expandDocument } from './components.js';
+import { expandDocument, buildIndex } from './components.js';
+
+const cssVar = (name) => `--${String(name).replace(/[^A-Za-z0-9]+/g, '-')}`;
 
 const DEFAULT_TAG = { FRAME: 'div', GROUP: 'div', RECTANGLE: 'div', ELLIPSE: 'div', TEXT: 'p', LINE: 'hr', COMPONENT: 'div', INSTANCE: 'div', SECTION: 'section', VECTOR: 'div', CANVAS: 'div' };
 const VOID = new Set(['img', 'hr', 'br', 'input']);
@@ -19,11 +21,15 @@ function cssClass(node) { return `le-${String(node.id).replace(/[^a-zA-Z0-9_-]/g
  * @param {{ nodes?: object[], page?: number, title?: string, fontLink?: boolean, bodyWidth?: boolean }} options
  */
 export function exportHtml(doc, options = {}) {
-  doc = expandDocument(doc, options.libs || []);
+  const libs = options.libs || [];
+  const tokens = buildIndex(doc, libs).tokens;
+  const sourceRoots = options.nodes;
+  doc = expandDocument(doc, libs);
   const page = (doc.children || [])[options.page || 0];
-  const roots = options.nodes || (page ? page.children : []);
+  const roots = sourceRoots ? sourceRoots.map((n) => findIn(doc, n.id) || n) : (page ? page.children : []);
   const rules = [];
   const body = [];
+  const tokenRules = Object.entries(tokens.colors || {}).filter(([, v]) => typeof v === 'string').map(([k, v]) => `  ${cssVar(k)}: ${v};`);
 
   const render = (node, parent, depth) => {
     if (node.visible === false) return '';
@@ -31,12 +37,20 @@ export function exportHtml(doc, options = {}) {
     // top-level frames are laid out in normal flow, stacked vertically
     if (!parent || parent.type === 'CANVAS') { style.position = 'relative'; delete style.left; delete style.top; if (style.width === '100%') style.width = 'auto'; }
     if (node.type === 'TEXT') { delete style.flexShrink; }
+    // tokens -> CSS custom properties (with the resolved value as fallback)
+    const fill = (node.fills || []).find((f) => f.visible !== false);
+    if (fill?.token && fill.type === 'SOLID') { if (node.type === 'TEXT') style.color = `var(${cssVar(fill.token)}, ${fill.color})`; else style.background = `var(${cssVar(fill.token)}, ${fill.color})`; }
+    const stroke = (node.strokes || []).find((f) => f.visible !== false);
+    if (stroke?.token && stroke.type === 'SOLID' && style.boxShadow) style.boxShadow = style.boxShadow.replace(stroke.color, `var(${cssVar(stroke.token)}, ${stroke.color})`);
     const cls = cssClass(node);
     rules.push(`.${cls} {\n${toCssText(style, '  ')}\n}`);
     const h = node.html || {};
     let tag = h.tag || DEFAULT_TAG[node.type] || 'div';
     const attrs = { class: [cls, h.className].filter(Boolean).join(' ') };
     attrs['data-name'] = node.name;
+    attrs['data-le-id'] = String(node.id).split('::').pop();
+    if (node.type === 'INSTANCE' && node.component) { attrs['data-component'] = node.component; if (node.variant && Object.keys(node.variant).length) attrs['data-variant'] = Object.entries(node.variant).map(([k, v]) => `${k}=${v}`).join(', '); }
+    if (node.style?.token) attrs['data-textstyle'] = node.style.token;
     for (const [k, v] of Object.entries(h.attrs || {})) attrs[k] = v;
     const img = (node.fills || []).find((f) => f.type === 'IMAGE' && f.src);
     if (tag === 'img' && img) { attrs.src = img.src; if (!attrs.alt) attrs.alt = node.name; }
@@ -63,6 +77,9 @@ export function exportHtml(doc, options = {}) {
 ${fontLink}
   <style>
     * { box-sizing: border-box; }
+    :root {
+${tokenRules.join('\n')}
+    }
     html, body { margin: 0; padding: 0; }
     body { font-family: "Inter", system-ui, sans-serif; display: flex; flex-direction: column; align-items: flex-start; }
     hr { border: 0; }
@@ -73,6 +90,13 @@ ${rules.join('\n')}
 ${body.join('')}</body>
 </html>
 `;
+}
+
+function findIn(root, id) {
+  let out = null;
+  const rec = (n) => { if (out) return; if (n.id === id) { out = n; return; } for (const c of n.children || []) rec(c); };
+  rec(root);
+  return out;
 }
 
 export { hasAutoLayout };

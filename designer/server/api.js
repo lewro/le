@@ -70,7 +70,7 @@ export function summarize(name, doc, st) {
     name, title: m.title || doc.name || name, createdBy: m.createdBy || null, updatedBy: m.updatedBy || null,
     createdAt: m.createdAt || null, updatedAt: m.updatedAt || (st ? new Date(st.mtimeMs).toISOString() : null),
     mtime: st?.mtimeMs, size: st?.size, pages: (doc.children || []).length, frames, nodes, libraries: doc.libraries || [],
-    kind: doc.kind || 'design', firstPage: page?.name || null,
+    kind: doc.kind || 'design', firstPage: page?.name || null, brief: m.brief ? String(m.brief).slice(0, 160) : null,
   };
 }
 function walkCount(n, fn) { fn(n); for (const c of n.children || []) walkCount(c, fn); }
@@ -217,6 +217,22 @@ export function createApiHandler({ designsDir, librariesDir = path.join(path.dir
         return true;
       }
 
+      if (parts[1] === 'proxy' && req.method === 'GET') {
+        // fetch an HTML prototype server-side so the app can load it into a same-origin iframe
+        const target = url.searchParams.get('url');
+        if (!/^https?:\/\//.test(target || '')) { send(res, 400, { error: 'url required' }); return true; }
+        const r = await fetch(target, { headers: { 'User-Agent': 'LE-Designer/1.0' } });
+        let html = await r.text();
+        if (!/<base\s/i.test(html)) html = html.replace(/<head([^>]*)>/i, `<head$1><base href="${target.replace(/"/g, '&quot;')}">`);
+        send(res, 200, html, 'text/html');
+        return true;
+      }
+      if (parts[1] === 'capture' && req.method === 'POST') {
+        // { html?: string, name?, state?, doc?: name } -> capture needs a browser; the app does it client-side.
+        send(res, 400, { error: 'Capture runs in the browser (Import → HTML prototype) or via "node le.js import-html" with Playwright' });
+        return true;
+      }
+
       if (parts[1] === 'figma' && parts[2] === 'import' && req.method === 'POST') {
         const body = JSON.parse(await readBody(req) || '{}');
         const doc = await fetchFromFigma({ token: body.token || process.env.FIGMA_TOKEN, fileKey: body.fileKey, nodeIds: body.nodeIds, name: body.name });
@@ -274,6 +290,7 @@ export function createApiHandler({ designsDir, librariesDir = path.join(path.dir
         const doc = store.load(name);
         doc.meta ||= { seq: 1 };
         if (body.title !== undefined) doc.meta.title = String(body.title).slice(0, 200);
+        if (body.brief !== undefined) doc.meta.brief = String(body.brief).slice(0, 20000);
         if (body.grid !== undefined) doc.meta.grid = body.grid === null ? undefined : Number(body.grid) || 0;
         markWriter(name, clientId);
         store.save(name, doc, who);
