@@ -1,3 +1,5 @@
 node_modules/
 dist/
 designs/*.bak
+designs/.history/
+libraries/.history/

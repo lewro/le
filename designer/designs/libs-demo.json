@@ -1,0 +1,566 @@
+{
+ "format": "le-design/1",
+ "name": "libs-demo",
+ "meta": {
+  "seq": 34,
+  "title": "Popular libraries demo",
+  "createdAt": "2026-10-22T06:26:39.971Z",
+  "createdBy": "Claude",
+  "updatedAt": "2026-10-22T06:28:55.656Z",
+  "updatedBy": "Claude"
+ },
+ "type": "DOCUMENT",
+ "id": "0:0",
+ "libraries": [
+  "mui",
+  "antd",
+  "bootstrap"
+ ],
+ "children": [
+  {
+   "id": "page1",
+   "type": "CANVAS",
+   "name": "Page 1",
+   "children": [
+    {
+     "name": "MUI",
+     "type": "FRAME",
+     "width": 900,
+     "height": 100,
+     "fills": [
+      {
+       "type": "SOLID",
+       "color": "#ffffff"
+      }
+     ],
+     "clipsContent": true,
+     "layoutMode": "VERTICAL",
+     "layoutSizingHorizontal": "FIXED",
+     "paddingTop": 40,
+     "paddingRight": 40,
+     "paddingBottom": 40,
+     "paddingLeft": 40,
+     "itemSpacing": 24,
+     "layoutSizingVertical": "HUG",
+     "id": "n1",
+     "x": 0,
+     "y": 0,
+     "children": [
+      {
+       "name": "MUI — Material Design",
+       "type": "TEXT",
+       "characters": "MUI — Material Design",
+       "style": {
+        "fontFamily": "Inter",
+        "fontWeight": 700,
+        "fontSize": 24,
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP"
+       },
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#000000"
+        }
+       ],
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "width": 100,
+       "height": 20,
+       "id": "n2"
+      },
+      {
+       "name": "Row",
+       "type": "FRAME",
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#ffffff"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Button",
+         "type": "INSTANCE",
+         "variant": {
+          "Variant": "Contained",
+          "Color": "Primary",
+          "Size": "Medium"
+         },
+         "component": "Button",
+         "overrides": {
+          "@TEXT": {
+           "characters": "Contained"
+          }
+         },
+         "id": "n4"
+        },
+        {
+         "name": "Button",
+         "type": "INSTANCE",
+         "variant": {
+          "Variant": "Outlined",
+          "Color": "Primary",
+          "Size": "Medium"
+         },
+         "component": "Button",
+         "overrides": {
+          "@TEXT": {
+           "characters": "Outlined"
+          }
+         },
+         "id": "n5"
+        },
+        {
+         "name": "Button",
+         "type": "INSTANCE",
+         "variant": {
+          "Variant": "Text",
+          "Color": "Secondary",
+          "Size": "Medium"
+         },
+         "component": "Button",
+         "overrides": {
+          "@TEXT": {
+           "characters": "Text"
+          }
+         },
+         "id": "n6"
+        },
+        {
+         "name": "Chip",
+         "type": "INSTANCE",
+         "variant": {
+          "Variant": "Filled",
+          "Color": "Primary"
+         },
+         "component": "Chip",
+         "overrides": {
+          "@TEXT": {
+           "characters": "Chip"
+          }
+         },
+         "id": "n7"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "itemSpacing": 16,
+       "counterAxisAlignItems": "CENTER",
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "id": "n3"
+      },
+      {
+       "name": "Row2",
+       "type": "FRAME",
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#ffffff"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "TextField",
+         "type": "INSTANCE",
+         "variant": {
+          "Variant": "Outlined"
+         },
+         "component": "TextField",
+         "id": "n9"
+        },
+        {
+         "name": "Alert",
+         "type": "INSTANCE",
+         "variant": {
+          "Severity": "Success"
+         },
+         "component": "Alert",
+         "id": "na"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "itemSpacing": 16,
+       "counterAxisAlignItems": "MIN",
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "id": "n8"
+      },
+      {
+       "name": "Card",
+       "type": "INSTANCE",
+       "overrides": {
+        "Title": {
+         "characters": "Material card"
+        },
+        "Body": {
+         "characters": "Captured straight from @mui/material."
+        }
+       },
+       "component": "Card",
+       "id": "nb"
+      }
+     ]
+    },
+    {
+     "name": "Ant Design",
+     "type": "FRAME",
+     "width": 900,
+     "height": 100,
+     "fills": [
+      {
+       "type": "SOLID",
+       "color": "#ffffff"
+      }
+     ],
+     "clipsContent": true,
+     "layoutMode": "VERTICAL",
+     "layoutSizingHorizontal": "FIXED",
+     "paddingTop": 40,
+     "paddingRight": 40,
+     "paddingBottom": 40,
+     "paddingLeft": 40,
+     "itemSpacing": 24,
+     "layoutSizingVertical": "HUG",
+     "id": "nc",
+     "x": 1100,
+     "y": 0,
+     "children": [
+      {
+       "name": "Ant Design",
+       "type": "TEXT",
+       "characters": "Ant Design",
+       "style": {
+        "fontFamily": "Inter",
+        "fontWeight": 700,
+        "fontSize": 24,
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP"
+       },
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#000000"
+        }
+       ],
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "width": 100,
+       "height": 20,
+       "id": "nd"
+      },
+      {
+       "name": "Row",
+       "type": "FRAME",
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#ffffff"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Button",
+         "type": "INSTANCE",
+         "variant": {
+          "Type": "Primary",
+          "Size": "Middle"
+         },
+         "component": "Button",
+         "overrides": {
+          "@TEXT": {
+           "characters": "Primary"
+          }
+         },
+         "id": "nf"
+        },
+        {
+         "name": "Button",
+         "type": "INSTANCE",
+         "variant": {
+          "Type": "Default",
+          "Size": "Middle"
+         },
+         "component": "Button",
+         "overrides": {
+          "@TEXT": {
+           "characters": "Default"
+          }
+         },
+         "id": "ng"
+        },
+        {
+         "name": "Button",
+         "type": "INSTANCE",
+         "variant": {
+          "Type": "Dashed",
+          "Size": "Middle"
+         },
+         "component": "Button",
+         "overrides": {
+          "@TEXT": {
+           "characters": "Dashed"
+          }
+         },
+         "id": "nh"
+        },
+        {
+         "name": "Tag",
+         "type": "INSTANCE",
+         "variant": {
+          "Color": "Blue"
+         },
+         "component": "Tag",
+         "id": "ni"
+        },
+        {
+         "name": "Switch",
+         "type": "INSTANCE",
+         "variant": {
+          "State": "On"
+         },
+         "component": "Switch",
+         "id": "nj"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "itemSpacing": 16,
+       "counterAxisAlignItems": "CENTER",
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "id": "ne"
+      },
+      {
+       "name": "Row2",
+       "type": "FRAME",
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#ffffff"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Input",
+         "type": "INSTANCE",
+         "variant": {
+          "Size": "Middle"
+         },
+         "component": "Input",
+         "id": "nl"
+        },
+        {
+         "name": "Alert",
+         "type": "INSTANCE",
+         "variant": {
+          "Type": "Info"
+         },
+         "component": "Alert",
+         "id": "nm"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "itemSpacing": 16,
+       "counterAxisAlignItems": "MIN",
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "id": "nk"
+      },
+      {
+       "name": "Card",
+       "type": "INSTANCE",
+       "overrides": {
+        "Body": {
+         "characters": "Captured from antd 5."
+        }
+       },
+       "component": "Card",
+       "id": "nn"
+      }
+     ]
+    },
+    {
+     "name": "Bootstrap",
+     "type": "FRAME",
+     "width": 900,
+     "height": 100,
+     "fills": [
+      {
+       "type": "SOLID",
+       "color": "#ffffff"
+      }
+     ],
+     "clipsContent": true,
+     "layoutMode": "VERTICAL",
+     "layoutSizingHorizontal": "FIXED",
+     "paddingTop": 40,
+     "paddingRight": 40,
+     "paddingBottom": 40,
+     "paddingLeft": 40,
+     "itemSpacing": 24,
+     "layoutSizingVertical": "HUG",
+     "id": "no",
+     "x": 0,
+     "y": 600,
+     "children": [
+      {
+       "name": "Bootstrap 5",
+       "type": "TEXT",
+       "characters": "Bootstrap 5",
+       "style": {
+        "fontFamily": "Inter",
+        "fontWeight": 700,
+        "fontSize": 24,
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP"
+       },
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#000000"
+        }
+       ],
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "width": 100,
+       "height": 20,
+       "id": "np"
+      },
+      {
+       "name": "Row",
+       "type": "FRAME",
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#ffffff"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Button",
+         "type": "INSTANCE",
+         "variant": {
+          "Color": "Primary",
+          "Style": "Solid",
+          "Size": "Medium"
+         },
+         "component": "Button",
+         "overrides": {
+          "@TEXT": {
+           "characters": "Primary"
+          }
+         },
+         "id": "nr"
+        },
+        {
+         "name": "Button",
+         "type": "INSTANCE",
+         "variant": {
+          "Color": "Secondary",
+          "Style": "Outline",
+          "Size": "Medium"
+         },
+         "component": "Button",
+         "overrides": {
+          "@TEXT": {
+           "characters": "Outline"
+          }
+         },
+         "id": "ns"
+        },
+        {
+         "name": "Badge",
+         "type": "INSTANCE",
+         "variant": {
+          "Color": "Success"
+         },
+         "component": "Badge",
+         "overrides": {
+          "@TEXT": {
+           "characters": "New"
+          }
+         },
+         "id": "nt"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "itemSpacing": 16,
+       "counterAxisAlignItems": "CENTER",
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "id": "nq"
+      },
+      {
+       "name": "Row2",
+       "type": "FRAME",
+       "width": 100,
+       "height": 100,
+       "fills": [
+        {
+         "type": "SOLID",
+         "color": "#ffffff"
+        }
+       ],
+       "clipsContent": true,
+       "children": [
+        {
+         "name": "Input",
+         "type": "INSTANCE",
+         "variant": {
+          "Size": "Medium"
+         },
+         "component": "Input",
+         "id": "nv"
+        },
+        {
+         "name": "Alert",
+         "type": "INSTANCE",
+         "variant": {
+          "Color": "Warning"
+         },
+         "component": "Alert",
+         "id": "nw"
+        }
+       ],
+       "layoutMode": "HORIZONTAL",
+       "itemSpacing": 16,
+       "counterAxisAlignItems": "MIN",
+       "layoutSizingHorizontal": "HUG",
+       "layoutSizingVertical": "HUG",
+       "id": "nu"
+      },
+      {
+       "name": "Card",
+       "type": "INSTANCE",
+       "overrides": {
+        "Title": {
+         "characters": "Bootstrap card"
+        },
+        "Body": {
+         "characters": "Captured from bootstrap 5.3."
+        }
+       },
+       "component": "Card",
+       "id": "nx"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

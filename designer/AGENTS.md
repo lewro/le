@@ -82,6 +82,13 @@ node le.js lib dsl acme Button                                 # inspect a compo
 node le.js lint landing                                        # strict mode: fails if anything is not from the libraries
 ```
 
+Included libraries: `le-ui` (sample), `mui` (Material Design / MUI), `antd` (Ant Design), `bootstrap` (Bootstrap 5).
+The last three were captured from the real libraries (`scripts/import-popular-libs.mjs` + `examples/galleries/*.html`);
+their variant props follow the libraries' own names (MUI: `Variant=Contained Color=Primary Size=Medium`; antd:
+`Type=Primary Size=Middle`; Bootstrap: `Color=Primary Style=Solid Size=Medium`). Always run `components <doc>` to see
+the exact names. To add another CSS/JS library, write a gallery page with `data-component`/`data-variant` markers and
+register it in the script.
+
 `components` prints lines like `Button  {Type=Primary|Secondary|Ghost, Size=Medium|Large}  texts: Label  [le-ui]  — description`:
 the variant properties and values, and the text slots you can override. **Read this before building with a library.**
 

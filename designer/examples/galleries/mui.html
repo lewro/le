@@ -1,0 +1,63 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>MUI (Material Design)</title>
+<!-- Gallery for `node scripts/import-popular-libs.mjs`: renders MUI components with data-component / data-variant markers.
+     VENDOR is replaced by the script with the folder holding the npm bundles (react, react-dom, @mui/material). -->
+<script src="VENDOR/react.production.min.js"></script>
+<script src="VENDOR/react-dom.production.min.js"></script>
+<script src="VENDOR/material-ui.production.min.js"></script>
+<style>body{margin:24px;font-family:Roboto,Helvetica,Arial,sans-serif;background:#fff} .row{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start;margin-bottom:24px} h3{font:600 12px/1 sans-serif;color:#888;margin:16px 0 8px}</style>
+</head><body><div id="root"></div>
+<script>
+const { createElement: h } = React;
+const M = MaterialUI;
+const theme = M.createTheme();
+const row = (...kids) => h('div', { className: 'row' }, ...kids);
+const C = (name, variant, el, extra) => h('div', { 'data-component': name, 'data-variant': variant, ...(extra || {}), style: { display: 'inline-flex' } }, el);
+const comps = [];
+// Buttons: variant × color × size
+for (const variant of ['contained', 'outlined', 'text']) for (const color of ['primary', 'secondary', 'error']) for (const size of ['small', 'medium', 'large'])
+  comps.push(C('Button', `Variant=${variant[0].toUpperCase() + variant.slice(1)}, Color=${color[0].toUpperCase() + color.slice(1)}, Size=${size[0].toUpperCase() + size.slice(1)}`, h(M.Button, { variant, color, size }, 'Button'), { 'data-description': 'Material button. Variant: Contained / Outlined / Text. Color: Primary / Secondary / Error. Size: Small / Medium / Large.' }));
+for (const variant of ['outlined', 'filled', 'standard']) comps.push(C('TextField', `Variant=${variant[0].toUpperCase() + variant.slice(1)}`, h(M.TextField, { variant, label: 'Label', placeholder: 'Placeholder', helperText: 'Helper text' }), { 'data-description': 'Text input with floating label and helper text.' }));
+comps.push(C('Checkbox', 'State=Unchecked', h(M.FormControlLabel, { control: h(M.Checkbox), label: 'Checkbox' })));
+comps.push(C('Checkbox', 'State=Checked', h(M.FormControlLabel, { control: h(M.Checkbox, { defaultChecked: true }), label: 'Checkbox' })));
+comps.push(C('Switch', 'State=Off', h(M.FormControlLabel, { control: h(M.Switch), label: 'Switch' })));
+comps.push(C('Switch', 'State=On', h(M.FormControlLabel, { control: h(M.Switch, { defaultChecked: true }), label: 'Switch' })));
+comps.push(C('Radio', 'State=Unchecked', h(M.FormControlLabel, { control: h(M.Radio), label: 'Option' })));
+comps.push(C('Radio', 'State=Checked', h(M.FormControlLabel, { control: h(M.Radio, { checked: true }), label: 'Option' })));
+for (const variant of ['filled', 'outlined']) for (const color of ['default', 'primary', 'success']) comps.push(C('Chip', `Variant=${variant[0].toUpperCase() + variant.slice(1)}, Color=${color[0].toUpperCase() + color.slice(1)}`, h(M.Chip, { label: 'Chip', variant, color })));
+for (const severity of ['success', 'info', 'warning', 'error']) comps.push(C('Alert', `Severity=${severity[0].toUpperCase() + severity.slice(1)}`, h(M.Alert, { severity, sx: { width: 420 } }, h(M.AlertTitle, null, severity[0].toUpperCase() + severity.slice(1)), 'This is an alert message with some details.'), { 'data-description': 'Alert with title and message.' }));
+comps.push(C('Card', '', h(M.Card, { sx: { width: 345 } }, h(M.CardContent, null, h(M.Typography, { gutterBottom: true, variant: 'h5', component: 'div', 'data-name': 'Title' }, 'Card title'), h(M.Typography, { variant: 'body2', color: 'text.secondary', 'data-name': 'Body' }, 'Supporting text for the card, usually one or two lines.')), h(M.CardActions, null, h(M.Button, { size: 'small' }, 'Share'), h(M.Button, { size: 'small' }, 'Learn more'))), { 'data-description': 'Card with title, body and two text actions.' }));
+comps.push(C('AppBar', '', h(M.AppBar, { position: 'static', sx: { width: 1200 } }, h(M.Toolbar, null, h(M.Typography, { variant: 'h6', component: 'div', sx: { flexGrow: 1 }, 'data-name': 'Title' }, 'App name'), h(M.Button, { color: 'inherit' }, 'Login'))), { 'data-description': 'Top app bar with title and action.', 'data-sizing': 'fixed' }));
+comps.push(C('Avatar', 'Variant=Letter', h(M.Avatar, { sx: { bgcolor: theme.palette.primary.main } }, 'A')));
+comps.push(C('Avatar', 'Variant=Image', h(M.Avatar, { src: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" fill="#bdbdbd"/></svg>') })));
+comps.push(C('Badge', '', h(M.Badge, { badgeContent: 4, color: 'primary' }, h('div', { style: { width: 24, height: 24, background: '#e0e0e0', borderRadius: 4 } }))));
+comps.push(C('Tabs', '', h(M.Tabs, { value: 0 }, h(M.Tab, { label: 'Item one' }), h(M.Tab, { label: 'Item two' }), h(M.Tab, { label: 'Item three' }))));
+comps.push(C('Slider', '', h(M.Slider, { defaultValue: 40, sx: { width: 240 } })));
+comps.push(C('LinearProgress', '', h(M.LinearProgress, { variant: 'determinate', value: 60, sx: { width: 240 } })));
+comps.push(C('Paper', 'Elevation=1', h(M.Paper, { elevation: 1, sx: { width: 240, height: 120 } })));
+comps.push(C('Paper', 'Elevation=4', h(M.Paper, { elevation: 4, sx: { width: 240, height: 120 } })));
+comps.push(C('ListItem', '', h(M.List, { sx: { width: 320, bgcolor: 'background.paper' } }, h(M.ListItem, null, h(M.ListItemText, { primary: 'Primary text', secondary: 'Secondary text' })))));
+comps.push(C('Breadcrumbs', '', h(M.Breadcrumbs, null, h(M.Link, { underline: 'hover', color: 'inherit', href: '#' }, 'Home'), h(M.Link, { underline: 'hover', color: 'inherit', href: '#' }, 'Catalog'), h(M.Typography, { color: 'text.primary' }, 'Item'))));
+comps.push(C('Pagination', '', h(M.Pagination, { count: 10, page: 2, color: 'primary' })));
+comps.push(C('Dialog', '', h(M.Paper, { sx: { width: 444, borderRadius: 1 }, elevation: 24 }, h(M.DialogTitle, { 'data-name': 'Title' }, 'Dialog title'), h(M.DialogContent, null, h(M.DialogContentText, { 'data-name': 'Body' }, 'Let Google help apps determine location. This means sending anonymous location data.')), h(M.DialogActions, null, h(M.Button, null, 'Disagree'), h(M.Button, null, 'Agree'))), { 'data-description': 'Dialog surface (static) with title, text and actions.' }));
+comps.push(C('Snackbar', '', h(M.SnackbarContent, { message: 'Note archived', action: h(M.Button, { color: 'secondary', size: 'small' }, 'UNDO') })));
+comps.push(C('Tooltip', '', h('div', { style: { background: 'rgba(97,97,97,.92)', color: '#fff', padding: '4px 8px', fontSize: 11, borderRadius: 4, fontWeight: 500 } }, 'Tooltip')));
+
+const tokens = [];
+for (const k of ['primary', 'secondary', 'error', 'warning', 'info', 'success']) for (const v of ['main', 'light', 'dark']) tokens.push(h('div', { 'data-token': `${k[0].toUpperCase() + k.slice(1)}/${v[0].toUpperCase() + v.slice(1)}`, style: { width: 40, height: 40, background: theme.palette[k][v] } }));
+tokens.push(h('div', { 'data-token': 'Text/Primary', style: { width: 40, height: 40, background: theme.palette.text.primary } }));
+tokens.push(h('div', { 'data-token': 'Text/Secondary', style: { width: 40, height: 40, background: theme.palette.text.secondary } }));
+tokens.push(h('div', { 'data-token': 'Background/Paper', style: { width: 40, height: 40, background: theme.palette.background.paper } }));
+tokens.push(h('div', { 'data-token': 'Background/Default', style: { width: 40, height: 40, background: theme.palette.background.default } }));
+tokens.push(h('div', { 'data-token': 'Divider', style: { width: 40, height: 40, background: theme.palette.divider } }));
+tokens.push(h('div', { 'data-token': 'Grey/100', style: { width: 40, height: 40, background: theme.palette.grey[100] } }));
+tokens.push(h('div', { 'data-token': 'Grey/300', style: { width: 40, height: 40, background: theme.palette.grey[300] } }));
+tokens.push(h('div', { 'data-token': 'Grey/500', style: { width: 40, height: 40, background: theme.palette.grey[500] } }));
+tokens.push(h('div', { 'data-token': 'Grey/700', style: { width: 40, height: 40, background: theme.palette.grey[700] } }));
+tokens.push(h('div', { 'data-token': 'Grey/900', style: { width: 40, height: 40, background: theme.palette.grey[900] } }));
+const texts = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'subtitle1', 'subtitle2', 'body1', 'body2', 'button', 'caption', 'overline'].map((v) => h(M.Typography, { variant: v, 'data-textstyle': v[0].toUpperCase() + v.slice(1) }, 'Sample ' + v));
+const effects = [1, 2, 4, 8, 16, 24].map((e) => h(M.Paper, { elevation: e, 'data-effect': 'Elevation/' + e, sx: { width: 24, height: 24 } }));
+
+ReactDOM.createRoot(document.getElementById('root')).render(h(M.ThemeProvider, { theme }, h(M.CssBaseline), h('h3', null, 'Components'), row(...comps), h('h3', null, 'Tokens'), row(...tokens), row(...texts), row(...effects)));
+setTimeout(() => { window.__ready = true; }, 300);
+</script></body></html>

@@ -49,8 +49,12 @@ npm run build && npm start   # http://localhost:4000, serves dist/ + API
 npm test               # core unit tests
 ```
 
-Documents live in `designer/designs/*.json`, libraries in `designer/libraries/*.json`. Included samples: `landing`
-(hand-built), `le-ui` (library) and `landing-ui` (built only from `le-ui`). Regenerate with
+Documents live in `designer/designs/*.json`, libraries in `designer/libraries/*.json`. Included: `landing`
+(hand-built), `le-ui` (small sample library), `landing-ui` (built only from `le-ui`), and three popular UI libraries
+captured from their real implementations: **mui** (Material Design, 21 components), **antd** (Ant Design, 22) and
+**bootstrap** (Bootstrap 5, 22), each with palette, typography and shadow tokens. `libs-demo` uses all three.
+Regenerate them with `node scripts/import-popular-libs.mjs` (renders `examples/galleries/*.html` headlessly; add a
+gallery page there to capture any other CSS/JS library the same way). Regenerate with
 `node le.js new landing < examples/landing.dsl`, `node le.js lib new le-ui < examples/le-ui.dsl`,
 `node le.js new landing-ui --libs le-ui < examples/landing-ui.dsl`.
 

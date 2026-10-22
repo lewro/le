@@ -1,0 +1,58 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Bootstrap 5</title>
+<link rel="stylesheet" href="VENDOR/bootstrap.min.css">
+<style>body{margin:24px} .row-g{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start;margin-bottom:24px} h3{font:600 12px/1 sans-serif;color:#888;margin:16px 0 8px}</style>
+</head><body>
+<h3>Components</h3>
+<div class="row-g" id="comps"></div>
+<h3>Tokens</h3>
+<div class="row-g" id="tokens"></div>
+<div class="row-g">
+  <h1 data-textstyle="Heading/H1">Heading 1</h1><h2 data-textstyle="Heading/H2">Heading 2</h2><h3 data-textstyle="Heading/H3" style="color:inherit;font:revert">Heading 3</h3><h4 data-textstyle="Heading/H4">Heading 4</h4><h5 data-textstyle="Heading/H5">Heading 5</h5><h6 data-textstyle="Heading/H6">Heading 6</h6>
+  <p data-textstyle="Body">Body</p><p class="lead" data-textstyle="Lead">Lead</p><small data-textstyle="Small">Small</small><p class="display-4" data-textstyle="Display/4">Display 4</p>
+</div>
+<script>
+const comps = document.getElementById('comps');
+const add = (name, variant, html, extra = {}) => { const d = document.createElement('div'); d.dataset.component = name; if (variant) d.dataset.variant = variant; for (const [k, v] of Object.entries(extra)) d.dataset[k] = v; d.style.display = 'inline-flex'; d.innerHTML = html; comps.appendChild(d); };
+const cap = (s) => s[0].toUpperCase() + s.slice(1);
+for (const c of ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']) {
+  for (const size of ['sm', '', 'lg']) add('Button', `Color=${cap(c)}, Style=Solid, Size=${size === 'sm' ? 'Small' : size === 'lg' ? 'Large' : 'Medium'}`, `<button type="button" class="btn btn-${c} ${size ? 'btn-' + size : ''}">Button</button>`, { description: 'Bootstrap button. Color: 8 theme colors. Style: Solid / Outline. Size: Small / Medium / Large.' });
+  add('Button', `Color=${cap(c)}, Style=Outline, Size=Medium`, `<button type="button" class="btn btn-outline-${c}">Button</button>`);
+}
+add('Button', 'Color=Link, Style=Solid, Size=Medium', `<button type="button" class="btn btn-link">Link</button>`);
+add('Input', 'Size=Medium', `<div style="width:260px"><label class="form-label">Label</label><input class="form-control" placeholder="Placeholder"><div class="form-text">Help text</div></div>`, { description: 'Form control with label and help text.' });
+add('Input', 'Size=Small', `<input class="form-control form-control-sm" placeholder="Small" style="width:260px">`);
+add('Input', 'Size=Large', `<input class="form-control form-control-lg" placeholder="Large" style="width:260px">`);
+add('Select', '', `<select class="form-select" style="width:260px"><option>Open this select menu</option></select>`);
+add('Checkbox', 'State=Unchecked', `<div class="form-check"><input class="form-check-input" type="checkbox"><label class="form-check-label">Checkbox</label></div>`);
+add('Checkbox', 'State=Checked', `<div class="form-check"><input class="form-check-input" type="checkbox" checked><label class="form-check-label">Checkbox</label></div>`);
+add('Switch', 'State=Off', `<div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch"><label class="form-check-label">Switch</label></div>`);
+add('Switch', 'State=On', `<div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" checked><label class="form-check-label">Switch</label></div>`);
+add('Radio', 'State=Unchecked', `<div class="form-check"><input class="form-check-input" type="radio"><label class="form-check-label">Option</label></div>`);
+add('Radio', 'State=Checked', `<div class="form-check"><input class="form-check-input" type="radio" checked><label class="form-check-label">Option</label></div>`);
+for (const c of ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']) add('Badge', `Color=${cap(c)}`, `<span class="badge text-bg-${c}">Badge</span>`);
+for (const c of ['primary', 'secondary', 'success', 'danger', 'warning', 'info']) add('Alert', `Color=${cap(c)}`, `<div class="alert alert-${c}" role="alert" style="width:420px"><strong data-name="Title">Heads up!</strong> <span data-name="Body">This is a ${c} alert with some text.</span></div>`);
+add('Card', '', `<div class="card" style="width:18rem"><div class="card-body"><h5 class="card-title" data-name="Title">Card title</h5><p class="card-text" data-name="Body">Some quick example text to build on the card title and make up the bulk of the card's content.</p><a href="#" class="btn btn-primary">Go somewhere</a></div></div>`, { description: 'Card with title, text and a primary button.' });
+add('Navbar', '', `<nav class="navbar navbar-expand-lg bg-body-tertiary" style="width:1200px"><div class="container-fluid"><a class="navbar-brand" href="#" data-name="Brand">Navbar</a><div class="collapse navbar-collapse show"><ul class="navbar-nav me-auto mb-2 mb-lg-0"><li class="nav-item"><a class="nav-link active" href="#">Home</a></li><li class="nav-item"><a class="nav-link" href="#">Link</a></li><li class="nav-item"><a class="nav-link disabled">Disabled</a></li></ul><form class="d-flex" role="search"><input class="form-control me-2" type="search" placeholder="Search"><button class="btn btn-outline-success" type="submit">Search</button></form></div></div></nav>`, { description: 'Navbar with brand, links and search.', sizing: 'fixed' });
+add('Breadcrumb', '', `<nav><ol class="breadcrumb mb-0"><li class="breadcrumb-item"><a href="#">Home</a></li><li class="breadcrumb-item"><a href="#">Library</a></li><li class="breadcrumb-item active">Data</li></ol></nav>`);
+add('Pagination', '', `<nav><ul class="pagination mb-0"><li class="page-item"><a class="page-link" href="#">Previous</a></li><li class="page-item"><a class="page-link" href="#">1</a></li><li class="page-item active"><a class="page-link" href="#">2</a></li><li class="page-item"><a class="page-link" href="#">3</a></li><li class="page-item"><a class="page-link" href="#">Next</a></li></ul></nav>`);
+add('Progress', '', `<div class="progress" style="width:240px"><div class="progress-bar" style="width:60%">60%</div></div>`);
+add('ListGroup', '', `<ul class="list-group" style="width:300px"><li class="list-group-item active">An active item</li><li class="list-group-item">A second item</li><li class="list-group-item">A third item</li></ul>`);
+add('Modal', '', `<div class="modal-content" style="width:500px"><div class="modal-header"><h1 class="modal-title fs-5" data-name="Title">Modal title</h1><button type="button" class="btn-close"></button></div><div class="modal-body" data-name="Body"><p class="mb-0">Modal body text goes here.</p></div><div class="modal-footer"><button type="button" class="btn btn-secondary">Close</button><button type="button" class="btn btn-primary">Save changes</button></div></div>`, { description: 'Modal dialog surface (static).' });
+add('Dropdown', 'State=Open', `<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button">Dropdown</button><ul class="dropdown-menu show" style="position:static"><li><a class="dropdown-item" href="#">Action</a></li><li><a class="dropdown-item" href="#">Another action</a></li><li><a class="dropdown-item" href="#">Something else</a></li></ul></div>`);
+add('Toast', '', `<div class="toast show"><div class="toast-header"><strong class="me-auto" data-name="Title">Bootstrap</strong><small>11 mins ago</small><button type="button" class="btn-close"></button></div><div class="toast-body" data-name="Body">Hello, world! This is a toast message.</div></div>`);
+add('Accordion', '', `<div class="accordion" style="width:400px"><div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button" type="button">Accordion Item #1</button></h2><div class="accordion-collapse collapse show"><div class="accordion-body">Body of the first item.</div></div></div><div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button">Accordion Item #2</button></h2></div></div>`);
+add('Table', '', `<table class="table" style="width:520px"><thead><tr><th>#</th><th>First</th><th>Last</th></tr></thead><tbody><tr><td>1</td><td>Mark</td><td>Otto</td></tr><tr><td>2</td><td>Jacob</td><td>Thornton</td></tr></tbody></table>`);
+add('Tooltip', '', `<div class="tooltip bs-tooltip-top show" style="position:static"><div class="tooltip-inner">Tooltip</div></div>`);
+add('Spinner', '', `<div class="spinner-border text-primary" role="status"></div>`);
+add('Tabs', '', `<ul class="nav nav-tabs" style="width:400px"><li class="nav-item"><a class="nav-link active" href="#">Active</a></li><li class="nav-item"><a class="nav-link" href="#">Link</a></li><li class="nav-item"><a class="nav-link disabled">Disabled</a></li></ul>`);
+
+const tokens = document.getElementById('tokens');
+const cs = getComputedStyle(document.documentElement);
+for (const c of ['primary', 'secondary', 'success', 'info', 'warning', 'danger', 'light', 'dark', 'body-color', 'body-bg', 'secondary-color', 'tertiary-color', 'border-color', 'link-color', 'gray-100', 'gray-300', 'gray-500', 'gray-700', 'gray-900']) {
+  const v = cs.getPropertyValue('--bs-' + c).trim(); if (!v) continue;
+  const d = document.createElement('div'); d.dataset.token = c.split('-').map(cap).join('/'); d.style.cssText = `width:40px;height:40px;background:${v}`; tokens.appendChild(d);
+}
+for (const [n, v] of [['Shadow/Sm', cs.getPropertyValue('--bs-box-shadow-sm')], ['Shadow', cs.getPropertyValue('--bs-box-shadow')], ['Shadow/Lg', cs.getPropertyValue('--bs-box-shadow-lg')]]) { const d = document.createElement('div'); d.dataset.effect = n; d.style.cssText = `width:24px;height:24px;background:#fff;box-shadow:${v}`; tokens.appendChild(d); }
+window.__ready = true;
+</script></body></html>

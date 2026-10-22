@@ -1,0 +1,53 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Ant Design</title>
+<script src="VENDOR/react.production.min.js"></script>
+<script src="VENDOR/react-dom.production.min.js"></script>
+<script src="VENDOR/dayjs.min.js"></script>
+<script src="VENDOR/antd.min.js"></script>
+<style>body{margin:24px;background:#fff} .row{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start;margin-bottom:24px} h3{font:600 12px/1 sans-serif;color:#888;margin:16px 0 8px}</style>
+</head><body><div id="root"></div>
+<script>
+const { createElement: h } = React;
+const A = antd;
+const token = A.theme.getDesignToken();
+const row = (...kids) => h('div', { className: 'row' }, ...kids);
+const C = (name, variant, el, extra) => h('div', { 'data-component': name, 'data-variant': variant, ...(extra || {}), style: { display: 'inline-flex' } }, el);
+const cap = (s) => s[0].toUpperCase() + s.slice(1);
+const comps = [];
+for (const type of ['primary', 'default', 'dashed', 'text', 'link']) for (const size of ['small', 'middle', 'large']) comps.push(C('Button', `Type=${cap(type)}, Size=${cap(size)}`, h(A.Button, { type, size }, 'Button'), { 'data-description': 'Ant Design button. Type: Primary / Default / Dashed / Text / Link. Size: Small / Middle / Large.' }));
+comps.push(C('Button', 'Type=Primary, Size=Middle, Danger=True', h(A.Button, { type: 'primary', danger: true }, 'Delete')));
+for (const size of ['small', 'middle', 'large']) comps.push(C('Input', `Size=${cap(size)}`, h(A.Input, { size, placeholder: 'Placeholder', style: { width: 240 } }), { 'data-description': 'Text input.' }));
+comps.push(C('Input', 'Size=Middle, State=Disabled', h(A.Input, { disabled: true, placeholder: 'Disabled', style: { width: 240 } })));
+comps.push(C('Checkbox', 'State=Unchecked', h(A.Checkbox, null, 'Checkbox')));
+comps.push(C('Checkbox', 'State=Checked', h(A.Checkbox, { defaultChecked: true }, 'Checkbox')));
+comps.push(C('Switch', 'State=Off', h(A.Switch)));
+comps.push(C('Switch', 'State=On', h(A.Switch, { defaultChecked: true })));
+comps.push(C('Radio', 'State=Unchecked', h(A.Radio, null, 'Option')));
+comps.push(C('Radio', 'State=Checked', h(A.Radio, { checked: true }, 'Option')));
+for (const color of ['default', 'blue', 'green', 'red', 'orange']) comps.push(C('Tag', `Color=${cap(color)}`, h(A.Tag, color === 'default' ? {} : { color }, 'Tag')));
+for (const type of ['success', 'info', 'warning', 'error']) comps.push(C('Alert', `Type=${cap(type)}`, h(A.Alert, { type, message: cap(type) + ' text', description: 'Additional description and information about this alert.', showIcon: true, style: { width: 420 } })));
+comps.push(C('Card', '', h(A.Card, { title: 'Card title', extra: h('a', { href: '#' }, 'More'), style: { width: 300 } }, h('p', { 'data-name': 'Body' }, 'Card content'), h('p', null, 'Card content')), { 'data-description': 'Card with header, extra link and body.' }));
+comps.push(C('Avatar', 'Variant=Letter', h(A.Avatar, { style: { backgroundColor: token.colorPrimary } }, 'U')));
+comps.push(C('Badge', '', h(A.Badge, { count: 5 }, h('div', { style: { width: 40, height: 40, background: '#eee', borderRadius: 4 } }))));
+comps.push(C('Tabs', '', h(A.Tabs, { defaultActiveKey: '1', items: [{ key: '1', label: 'Tab 1' }, { key: '2', label: 'Tab 2' }, { key: '3', label: 'Tab 3' }], style: { width: 320 } })));
+comps.push(C('Select', '', h(A.Select, { defaultValue: 'lucy', style: { width: 200 }, options: [{ value: 'lucy', label: 'Lucy' }] })));
+comps.push(C('Pagination', '', h(A.Pagination, { defaultCurrent: 2, total: 50 })));
+comps.push(C('Breadcrumb', '', h(A.Breadcrumb, { items: [{ title: 'Home' }, { title: 'Application' }, { title: 'Item' }] })));
+comps.push(C('Steps', '', h(A.Steps, { current: 1, items: [{ title: 'Finished' }, { title: 'In progress' }, { title: 'Waiting' }], style: { width: 600 } })));
+comps.push(C('Progress', '', h(A.Progress, { percent: 60, style: { width: 240 } })));
+comps.push(C('Slider', '', h('div', { style: { width: 240 } }, h(A.Slider, { defaultValue: 40 }))));
+comps.push(C('Menu', '', h(A.Menu, { mode: 'horizontal', selectedKeys: ['1'], items: [{ key: '1', label: 'Navigation One' }, { key: '2', label: 'Navigation Two' }, { key: '3', label: 'Navigation Three' }], style: { width: 520 } })));
+comps.push(C('Table', '', h(A.Table, { size: 'small', pagination: false, style: { width: 520 }, columns: [{ title: 'Name', dataIndex: 'name' }, { title: 'Age', dataIndex: 'age' }, { title: 'Address', dataIndex: 'address' }], dataSource: [{ key: 1, name: 'John Brown', age: 32, address: 'New York' }, { key: 2, name: 'Jim Green', age: 42, address: 'London' }] })));
+comps.push(C('Modal', '', h('div', { className: 'ant-modal-content', style: { width: 520, background: '#fff', borderRadius: 8, boxShadow: token.boxShadow, padding: '20px 24px' } }, h('div', { className: 'ant-modal-header' }, h('div', { className: 'ant-modal-title', 'data-name': 'Title' }, 'Modal title')), h('div', { className: 'ant-modal-body', 'data-name': 'Body' }, 'Some contents...'), h('div', { className: 'ant-modal-footer', style: { display: 'flex', justifyContent: 'flex-end', gap: 8, marginTop: 12 } }, h(A.Button, null, 'Cancel'), h(A.Button, { type: 'primary' }, 'OK'))), { 'data-description': 'Modal surface (static).' }));
+comps.push(C('Tooltip', '', h('div', { style: { background: 'rgba(0,0,0,.85)', color: '#fff', padding: '6px 8px', fontSize: 14, borderRadius: 6, boxShadow: token.boxShadowSecondary } }, 'Tooltip')));
+comps.push(C('Empty', '', h(A.Empty)));
+
+const tokenEls = [];
+for (const [name, val] of [['Primary', token.colorPrimary], ['Primary/Hover', token.colorPrimaryHover], ['Primary/Active', token.colorPrimaryActive], ['Primary/Bg', token.colorPrimaryBg], ['Success', token.colorSuccess], ['Warning', token.colorWarning], ['Error', token.colorError], ['Info', token.colorInfo], ['Text', token.colorText], ['Text/Secondary', token.colorTextSecondary], ['Text/Tertiary', token.colorTextTertiary], ['Border', token.colorBorder], ['Border/Secondary', token.colorBorderSecondary], ['Bg/Container', token.colorBgContainer], ['Bg/Layout', token.colorBgLayout], ['Fill/Secondary', token.colorFillSecondary], ['Link', token.colorLink]]) tokenEls.push(h('div', { 'data-token': name, style: { width: 40, height: 40, background: val } }));
+const texts = [1, 2, 3, 4, 5].map((l) => h(A.Typography.Title, { level: l, 'data-textstyle': 'Heading/H' + l }, 'Heading ' + l));
+texts.push(h(A.Typography.Text, { 'data-textstyle': 'Body' }, 'Body text'), h(A.Typography.Text, { type: 'secondary', 'data-textstyle': 'Body/Secondary' }, 'Secondary'));
+const effects = [['Shadow', token.boxShadow], ['Shadow/Secondary', token.boxShadowSecondary], ['Shadow/Tertiary', token.boxShadowTertiary]].map(([n, v]) => h('div', { 'data-effect': n, style: { width: 24, height: 24, background: '#fff', boxShadow: v } }));
+
+ReactDOM.createRoot(document.getElementById('root')).render(h(A.ConfigProvider, null, h('h3', null, 'Components'), row(...comps), h('h3', null, 'Tokens'), row(...tokenEls), row(...texts), row(...effects)));
+setTimeout(() => { window.__ready = true; }, 400);
+</script></body></html>
